@@ -44,7 +44,6 @@ group :development, :test do
   gem 'better_errors'
 
   gem 'capybara'
-  # gem 'selenium'
   gem 'selenium-webdriver'
 
   # Access an IRB console on exception pages or by using <%= console %> in views
