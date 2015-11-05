@@ -38,13 +38,14 @@ group :development, :test do
   %w[rspec-core rspec-expectations rspec-mocks rspec-rails rspec-support].each do |lib|
     gem lib, :git => "git://github.com/rspec/#{lib}.git", :branch => 'master'
   end
-  
+
   gem 'byebug'
   gem 'quiet_assets'
   gem 'better_errors'
 
   gem 'capybara'
-  gem 'selenium'
+  # gem 'selenium'
+  gem 'selenium-webdriver'
 
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
