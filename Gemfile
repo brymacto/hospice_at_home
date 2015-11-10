@@ -43,6 +43,9 @@ group :development, :test do
   gem 'quiet_assets'
   gem 'better_errors'
 
+  gem 'rack-test'
+  gem 'faker'
+  gem 'factory_girl_rails'
   gem 'capybara'
   gem 'selenium-webdriver'
 

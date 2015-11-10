@@ -18,8 +18,17 @@
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 require 'capybara/rspec'
 
+Capybara.register_driver :rack_test do |app|
+  Capybara::RackTest::Driver.new(app, :headers => { 'HTTP_USER_AGENT' => 'Capybara' })
+end
+
+Capybara.register_driver :selenium_chrome do |app|
+  Capybara::Selenium::Driver.new(app, :browser => :chrome)
+end
+
 Capybara.configure do |config|
   config.run_server = false
+  # config.default_driver = :rack_test
   config.default_driver = :selenium
   config.app_host = 'localhost:3000' # change url
 end
