@@ -1,0 +1,8 @@
+<h1>Add a client</h1>
+<%= form_for @client, url: {action: "create"} do |f| %>
+<%= label_tag(:first_name, "First Name") %>
+<%= f.text_field :first_name %>
+<%= label_tag(:last_name, "Last Name") %>
+<%= f.text_field :last_name %>
+<%= f.submit "Submit" %>
+<% end %>
