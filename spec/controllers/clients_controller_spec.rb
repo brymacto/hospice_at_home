@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 describe 'POST #create' do
   it 'renders the client that was created' do
     client = create(:client)
