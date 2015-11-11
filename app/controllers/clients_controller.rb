@@ -6,6 +6,10 @@ class ClientsController < ApplicationController
     end
   end
 
+  def new
+
+  end
+
   private
 
   def client_params
