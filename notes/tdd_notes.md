@@ -7,6 +7,11 @@ http://david.heinemeierhansson.com/2014/tdd-is-dead-long-live-testing.html
 # Questions
 - Why are fixtures/factories necessary?
     +  "You could use the built-in User.create, but that gets tedious when you have many validations on your model. With User.create you have to specify attributes to fulfill the validations, even if your test has nothing to do with those validations. " - https://robots.thoughtbot.com/how-we-test-rails-applications
+-  What would integration tests in Rails look like?
+    +  According to Rails Guides, Integration tests are used to test interaction among any number of controllers.  Test important work flows within the app.
+    +  This page (https://robots.thoughtbot.com/rspec-integration-tests-with-capybara) makes it sound like Integration and acceptance tests are the same thing.  They use the example of testing a visitor sign up process.
+    +  This page (http://stackoverflow.com/questions/4019646/integration-vs-acceptance-test-what-is-cucumber-steak) has a good answer.  Integration tests hit several but not all layers, while acceptance tests are end-to-end.
+    +  http://chriskottom.com/blog/2015/07/three-options-for-top-down-rails-testing/
 
 # Everyday Rails
 Tests should be:
