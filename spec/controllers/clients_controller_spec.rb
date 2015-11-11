@@ -8,7 +8,7 @@ RSpec.describe ClientsController, type: :controller do
 
       post :create, :client => {:last_name => 'Doe', :first_name => 'John'}
 
-      expect(response).to render_template(:show)
+      expect(response).to redirect_to("/clients/#{assigns(:client).id}")
     end
   end
 end
