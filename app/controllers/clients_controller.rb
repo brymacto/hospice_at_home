@@ -5,4 +5,10 @@ class ClientsController < ApplicationController
       redirect_to @client
     end
   end
+
+  private
+
+  def client_params
+    params.require(:client).permit(:last_name, :first_name)
+  end
 end
