@@ -1,5 +1,9 @@
 <h1>Client</h1>
+
+<%= link_to 'Back to all clients', clients_path %>
+<%= link_to 'Edit', edit_client_path(@client) %>
 <h3>First name</h3>
 <%= @client.first_name  %>
 <h3>Last name</h3>
 <%= @client.last_name  %>
+
