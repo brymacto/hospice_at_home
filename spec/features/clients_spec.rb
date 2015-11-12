@@ -21,6 +21,9 @@ feature "clients" do
 
   scenario "edit client" do
     visit edit_client_path(test_client.id)
-    expect(page).to have_content 'John'
+    expect(page).to have_content 'Edit'
+    fill_in('client_first_name', :with => 'Jon')
+    click_button('Submit')
+    expect(page).to have_content 'Jon'
   end
 end 
