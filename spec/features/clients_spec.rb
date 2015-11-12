@@ -7,4 +7,10 @@ feature "clients" do
     visit '/clients/1'
     expect(page).to have_content 'John'
   end
+
+  scenario "view list of clients" do
+    visit clients_path
+    expect(page).to have_content 'John'
+
+  end
 end 

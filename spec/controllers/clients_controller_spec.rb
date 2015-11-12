@@ -12,6 +12,14 @@ RSpec.describe ClientsController, type: :controller do
     end
   end
 
+  describe 'GET #index' do
+    subject { get :index }
+
+    fit "renders the index view" do
+      expect(subject).to render_template(:index)
+    end
+  end
+
   describe 'GET #new' do
     subject { get :new }
 
