@@ -34,7 +34,14 @@ Capybara.configure do |config|
   config.app_host = 'localhost:3000' # change url
 end
 
+RSpec.configure do |c|
+  c.add_setting :use_transactional_fixtures,
+                :default => true,
+                :alias_with => :use_transactional_examples
+end
+
 RSpec.configure do |config|
+  config.use_transactional_fixtures = false
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.
