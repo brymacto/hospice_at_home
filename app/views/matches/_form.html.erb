@@ -1,0 +1,6 @@
+<%= form_for @match do |f| %>
+    <%= label_tag(:client_association, "Client") %><br>
+    <%= f.collection_select(:client_id, Client.all, :id, :name, prompt: true) %>
+
+    <%= f.submit "Submit" %>
+<% end %>
