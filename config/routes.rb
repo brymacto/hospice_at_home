@@ -9,6 +9,7 @@ Rails.application.routes.draw do
 
   resources :clients
   resources :volunteers
+  resources :matches
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

@@ -7,6 +7,7 @@ feature "clients" do
   let!(:test_client) { create(:client) }
   scenario "add a client" do
     visit new_client_path
+
     fill_in('client_first_name', :with => 'John')
     fill_in('client_last_name', :with => 'Doe')
     click_button('Submit')
