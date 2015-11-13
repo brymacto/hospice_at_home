@@ -41,7 +41,7 @@ RSpec.configure do |c|
 end
 
 RSpec.configure do |config|
-  config.use_transactional_fixtures = false
+    config.use_transactional_fixtures = true
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.
