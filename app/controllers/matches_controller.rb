@@ -19,8 +19,8 @@ class MatchesController < ApplicationController
   end
 
   def index
-    # @matches = Match.all.order(id: :desc)
-    @matches = [OpenStruct.new(client_name: 'John Doe', volunteer_name: 'Jane Doex', id: 1), OpenStruct.new(client_name: 'Johnny Doe', volunteer_name: 'Jane Doex', id: 2)]
+    @matches = Match.all.order(id: :desc)
+    # @matches = [OpenStruct.new(client_name: 'John Doe', volunteer_name: 'Jane Doex', id: 1), OpenStruct.new(client_name: 'Johnny Doe', volunteer_name: 'Jane Doex', id: 2)]
   end
 
   def update
