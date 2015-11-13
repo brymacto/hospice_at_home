@@ -13,16 +13,16 @@ feature "volunteers" do
     expect(page).to have_content 'Jane'
   end
 
-  # scenario "view list of clients" do
-  #   visit clients_path
-  #   expect(page).to have_content 'John'
-  # end
-  #
-  # scenario "edit client" do
-  #   visit edit_client_path(test_client.id)
-  #   expect(page).to have_content 'Edit'
-  #   fill_in('client_first_name', :with => 'Jon')
-  #   click_button('Submit')
-  #   expect(page).to have_content 'Jon'
-  # end
+  scenario "view list of volunteers" do
+    visit volunteers_path
+    expect(page).to have_content 'Jane'
+  end
+
+  scenario "edit volunteer" do
+    visit edit_volunteer_path(test_volunteer.id)
+    expect(page).to have_content 'Edit'
+    fill_in('volunteer_first_name', :with => 'Sara Jane')
+    click_button('Submit')
+    expect(page).to have_content 'Sara Jane'
+  end
 end 
