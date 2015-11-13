@@ -1,0 +1,8 @@
+<h1>Match</h1>
+
+<%= link_to 'Back to all matches', matches_path %>
+<%= link_to 'Edit', edit_match_path(@match) %>
+<h3>Client</h3>
+<td><%= link_to @match.client_name, client_path(@match.client_id) %></td>
+<h3>Volunteer</h3>
+<td><%= link_to @match.volunteer_name, volunteer_path(@match.volunteer_id) %></td>

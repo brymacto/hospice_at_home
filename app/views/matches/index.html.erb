@@ -6,7 +6,7 @@
   <th>Volunteer</th>
   <% @matches.each do |match| %>
       <tr>
-        <td><%= match.id %></td>
+        <td><%= link_to match.id, match %></td>
         <td><%= match.client_name %></td>
         <td><%= match.volunteer_name %></td>
       </tr>
