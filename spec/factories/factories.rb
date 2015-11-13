@@ -8,4 +8,9 @@ FactoryGirl.define do
     first_name "Jane"
     last_name  "Doe"
   end
+
+  factory :match do
+    client_id 01
+    volunteer_id 01
+  end
 end
