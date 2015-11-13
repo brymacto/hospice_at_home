@@ -44,6 +44,7 @@ group :development, :test do
   gem 'better_errors'
   gem 'pry'
   gem 'bourbon'
+  gem 'neat'
   gem 'rack-test'
   gem 'faker'
   gem 'factory_girl_rails'
