@@ -1,15 +1,15 @@
 <h1>Clients</h1>
+<%= link_to 'Add a client', new_client_path %>
 <table>
   <th>ID</th>
   <th>Name</th>
   <th>Actions</th>
-
   <% @clients.each do |client| %>
       <tr>
         <td><%= client.id %></td>
         <td>
           <%= link_to "#{client.first_name} #{client.last_name}", client %>
-          </td>
+        </td>
         <td><%= link_to "Edit", edit_client_path(client.id) %></td>
       </tr>
 
