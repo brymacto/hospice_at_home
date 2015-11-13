@@ -22,6 +22,12 @@ class VolunteersController < ApplicationController
     @volunteers = Volunteer.all.order(id: :desc)
   end
 
+  def destroy
+    @volunteer = Volunteer.find(params[:id])
+    @volunteer.destroy
+    redirect_to volunteers_path
+  end
+
   def update
     @volunteer = Volunteer.find(params[:id])
     if @volunteer.update(volunteer_params)

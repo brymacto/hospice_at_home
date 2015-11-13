@@ -1,3 +1,7 @@
 <h1>Edit volunteer</h1>
 <%= link_to 'Back to volunteer', volunteer_path(@volunteer) %>
 <%= render "form" %>
+
+<%= link_to 'Delete', volunteer_path(@volunteer),
+            method: :delete,
+            data: { confirm: 'Are you sure?' } %>

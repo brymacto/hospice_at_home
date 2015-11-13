@@ -23,6 +23,12 @@ class MatchesController < ApplicationController
     # @matches = [OpenStruct.new(client_name: 'John Doe', volunteer_name: 'Jane Doex', id: 1), OpenStruct.new(client_name: 'Johnny Doe', volunteer_name: 'Jane Doex', id: 2)]
   end
 
+  def destroy
+    @match = Match.find(params[:id])
+    @match.destroy
+    redirect_to matches_path
+  end
+
   def update
     @match = Match.find(params[:id])
     if @match.update(match_params)

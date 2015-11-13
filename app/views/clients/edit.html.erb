@@ -1,3 +1,6 @@
 <h1>Edit client</h1>
 <%= link_to 'Back to client', client_path(@client) %>
 <%= render "form" %>
+<%= link_to 'Delete', client_path(@client),
+            method: :delete,
+            data: { confirm: 'Are you sure?' } %>
