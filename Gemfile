@@ -45,6 +45,7 @@ group :development, :test do
   gem 'pry'
   gem 'bourbon'
   gem 'neat'
+  gem "refills"
   gem 'rack-test'
   gem 'faker'
   gem 'factory_girl_rails'
