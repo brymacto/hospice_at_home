@@ -19,7 +19,7 @@ class VolunteersController < ApplicationController
   end
 
   def index
-    @volunteers = Volunteer.all
+    @volunteers = Volunteer.all.order(id: :desc)
   end
 
   def update

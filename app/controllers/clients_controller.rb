@@ -19,7 +19,7 @@ class ClientsController < ApplicationController
   end
 
   def index
-    @clients = Client.all
+    @clients = Client.all.order(id: :desc)
   end
 
   def update

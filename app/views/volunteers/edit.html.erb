@@ -1,9 +1,3 @@
 <h1>Edit volunteer</h1>
 <%= link_to 'Back to volunteer', volunteer_path(@volunteer) %>
-<%= form_for @volunteer do |f| %>
-    <%= label_tag(:first_name, "First Name") %>
-    <%= f.text_field :first_name %>
-    <%= label_tag(:last_name, "Last Name") %>
-    <%= f.text_field :last_name %>
-    <%= f.submit "Submit" %>
-<% end %>
+<%= render "form" %>
