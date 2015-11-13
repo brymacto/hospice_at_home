@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   root 'clients#index'
 
   resources :clients
+  resources :volunteers
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
