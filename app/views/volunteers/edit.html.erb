@@ -1,7 +1,40 @@
 <h1>Edit volunteer</h1>
 <%= link_to 'Back to volunteer', volunteer_path(@volunteer) %>
 <%= render "form" %>
+<h2>Availability</h2>
+<table>
+<tr>
+<th>Day</th>
+<th>Start time</th>
+<th>End time</th>
+<th>Actions</th>
+</tr>
+<tr>
+<td>Monday</td>
+<td>9</td>
+<td>10</td>
+<td><a href="">Edit</a> &nbsp;
+<a href="">Delete</a></td>
+</tr>
+</table>
+<h3>Add new availability</h3>
+<form action="">
+  <select name="" id="">
+    <option value="Monday">Monday</option>
+    <option value="Tuesday">Tuesday</option>
+    <option value="Wednesday">Wednesday</option>
+    <option value="Thursday">Thursday</option>
+    <option value="Friday">Friday</option>
+    <option value="Saturday">Saturday</option>
+    <option value="Sunday">Sunday</option>
+  </select>
+
+  <label for="">Start time</label><input type="text">
+  <label for="">End time</label><input type="text">
+
+</form>
 
 <%= link_to 'Delete', volunteer_path(@volunteer),
             method: :delete,
             data: { confirm: 'Are you sure?' } %>
+
