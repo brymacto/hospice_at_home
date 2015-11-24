@@ -13,6 +13,7 @@ class VolunteersController < ApplicationController
   def edit
     @volunteer = Volunteer.find(params[:id])
     @volunteer_availability = VolunteerAvailability.new 
+    @volunteer_availabilities = @volunteer.volunteer_availabilities
     @day_options = Date::DAYNAMES.zip(Date::DAYNAMES.map(&:downcase))
     render 'edit'
   end

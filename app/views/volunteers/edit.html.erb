@@ -3,28 +3,38 @@
 <%= render "form" %>
 <h2>Availability</h2>
 <table>
-<tr>
-<th>Day</th>
-<th>Start time</th>
-<th>End time</th>
-<th>Actions</th>
-</tr>
-<tr>
+  <tr>
+    <th>Day</th>
+    <th>Start time</th>
+    <th>End time</th>
+    <th>Actions</th>
+  </tr>
+  <% @volunteer_availabilities.each do |volunteer_availability| %>
+  <tr>
+    <td><%= volunteer_availability.start_hour %></td>
+    <td><%= volunteer_availability.end_hour %></td>
+    <td><%= volunteer_availability.day %></td>
+    <td>
+      Edit, Delete
+    </td>
+  </tr>
+  <% end %>
+<!-- <tr>
 <td>Monday</td>
 <td>9</td>
 <td>10</td>
 <td><a href="">Edit</a> &nbsp;
 <a href="">Delete</a></td>
-</tr>
+</tr> -->
 </table>
 <h3>Add new availability</h3>
 <%= form_for @volunteer_availability, url: add_volunteer_availabilities_volunteer_path(@volunteer) do |f| %>
-    <%= label_tag(:start_hour, "Start time") %>
-    <%= f.text_field :start_hour %>    
-    <%= label_tag(:end_hour, "End time") %>
-    <%= f.text_field :end_hour %>
-    <%= f.select :day, @day_options %>
-    <%= f.submit "Submit" %>
+<%= label_tag(:start_hour, "Start time") %>
+<%= f.text_field :start_hour %>    
+<%= label_tag(:end_hour, "End time") %>
+<%= f.text_field :end_hour %>
+<%= f.select :day, @day_options %>
+<%= f.submit "Submit" %>
 <% end %>
 
 <!-- <form action="">
@@ -47,6 +57,6 @@
 
 
 <%= link_to 'Delete', volunteer_path(@volunteer),
-            method: :delete,
-            data: { confirm: 'Are you sure?' } %>
+method: :delete,
+data: { confirm: 'Are you sure?' } %>
 
