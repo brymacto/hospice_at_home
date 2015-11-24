@@ -18,7 +18,7 @@
 </tr>
 </table>
 <h3>Add new availability</h3>
-<%= form_for @volunteer_availability do |f| %>
+<%= form_for @volunteer_availability, url: add_volunteer_availabilities_volunteer_path(@volunteer) do |f| %>
     <%= label_tag(:start_hour, "Start time") %>
     <%= f.text_field :start_hour %>    
     <%= label_tag(:end_hour, "End time") %>

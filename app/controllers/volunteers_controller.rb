@@ -14,6 +14,7 @@ class VolunteersController < ApplicationController
     @volunteer = Volunteer.find(params[:id])
     @volunteer_availability = VolunteerAvailability.new 
     @day_options = Date::DAYNAMES.zip(Date::DAYNAMES.map(&:downcase))
+    render 'edit'
   end
 
   def new
@@ -39,9 +40,17 @@ class VolunteersController < ApplicationController
     end
   end
 
+  def add_volunteer_availabilities
+    attrs = params.require(:volunteer_availability).permit(:start_hour, :end_hour, :day)
+    @volunteer_availability = VolunteerAvailability.new(attrs.merge(volunteer_id: params[:id]))
+    @volunteer_availability.save
+    edit
+  end
+
   private
 
   def volunteer_params
     params.require(:volunteer).permit(:last_name, :first_name)
   end
+
 end

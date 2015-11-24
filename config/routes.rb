@@ -8,8 +8,11 @@ Rails.application.routes.draw do
   root 'clients#index'
 
   resources :clients
-  resources :volunteers
-  resources :volunteer_availabilities
+  resources :volunteers do
+    member do
+      post 'add_volunteer_availabilities'
+    end
+  end
   resources :matches
 
   # Example of regular route:
