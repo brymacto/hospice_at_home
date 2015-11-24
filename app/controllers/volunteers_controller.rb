@@ -10,12 +10,13 @@ class VolunteersController < ApplicationController
     load_volunteer
   end
 
-  def edit
+  def edit(flash_message = nil)
     load_volunteer
     @volunteer_availability = VolunteerAvailability.new 
     @volunteer_availabilities = @volunteer.volunteer_availabilities
     @day_options = Date::DAYNAMES.zip(Date::DAYNAMES.map(&:downcase))
     render 'edit'
+
   end
 
   def new
@@ -44,8 +45,11 @@ class VolunteersController < ApplicationController
   def add_volunteer_availabilities
     attrs = params.require(:volunteer_availability).permit(:start_hour, :end_hour, :day)
     @volunteer_availability = VolunteerAvailability.new(attrs.merge(volunteer_id: params[:id]))
-    @volunteer_availability.save
+    if !@volunteer_availability.save
+      flash[:error] = 'You must include day'
+    end
     edit
+
   end
 
   private

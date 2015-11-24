@@ -9,6 +9,7 @@
 <body>
 <%= render "refills/navigation" %>
 <div class="container">
+  <%= render :partial => "/layouts/flash", :locals => {:flash => flash} %>
   <%= yield %>
 </div>
 </body>
