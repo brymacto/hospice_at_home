@@ -9,6 +9,7 @@ Rails.application.routes.draw do
 
   resources :clients
   resources :volunteers
+  resources :volunteer_availabilities
   resources :matches
 
   # Example of regular route:

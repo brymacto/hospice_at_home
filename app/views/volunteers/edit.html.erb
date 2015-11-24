@@ -18,7 +18,16 @@
 </tr>
 </table>
 <h3>Add new availability</h3>
-<form action="">
+<%= form_for @volunteer_availability do |f| %>
+    <%= label_tag(:start_hour, "Start time") %>
+    <%= f.text_field :start_hour %>    
+    <%= label_tag(:end_hour, "End time") %>
+    <%= f.text_field :end_hour %>
+    <%= f.select :day, @day_options %>
+    <%= f.submit "Submit" %>
+<% end %>
+
+<!-- <form action="">
   <select name="" id="">
     <option value="Monday">Monday</option>
     <option value="Tuesday">Tuesday</option>
@@ -31,8 +40,11 @@
 
   <label for="">Start time</label><input type="text">
   <label for="">End time</label><input type="text">
+<button>Submit</button>
+</form> -->
 
-</form>
+
+
 
 <%= link_to 'Delete', volunteer_path(@volunteer),
             method: :delete,
