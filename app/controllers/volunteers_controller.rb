@@ -7,11 +7,11 @@ class VolunteersController < ApplicationController
   end
 
   def show
-    @volunteer = Volunteer.find(params[:id])
+    load_volunteer
   end
 
   def edit
-    @volunteer = Volunteer.find(params[:id])
+    load_volunteer
     @volunteer_availability = VolunteerAvailability.new 
     @volunteer_availabilities = @volunteer.volunteer_availabilities
     @day_options = Date::DAYNAMES.zip(Date::DAYNAMES.map(&:downcase))
@@ -27,13 +27,13 @@ class VolunteersController < ApplicationController
   end
 
   def destroy
-    @volunteer = Volunteer.find(params[:id])
+    load_volunteer
     @volunteer.destroy
     redirect_to volunteers_path
   end
 
   def update
-    @volunteer = Volunteer.find(params[:id])
+    load_volunteer
     if @volunteer.update(volunteer_params)
       redirect_to @volunteer
     else
@@ -49,6 +49,10 @@ class VolunteersController < ApplicationController
   end
 
   private
+
+  def load_volunteer
+    @volunteer = Volunteer.find(params[:id])
+  end
 
   def volunteer_params
     params.require(:volunteer).permit(:last_name, :first_name)
