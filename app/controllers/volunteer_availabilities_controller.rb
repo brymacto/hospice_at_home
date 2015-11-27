@@ -1,6 +1,5 @@
 class VolunteerAvailabilitiesController < ApplicationController
   def destroy
-    p "Clicked destroy"
     @volunteer_availability = VolunteerAvailability.find(params[:id])
     @volunteer = @volunteer_availability.volunteer
     @volunteer_availability.destroy

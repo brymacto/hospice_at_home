@@ -46,7 +46,10 @@ class VolunteersController < ApplicationController
     attrs = params.require(:volunteer_availability).permit(:start_hour, :end_hour, :day)
     @volunteer_availability = VolunteerAvailability.new(attrs.merge(volunteer_id: params[:id]))
     if !@volunteer_availability.save
-      flash[:error] = 'You must include day'
+      flash[:error] = ""
+      flash[:error] << 'You must include day. ' if @volunteer_availability.day == nil
+      flash[:error] << 'Start hour must be an integer. ' if !@volunteer_availability.start_hour.is_a?(Integer)
+      flash[:error] << 'End hour must be an integer. ' if !@volunteer_availability.end_hour.is_a?(Integer)
     end
     edit
   end
