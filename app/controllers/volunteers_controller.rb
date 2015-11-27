@@ -49,7 +49,6 @@ class VolunteersController < ApplicationController
       flash[:error] = 'You must include day'
     end
     edit
-
   end
 
   private
