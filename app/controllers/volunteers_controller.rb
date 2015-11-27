@@ -51,6 +51,11 @@ class VolunteersController < ApplicationController
     edit
   end
 
+  def edit_volunteer_availabilities
+    p 'edit vol avail'
+
+  end
+
   private
 
   def load_volunteer

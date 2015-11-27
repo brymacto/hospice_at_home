@@ -15,9 +15,10 @@
         <td><%= volunteer_availability.start_hour %></td>
         <td><%= volunteer_availability.end_hour %></td>
         <td>
-          Edit, <%= link_to 'Delete', volunteer_availability_path(volunteer_availability),
-                            method: :delete,
-                            data: {confirm: 'Are you sure?'} %>
+          <%= link_to 'Edit', edit_volunteer_availability_path(volunteer_availability) %>,
+          <%= link_to 'Delete', volunteer_availability_path(volunteer_availability),
+                            method: :delete
+          %>
         </td>
       </tr>
   <% end %>
