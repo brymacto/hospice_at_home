@@ -5,3 +5,16 @@ div.container {
   @include outer-container;
   padding-top: 1em;
 }
+
+.width33 {
+  @include span-columns(4);
+  @include omega();
+}
+.padding1 {
+  padding: 1em;
+}
+
+.form_field, input[type="text"].form_field, select.form_field {
+  margin-right: 1em;
+  width: 90%;
+}

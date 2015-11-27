@@ -10,55 +10,37 @@
     <th>Actions</th>
   </tr>
   <% @volunteer_availabilities.each do |volunteer_availability| %>
-  <tr>
-    <td><%= volunteer_availability.day %></td>
-    <td><%= volunteer_availability.start_hour %></td>
-    <td><%= volunteer_availability.end_hour %></td>
-    <td>
-      Edit, <%= link_to 'Delete', volunteer_availability_path(volunteer_availability),
-                        method: :delete,
-                        data: { confirm: 'Are you sure?' } %>
-    </td>
-  </tr>
+      <tr>
+        <td><%= volunteer_availability.day %></td>
+        <td><%= volunteer_availability.start_hour %></td>
+        <td><%= volunteer_availability.end_hour %></td>
+        <td>
+          Edit, <%= link_to 'Delete', volunteer_availability_path(volunteer_availability),
+                            method: :delete,
+                            data: {confirm: 'Are you sure?'} %>
+        </td>
+      </tr>
   <% end %>
-<!-- <tr>
-<td>Monday</td>
-<td>9</td>
-<td>10</td>
-<td><a href="">Edit</a> &nbsp;
-<a href="">Delete</a></td>
-</tr> -->
 </table>
 <h3>Add new availability</h3>
 <%= form_for @volunteer_availability, url: add_volunteer_availabilities_volunteer_path(@volunteer) do |f| %>
-<%= label_tag(:start_hour, "Start time") %>
-<%= f.text_field :start_hour %>    
-<%= label_tag(:end_hour, "End time") %>
-<%= f.text_field :end_hour %>
-<%= f.select :day, @day_options %>
-<%= f.submit "Submit" %>
+    <div class="width33">
+      <%= label_tag(:start_hour, "Start time") %>
+      <%= f.select :day, @day_options, class: 'form_field' %>
+    </div>
+    <div class="width33">
+      <%= label_tag(:start_hour, "Start time") %>
+      <%= f.text_field :start_hour, class: 'form_field' %>
+    </div>
+    <div class="width33">
+      <%= label_tag(:end_hour, "End time") %>
+      <%= f.text_field :end_hour, class: 'form_field' %>
+    </div>
+
+    <%= f.submit "Submit" %>
 <% end %>
 
-<!-- <form action="">
-  <select name="" id="">
-    <option value="Monday">Monday</option>
-    <option value="Tuesday">Tuesday</option>
-    <option value="Wednesday">Wednesday</option>
-    <option value="Thursday">Thursday</option>
-    <option value="Friday">Friday</option>
-    <option value="Saturday">Saturday</option>
-    <option value="Sunday">Sunday</option>
-  </select>
-
-  <label for="">Start time</label><input type="text">
-  <label for="">End time</label><input type="text">
-<button>Submit</button>
-</form> -->
-
-
-
-
 <%= link_to 'Delete', volunteer_path(@volunteer),
-method: :delete,
-data: { confirm: 'Are you sure?' } %>
+            method: :delete,
+            data: {confirm: 'Are you sure?'} %>
 
