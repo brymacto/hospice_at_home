@@ -5,7 +5,7 @@ class VolunteerAvailabilitiesController < ApplicationController
     @volunteer = @volunteer_availability.volunteer
     @volunteer_availability.destroy
     # render nothing: true
-    redirect_to volunteer_path(@volunteer)
+    redirect_to edit_volunteer_path(@volunteer)
   end
 
   private
