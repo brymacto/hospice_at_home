@@ -1,7 +1,11 @@
 <%= form_for @volunteer do |f| %>
-    <%= label_tag(:first_name, "First Name") %>
-    <%= f.text_field :first_name %>
-    <%= label_tag(:last_name, "Last Name") %>
-    <%= f.text_field :last_name %>
+    <div class="width50">
+      <%= label_tag(:first_name, "First Name") %>
+      <%= f.text_field :first_name, class: 'form_field' %>
+    </div>
+    <div class="width50">
+      <%= label_tag(:last_name, "Last Name") %>
+      <%= f.text_field :last_name, class: 'form_field' %>
+    </div>
 <%= f.submit "Submit" %>
 <% end %>

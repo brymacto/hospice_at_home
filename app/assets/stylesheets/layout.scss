@@ -10,6 +10,10 @@ div.container {
   @include span-columns(4);
   @include omega();
 }
+.width50 {
+  @include span-columns(6);
+  @include omega();
+}
 .padding1 {
   padding: 1em;
 }

@@ -4,9 +4,16 @@ FactoryGirl.define do
     last_name  "Doe"
   end
 
-  factory :volunteer do
+  factory :volunteer, :class => 'Volunteer' do
     first_name "Jane"
     last_name  "Doe"
+  end
+
+  factory :volunteer_availability do
+    day 'monday'
+    start_hour 14
+    end_hour 16
+    volunteer_id 1
   end
 
   factory :match do
