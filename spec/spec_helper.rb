@@ -20,9 +20,6 @@ require 'capybara/rspec'
 require 'rails_helper'
 require_relative 'support/factory_girl'
 
-# FactoryGirl.definition_file_paths = [File.expand_path('../factories', __FILE__)]
-# FactoryGirl.find_definitions
-
 Capybara.register_driver :rack_test do |app|
   Capybara::RackTest::Driver.new(app, :headers => { 'HTTP_USER_AGENT' => 'Capybara' })
 end
