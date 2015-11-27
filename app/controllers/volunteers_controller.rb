@@ -8,6 +8,7 @@ class VolunteersController < ApplicationController
 
   def show
     load_volunteer
+    @volunteer_availabilities = @volunteer.volunteer_availabilities
   end
 
   def edit(flash_message = nil)
@@ -16,7 +17,6 @@ class VolunteersController < ApplicationController
     @volunteer_availabilities = @volunteer.volunteer_availabilities
     @day_options = Date::DAYNAMES.zip(Date::DAYNAMES.map(&:downcase))
     render 'edit'
-
   end
 
   def new
@@ -49,11 +49,6 @@ class VolunteersController < ApplicationController
       flash[:error] = @volunteer_availability.errors.full_messages.to_sentence
     end
     edit
-  end
-
-  def edit_volunteer_availabilities
-    p 'edit vol avail'
-
   end
 
   private

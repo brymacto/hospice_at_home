@@ -7,3 +7,18 @@
 <h3>Last name</h3>
 <%= @volunteer.last_name  %>
 
+<h2>Availability</h2>
+<table>
+  <tr>
+    <th>Day</th>
+    <th>Start time</th>
+    <th>End time</th>
+  </tr>
+  <% @volunteer_availabilities.each do |volunteer_availability| %>
+      <tr>
+        <td><%= volunteer_availability.day.capitalize %></td>
+        <td><%= volunteer_availability.start_hour %></td>
+        <td><%= volunteer_availability.end_hour %></td>
+      </tr>
+  <% end %>
+</table>
