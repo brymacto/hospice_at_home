@@ -1,12 +1,12 @@
 <h1>Matchs</h1>
 <%= link_to 'Add a match', new_match_path %>
 <table>
-  <th>ID</th>
+  <th>Day and time</th>
   <th>Client</th>
   <th>Volunteer</th>
   <% @matches.each do |match| %>
       <tr>
-        <td><%= link_to match.id, match %></td>
+        <td><%= link_to match.day_and_time, match %></td>
         <td><%= match.client_name %></td>
         <td><%= match.volunteer_name %></td>
       </tr>

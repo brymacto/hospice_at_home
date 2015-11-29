@@ -3,6 +3,8 @@ class MatchesController < ApplicationController
     @match = Match.new(match_params)
     if @match.save
       redirect_to @match
+    else
+      flash[:error] = @match.errors.full_messages.to_sentence
     end
   end
 
@@ -26,7 +28,6 @@ class MatchesController < ApplicationController
 
   def index
     @matches = Match.all.order(id: :desc)
-    # @matches = [OpenStruct.new(client_name: 'John Doe', volunteer_name: 'Jane Doex', id: 1), OpenStruct.new(client_name: 'Johnny Doe', volunteer_name: 'Jane Doex', id: 2)]
   end
 
   def destroy
@@ -37,6 +38,7 @@ class MatchesController < ApplicationController
 
   def update
     @match = Match.find(params[:id])
+    p @match
     if @match.update(match_params)
       redirect_to @match
     else
@@ -47,6 +49,6 @@ class MatchesController < ApplicationController
   private
 
   def match_params
-    params.require(:match).permit(:client_id, :volunteer_id)
+    params.require(:match).permit(:client_id, :volunteer_id, :day, :start_time, :end_time)
   end
 end

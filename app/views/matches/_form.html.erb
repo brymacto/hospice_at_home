@@ -10,15 +10,15 @@
 
     <div class="width33">
       <%= label_tag(:day, "Day") %>
-      <%= f.select :day, @day_options, class: 'form_field' %>
+      <%= f.select(:day, @day_options, class: 'form_field') %>
     </div>
     <div class="width33">
       <%= label_tag(:start_time, "Start time") %>
-      <%= f.text_field :start_time, class: 'form_field', type: 'number', min: 0, max: 23 %>
+      <%= f.text_field(:start_time, class: 'form_field', type: 'number', min: 0, max: 23) %>
     </div>
     <div class="width33">
       <%= label_tag(:end_time, "End time") %>
-      <%= f.text_field :end_time, class: 'form_field', type: 'number', min: 1, max: 24 %>
+      <%= f.text_field(:end_time, class: 'form_field', type: 'number', min: 1, max: 24) %>
     </div>
 
     <%= f.submit "Submit" %>

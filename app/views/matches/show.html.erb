@@ -3,6 +3,9 @@
 <%= link_to 'Back to all matches', matches_path %>
 <%= link_to 'Edit', edit_match_path(@match) %>
 <h3>Client</h3>
-<td><%= link_to @match.client_name, client_path(@match.client_id) %></td>
+<%= link_to @match.client_name, client_path(@match.client_id) %>
 <h3>Volunteer</h3>
-<td><%= link_to @match.volunteer_name, volunteer_path(@match.volunteer_id) %></td>
+<%= link_to @match.volunteer_name, volunteer_path(@match.volunteer_id) %>
+<h3>Day and time</h3>
+<%= @match.day_and_time %>
+

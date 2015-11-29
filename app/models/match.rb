@@ -10,9 +10,6 @@ class Match < ActiveRecord::Base
   validate :start_time_possible_times
   validate :start_time_before_end_time
 
-  attr_reader :day
-  attr_reader :start_time
-  attr_reader :end_time
 
   def client_name
     Client.find(client_id).name
@@ -22,18 +19,21 @@ class Match < ActiveRecord::Base
     Volunteer.find(volunteer_id).name
   end
 
+  def day_and_time
+    "#{day.capitalize}, #{start_time} to #{end_time}"
+  end
+
   private
 
   def start_time_possible_times
-    if (start_time < 0) || (start_time > 23)
+    if (start_time.to_i < 0) || (start_time.to_i > 23)
       errors.add(:start_time, "must be between 0 and 23 (12:00 AM and 11:00 PM)")
     end
   end
+
   def start_time_before_end_time
-    if start_time >= end_time
+    if start_time.to_i >= end_time.to_i
       errors.add(:start_time, "must be before end hour")
     end
   end
-
-
 end

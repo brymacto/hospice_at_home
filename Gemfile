@@ -61,6 +61,10 @@ group :development, :test do
   gem 'foreman'
 end
 
+group :development do
+  gem 'pry-rails'
+end
+
 group :test do
   gem 'database_cleaner', require: false
 
