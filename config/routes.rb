@@ -13,6 +13,7 @@ Rails.application.routes.draw do
       post 'add_volunteer_availabilities'
     end
   end
+  get 'matches/explorer' => 'matches#explorer', as: :matches_explorer
   resources :matches
   resources :volunteer_availabilities
 
