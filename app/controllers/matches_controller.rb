@@ -16,10 +16,11 @@ class MatchesController < ApplicationController
 
   def new
     @match = Match.new
+    @day_options = Date::DAYNAMES.zip(Date::DAYNAMES.map(&:downcase))
   end
 
   def explorer
-
+    @day_options = Date::DAYNAMES.zip(Date::DAYNAMES.map(&:downcase))
 
   end
 

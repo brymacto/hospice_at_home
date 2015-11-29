@@ -19,6 +19,7 @@ class VolunteerAvailabilitiesController < ApplicationController
   end
 
   private
+
   def load_volunteer_availability
     @volunteer_availability = VolunteerAvailability.find(params[:id])
     @volunteer = @volunteer_availability.volunteer
