@@ -22,4 +22,15 @@ feature 'volunteers' do
     click_button('Submit')
     expect(page).to have_content 'Sara Jane'
   end
+
+  scenario 'add volunteer availability' do
+    visit edit_volunteer_path(test_volunteer.id)
+    fill_in('volunteer_availability_start_hour', with: '9')
+    fill_in('volunteer_availability_end_hour', with: '10')
+    select('Monday', :from => 'volunteer_availability_day')
+    click_button('Add availability')
+    expect(page).to have_content 'Monday'
+    expect(page).to have_content '9'
+    expect(page).to have_content '10'
+  end
 end

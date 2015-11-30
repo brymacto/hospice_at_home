@@ -26,7 +26,7 @@
 <h3>Add new availability</h3>
 <%= form_for @volunteer_availability, url: add_volunteer_availabilities_volunteer_path(@volunteer) do |f| %>
     <div class="width33">
-      <%= label_tag(:start_hour, "Start time") %>
+      <%= label_tag(:day, "Day") %>
       <%= f.select :day, @day_options, class: 'form_field' %>
     </div>
     <div class="width33">
