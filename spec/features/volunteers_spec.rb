@@ -1,10 +1,6 @@
 require 'rails_helper'
-require 'database_cleaner'
-DatabaseCleaner.strategy = :truncation
 feature 'volunteers' do
-  before(:each) do
-    DatabaseCleaner.clean
-  end
+
   let!(:test_volunteer) { create(:volunteer) }
   scenario 'add a volunteer' do
     visit new_volunteer_path

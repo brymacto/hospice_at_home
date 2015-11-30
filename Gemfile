@@ -34,10 +34,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  %w(rspec-core rspec-expectations rspec-mocks rspec-rails rspec-support).each do |lib|
-    gem lib, git: "git://github.com/rspec/#{lib}.git", branch: 'master'
-  end
-
+  gem 'rspec-rails'
   gem 'byebug'
   gem 'quiet_assets'
   gem 'better_errors'
@@ -57,7 +54,6 @@ group :development, :test do
   gem 'spring'
   gem 'spring-commands-rspec'
   gem 'spring-commands-rubocop'
-  gem 'spring-watcher-listen'
 end
 
 group :development do
