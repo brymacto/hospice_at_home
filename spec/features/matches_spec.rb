@@ -1,10 +1,5 @@
 require 'rails_helper'
-require 'database_cleaner'
-DatabaseCleaner.strategy = :truncation
 feature 'matches' do
-  before(:each) do
-    DatabaseCleaner.clean
-  end
   let!(:test_client) { create(:client, first_name: Faker::Name.first_name, last_name: Faker::Name.last_name) }
   let!(:test_volunteer) { create(:volunteer, first_name: Faker::Name.first_name, last_name: Faker::Name.last_name) }
   scenario 'add a match' do
