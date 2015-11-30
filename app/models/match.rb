@@ -25,14 +25,12 @@ class Match < ActiveRecord::Base
   private
 
   def start_time_possible_times
-    if (start_time.to_i < 0) || (start_time.to_i > 23)
-      errors.add(:start_time, 'must be between 0 and 23 (12:00 AM and 11:00 PM)')
-    end
+    return unless (start_time.to_i < 0) || (start_time.to_i > 23)
+    errors.add(:start_time, 'must be between 0 and 23 (12:00 AM and 11:00 PM)')
   end
 
   def start_time_before_end_time
-    if start_time.to_i >= end_time.to_i
-      errors.add(:start_time, 'must be before end hour')
-    end
+    return unless start_time.to_i >= end_time.to_i
+    errors.add(:start_time, 'must be before end hour')
   end
 end

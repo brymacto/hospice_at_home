@@ -48,14 +48,16 @@ group :development, :test do
   gem 'rack-test'
   gem 'faker'
   gem 'factory_girl_rails'
-  gem 'capybara'
-  gem 'selenium-webdriver'
+
 
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+  gem 'spring-commands-rspec'
+  gem 'spring-commands-rubocop'
+  gem 'spring-watcher-listen'
 end
 
 group :development do
@@ -65,5 +67,7 @@ group :development do
 end
 
 group :test do
+  gem 'capybara'
+  gem 'selenium-webdriver'
   gem 'database_cleaner', require: false
 end

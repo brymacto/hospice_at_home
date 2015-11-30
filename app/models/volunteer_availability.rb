@@ -12,9 +12,8 @@ class VolunteerAvailability < ActiveRecord::Base
   private
 
   def start_hour_possible_times
-    if (start_hour < 0) || (start_hour > 23)
-      errors.add(:start_hour, 'must be between 0 and 23 (12:00 AM and 11:00 PM)')
-    end
+    return unless (start_hour < 0) || (start_hour > 23)
+    errors.add(:start_hour, 'must be between 0 and 23 (12:00 AM and 11:00 PM)')
   end
 
   def start_hour_before_end_hour

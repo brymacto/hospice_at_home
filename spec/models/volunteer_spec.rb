@@ -1,7 +1,14 @@
 describe 'Volunteer' do
   let!(:volunteer_with_availability) { FactoryGirl.create(:volunteer) }
   let!(:volunteer_without_availability) { FactoryGirl.create(:volunteer) }
-  let!(:test_availability) { FactoryGirl.create(:volunteer_availability, day: 'monday', start_hour: 14, end_hour: 16, volunteer_id: volunteer_with_availability.id) }
+  let!(:test_availability) do
+    FactoryGirl.create(
+      :volunteer_availability,
+      day: 'monday',
+      start_hour: 14,
+      end_hour: 16,
+      volunteer_id: volunteer_with_availability.id)
+  end
   describe '#available?' do
     it 'is available when volunteer has matching availability' do
       expect(volunteer_with_availability.available?('monday', 14, 16)).to eq(true)

@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe ClientsController, type: :controller do
   describe 'POST #create' do
     it 'renders the client that was created' do
-      client = create(:client)
+      create(:client)
 
       post :create, client: { last_name: 'Doe', first_name: 'John' }
 

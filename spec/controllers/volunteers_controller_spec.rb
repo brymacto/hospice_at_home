@@ -7,9 +7,12 @@ RSpec.describe VolunteersController, type: :controller do
 
       test_volunteer = create(:volunteer)
 
-      post :add_volunteer_availabilities, id: test_volunteer.id, volunteer_availability: { start_hour: 9, end_hour: 10, day: '' }
+      post(:add_volunteer_availabilities,
+           id: test_volunteer.id,
+           volunteer_availability: { start_hour: 9, end_hour: 10, day: '' }
+          )
 
-      expect(flash[:error]).to eq('You must include day')
+      expect(flash[:error]).to eq("Day can't be blank")
     end
   end
 end

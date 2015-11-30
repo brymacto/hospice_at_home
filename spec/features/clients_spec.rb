@@ -1,9 +1,5 @@
-require 'database_cleaner'
-DatabaseCleaner.strategy = :truncation
-feature 'clients' do
-  before(:each) do
-    DatabaseCleaner.clean
-  end
+require 'rails_helper'
+feature 'clients', js: true do
   let!(:test_client) { create(:client) }
   scenario 'add a client' do
     visit new_client_path

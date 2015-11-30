@@ -1,3 +1,4 @@
+require 'rails_helper'
 require 'database_cleaner'
 DatabaseCleaner.strategy = :truncation
 feature 'matches' do
@@ -10,7 +11,6 @@ feature 'matches' do
     visit new_match_path
     select(test_client.name, from: 'match_client_id')
     select(test_volunteer.name, from: 'match_volunteer_id')
-    binding.pry
     click_button('Submit')
     expect(page).to have_content 'John'
     expect(page).to have_content 'Jane'

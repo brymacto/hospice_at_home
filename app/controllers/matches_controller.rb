@@ -37,7 +37,6 @@ class MatchesController < ApplicationController
 
   def update
     @match = Match.find(params[:id])
-    p @match
     if @match.update(match_params)
       redirect_to @match
     else

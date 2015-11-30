@@ -7,13 +7,15 @@ class Volunteer < ActiveRecord::Base
   end
 
   def available?(day, start_time, end_time)
-    availabilities = volunteer_availabilities
-    matching_availabilities = volunteer_availabilities.select { |availability| (availability.day == day) && (availability.start_hour >= start_time) && (availability.end_hour <= end_time) }
-    return true if matching_availabilities && matching_availabilities.size > 0
-    false
-    # availabilities_on_day = volunteer_availabilities.select { |availability| availability.day = day }
-    # availabilities_on_day.each do |availability|
-    #   return true if ((availability.start_hour >= start_time) && (availability.end_hour <= end_time)
-    # end
+    matching_availabilities = volunteer_availabilities.select do |availability|
+      availability_matching?(availability, day, end_time, start_time)
+    end
+
+    matching_availabilities && matching_availabilities.size > 0
+  end
+
+  # TODO: Move above logic into availability model.
+  def availability_matching?(availability, day, end_time, start_time)
+    (availability.day == day) && (availability.start_hour >= start_time) && (availability.end_hour <= end_time)
   end
 end
