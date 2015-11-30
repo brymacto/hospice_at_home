@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 
-
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.3'
 # Use sqlite3 as the database for Active Record
@@ -35,8 +34,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  %w[rspec-core rspec-expectations rspec-mocks rspec-rails rspec-support].each do |lib|
-    gem lib, :git => "git://github.com/rspec/#{lib}.git", :branch => 'master'
+  %w(rspec-core rspec-expectations rspec-mocks rspec-rails rspec-support).each do |lib|
+    gem lib, git: "git://github.com/rspec/#{lib}.git", branch: 'master'
   end
 
   gem 'byebug'
@@ -45,7 +44,7 @@ group :development, :test do
   gem 'pry'
   gem 'bourbon'
   gem 'neat'
-  gem "refills"
+  gem 'refills'
   gem 'rack-test'
   gem 'faker'
   gem 'factory_girl_rails'
@@ -57,16 +56,14 @@ group :development, :test do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
-  gem 'zeus'
-  gem 'foreman'
 end
 
 group :development do
   gem 'pry-rails'
+  gem 'rubocop'
+  gem 'rubocop-rspec'
 end
 
 group :test do
   gem 'database_cleaner', require: false
-
 end
-

@@ -11,7 +11,6 @@ class VolunteerAvailabilitiesController < ApplicationController
     @day_options = Date::DAYNAMES.zip(Date::DAYNAMES.map(&:downcase))
   end
 
-
   def update
     load_volunteer_availability
     @volunteer_availability.update(volunteer_availability_params)

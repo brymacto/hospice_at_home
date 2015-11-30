@@ -3,15 +3,14 @@ describe Match do
   let!(:test_client) { create(:client) }
   let!(:test_match) { create(:match, client_id: test_client.id, volunteer_id: test_volunteer.id) }
 
-  describe "#client" do
-    it "returns the name of the client" do
+  describe '#client' do
+    it 'returns the name of the client' do
       expect(test_match.name).to eq('John Doe')
     end
   end
-  describe "#volunteer" do
-    it "returns the name of the volunteer" do
+  describe '#volunteer' do
+    it 'returns the name of the volunteer' do
       expect(test_match.name).to eq('Jane Doe')
     end
   end
-
 end

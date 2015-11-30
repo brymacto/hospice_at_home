@@ -23,7 +23,6 @@ class MatchesController < ApplicationController
 
   def explorer
     @day_options = Date::DAYNAMES.zip(Date::DAYNAMES.map(&:downcase))
-
   end
 
   def index

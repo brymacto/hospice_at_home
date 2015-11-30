@@ -1,12 +1,12 @@
 FactoryGirl.define do
   factory :client do
-    first_name "John"
-    last_name  "Doe"
+    first_name 'John'
+    last_name 'Doe'
   end
 
-  factory :volunteer, :class => 'Volunteer' do
-    first_name "Jane"
-    last_name  "Doe"
+  factory :volunteer, class: 'Volunteer' do
+    first_name 'Jane'
+    last_name 'Doe'
   end
 
   factory :volunteer_availability do
