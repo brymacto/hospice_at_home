@@ -7,7 +7,7 @@ class MatchTime
     @end_time = end_time
   end
 
-  def ==(other_match_time)
-    day == other_match_time.day && start_time == other_match_time.start_time && end_time == other_match_time.end_time
+  def ==(other)
+    day == other.day && start_time == other.start_time && end_time == other.end_time
   end
 end

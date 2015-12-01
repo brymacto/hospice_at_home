@@ -52,7 +52,7 @@ class VolunteersController < ApplicationController
   end
 
   def add_volunteer_availabilities
-    attrs = params.require(:volunteer_availability).permit(:start_hour, :end_hour, :day)
+    attrs = volunteer_availability_params
     @volunteer_availability = VolunteerAvailability.new(attrs.merge(volunteer_id: params[:id]))
     unless @volunteer_availability.save
       flash[:error] = @volunteer_availability.errors.full_messages.to_sentence
@@ -66,6 +66,10 @@ class VolunteersController < ApplicationController
 
   def load_volunteer
     @volunteer = Volunteer.find(params[:id])
+  end
+
+  def volunteer_availability_params
+    params.require(:volunteer_availability).permit(:start_hour, :end_hour, :day)
   end
 
   def volunteer_params

@@ -1,8 +1,12 @@
 require 'rails_helper'
 
-describe 'Volunteer' do
-  let!(:volunteer_with_availability) { FactoryGirl.create(:volunteer) }
-  let!(:volunteer_without_availability) { FactoryGirl.create(:volunteer) }
+describe Volunteer do
+  let!(:volunteer_with_availability) do
+    FactoryGirl.create(:volunteer)
+  end
+  let!(:volunteer_without_availability) do
+    FactoryGirl.create(:volunteer)
+  end
   let!(:test_availability) do
     FactoryGirl.create(
       :volunteer_availability,

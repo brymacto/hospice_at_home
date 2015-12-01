@@ -1,7 +1,13 @@
 require 'rails_helper'
 feature 'volunteers' do
   let!(:test_volunteer) { create(:volunteer) }
-  let!(:test_volunteer_availability) { create(:volunteer_availability, volunteer_id: test_volunteer.id, day: 'monday', start_hour: 13, end_hour: 14) }
+  let!(:test_volunteer_availability) do
+    create(:volunteer_availability,
+           volunteer_id: test_volunteer.id,
+           day: 'monday',
+           start_hour: 13,
+           end_hour: 14)
+  end
   scenario 'add a volunteer' do
     visit new_volunteer_path
     fill_in('volunteer_first_name', with: 'Jane')
