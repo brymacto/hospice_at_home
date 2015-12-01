@@ -1,7 +1,12 @@
 class ClientsController < ApplicationController
   def create
     @client = Client.new(client_params)
-    redirect_to @client if @client.save
+    if @client.save
+      redirect_to @client
+    else
+      flash[:error] = @client.errors.full_messages.to_sentence
+      render 'new'
+    end
   end
 
   def show
@@ -32,6 +37,7 @@ class ClientsController < ApplicationController
     if @client.update(client_params)
       redirect_to @client
     else
+      flash[:error] = @client.errors.full_messages.to_sentence
       render 'edit'
     end
   end
