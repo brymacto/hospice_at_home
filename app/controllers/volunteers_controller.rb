@@ -57,7 +57,9 @@ class VolunteersController < ApplicationController
     unless @volunteer_availability.save
       flash[:error] = @volunteer_availability.errors.full_messages.to_sentence
     end
-    edit
+    load_volunteer
+    load_availabilities
+    render 'edit'
   end
 
   private

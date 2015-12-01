@@ -22,6 +22,17 @@ class Match < ActiveRecord::Base
     "#{day.capitalize}, #{start_time} to #{end_time}"
   end
 
+  def match_time
+    @match_time ||= MatchTime.new(day, start_time, end_time)
+  end
+
+  def match_time=(match_time)
+    self[:day] = match_time.day
+    self[:start_time] = match_time.start_time
+    self[:end_time] = match_time.end_time
+    @match_time = match_time
+  end
+
   private
 
   def start_time_possible_times
@@ -32,5 +43,19 @@ class Match < ActiveRecord::Base
   def start_time_before_end_time
     return unless start_time.to_i >= end_time.to_i
     errors.add(:start_time, 'must be before end hour')
+  end
+end
+
+class MatchTime
+  attr_reader :day, :start_time, :end_time
+
+  def initialize(day, start_time, end_time)
+    @day = day
+    @start_time = start_time
+    @end_time = end_time
+  end
+
+  def ==(other_match_time)
+    day == other_match_time.day && start_time == other_match_time.start_time && end_time == other_match_time.end_time
   end
 end
