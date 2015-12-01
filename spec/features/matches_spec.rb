@@ -11,20 +11,20 @@ feature 'matches' do
     expect(page).to have_content 'Jane'
   end
 
-  scenario "view list of clients" do
+  scenario 'view list of clients' do
     visit clients_path
     expect(page).to have_content test_client.first_name
   end
 
-  scenario "edit client" do
+  scenario 'edit client' do
     visit edit_client_path(test_client.id)
     expect(page).to have_content 'Edit'
-    fill_in('client_first_name', :with => 'Jon')
+    fill_in('client_first_name', with: 'Jon')
     click_button('Submit')
     expect(page).to have_content 'Jon'
   end
 
-  scenario "delete client" do
+  scenario 'delete client' do
     visit clients_path
     expect(page).to have_content test_client.first_name
     visit edit_client_path(test_client.id)

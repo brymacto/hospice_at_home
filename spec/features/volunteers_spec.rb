@@ -1,6 +1,5 @@
 require 'rails_helper'
 feature 'volunteers' do
-
   let!(:test_volunteer) { create(:volunteer) }
   let!(:test_volunteer_availability) { create(:volunteer_availability, volunteer_id: test_volunteer.id, day: 'monday', start_hour: 13, end_hour: 14) }
   scenario 'add a volunteer' do
@@ -28,7 +27,7 @@ feature 'volunteers' do
       visit edit_volunteer_path(test_volunteer.id)
       fill_in('volunteer_availability_start_hour', with: '9')
       fill_in('volunteer_availability_end_hour', with: '10')
-      select('Monday', :from => 'volunteer_availability_day')
+      select('Monday', from: 'volunteer_availability_day')
       click_button('Add availability')
       expect(page).to have_content 'Monday'
       expect(page).to have_content '9'
@@ -41,7 +40,7 @@ feature 'volunteers' do
       expect(page).to have_content '13'
       expect(page).to have_content '14'
       visit edit_volunteer_availability_path(test_volunteer_availability.id)
-      select('Wednesday', :from => 'volunteer_availability_day')
+      select('Wednesday', from: 'volunteer_availability_day')
       fill_in('volunteer_availability_start_hour', with: '15')
       fill_in('volunteer_availability_end_hour', with: '16')
       click_button('Submit')
