@@ -10,12 +10,12 @@ class ClientsController < ApplicationController
   end
 
   def show
-    @client = Client.find(params[:id])
+    load_client
     @matches = @client.matches
   end
 
   def edit
-    @client = Client.find(params[:id])
+    load_client
   end
 
   def new
@@ -27,13 +27,13 @@ class ClientsController < ApplicationController
   end
 
   def destroy
-    @client = Client.find(params[:id])
+    load_client
     @client.destroy
     redirect_to clients_path
   end
 
   def update
-    @client = Client.find(params[:id])
+    load_client
     if @client.update(client_params)
       redirect_to @client
     else
@@ -43,6 +43,10 @@ class ClientsController < ApplicationController
   end
 
   private
+
+  def load_client
+    @client = Client.find(params[:id])
+  end
 
   def client_params
     params.require(:client).permit(:last_name, :first_name)
