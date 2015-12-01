@@ -9,18 +9,7 @@
 
 <h2>Matches</h2>
 <% if @matches.size > 0 %>
-    <table>
-      <th>Day and time</th>
-      <th>Client</th>
-      <th>Volunteer</th>
-      <% @matches.each do |match| %>
-          <tr>
-            <td><%= link_to match.day_and_time, match %></td>
-            <td><%= match.client_name %></td>
-            <td><%= match.volunteer_name %></td>
-          </tr>
-      <% end %>
-    </table>
+    <%= render "matches/matches_table" %>
 <% else %>
     <p><%= @client.name %> has no matches.</p>
 <% end %>
