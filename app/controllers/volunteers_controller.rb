@@ -6,6 +6,7 @@ class VolunteersController < ApplicationController
 
   def show
     load_volunteer
+    @matches = @volunteer.matches
     @volunteer_availabilities = @volunteer.volunteer_availabilities
   end
 

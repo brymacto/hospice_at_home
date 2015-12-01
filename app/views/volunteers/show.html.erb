@@ -22,3 +22,11 @@
       </tr>
   <% end %>
 </table>
+
+
+<h2>Matches</h2>
+<% if @matches.size > 0 %>
+    <%= render "matches/matches_table" %>
+<% else %>
+    <p><%= @volunteer.name %> has no matches.</p>
+<% end %>
