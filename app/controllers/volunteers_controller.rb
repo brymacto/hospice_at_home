@@ -1,7 +1,12 @@
 class VolunteersController < ApplicationController
   def create
     @volunteer = Volunteer.new(volunteer_params)
-    redirect_to @volunteer if @volunteer.save
+    if @volunteer.save
+      redirect_to @volunteer
+    else
+      flash[:error] = @volunteer.errors.full_messages.to_sentence
+      render 'new'
+    end
   end
 
   def show
@@ -12,10 +17,7 @@ class VolunteersController < ApplicationController
 
   def edit(_flash_message = nil)
     load_volunteer
-    @volunteer_availability = VolunteerAvailability.new
-    @volunteer_availabilities = @volunteer.volunteer_availabilities
-    @day_options = Date::DAYNAMES.zip(Date::DAYNAMES.map(&:downcase))
-    render 'edit'
+    load_availabilities
   end
 
   def new
@@ -37,8 +39,16 @@ class VolunteersController < ApplicationController
     if @volunteer.update(volunteer_params)
       redirect_to @volunteer
     else
+      flash[:error] = @volunteer.errors.full_messages.to_sentence
+      load_availabilities
       render 'edit'
     end
+  end
+
+  def load_availabilities
+    @volunteer_availability = VolunteerAvailability.new
+    @volunteer_availabilities = @volunteer.volunteer_availabilities
+    @day_options = Date::DAYNAMES.zip(Date::DAYNAMES.map(&:downcase))
   end
 
   def add_volunteer_availabilities
