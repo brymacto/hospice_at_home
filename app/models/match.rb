@@ -10,7 +10,7 @@ class Match < ActiveRecord::Base
   validate :start_time_possible_times
   validate :start_time_before_end_time
 
-  composed_of :match_time, class_name: 'MatchTime', mapping: [['day', 'day'], ['start_time', 'start_time'], ['end_time', 'end_time']]
+  composed_of :match_time, class_name: 'TimeRange', mapping: [['day', 'day'], ['start_time', 'start_time'], ['end_time', 'end_time']]
 
   def client_name
     Client.find(client_id).name

@@ -1,4 +1,4 @@
-class MatchTime
+class TimeRange
   attr_reader :day, :start_time, :end_time
 
   def initialize(day, start_time, end_time)
