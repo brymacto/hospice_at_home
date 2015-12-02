@@ -15,9 +15,21 @@ describe Volunteer do
       end_hour: 16,
       volunteer_id: volunteer_with_availability.id)
   end
+  let!(:test_availability_2) do
+    FactoryGirl.create(
+        :volunteer_availability,
+        day: 'tuesday',
+        start_hour: 0,
+        end_hour: 24,
+        volunteer_id: volunteer_with_availability.id)
+  end
   describe '#available?' do
     it 'is available when volunteer has matching availability' do
       expect(volunteer_with_availability).to be_available(TimeRange.new('monday', 14, 16))
+    end
+
+    it 'is available when volunteer has matching availability (available ALL day' do
+      expect(volunteer_with_availability).to be_available(TimeRange.new('tuesday', 10, 11))
     end
 
     it 'is not available when volunteer does not have matching availability' do
