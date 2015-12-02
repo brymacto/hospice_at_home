@@ -17,11 +17,11 @@ describe Volunteer do
   end
   let!(:test_availability_2) do
     FactoryGirl.create(
-        :volunteer_availability,
-        day: 'tuesday',
-        start_hour: 0,
-        end_hour: 24,
-        volunteer_id: volunteer_with_availability.id)
+      :volunteer_availability,
+      day: 'tuesday',
+      start_hour: 0,
+      end_hour: 24,
+      volunteer_id: volunteer_with_availability.id)
   end
   describe '#available?' do
     it 'is available when volunteer has matching availability' do

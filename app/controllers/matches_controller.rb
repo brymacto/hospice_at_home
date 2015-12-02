@@ -24,9 +24,7 @@ class MatchesController < ApplicationController
   def explorer
     @day_options = Date::DAYNAMES.zip(Date::DAYNAMES.map(&:downcase))
     @volunteers = Volunteer.all.order(id: :desc)
-    if has_time_range_params
-      @volunteers = suitable_volunteers
-    end
+    @volunteers = suitable_volunteers if time_range_params?
   end
 
   def index
@@ -51,12 +49,11 @@ class MatchesController < ApplicationController
   private
 
   def suitable_volunteers
-    Volunteer.find_each do |volunteer|
-      volunteer.available?(TimeRange.new(params[:day], params[:start_time].to_i, params[:end_time].to_i))
-    end
+    search_time_range = TimeRange.new(params[:day], params[:start_time].to_i, params[:end_time].to_i)
+    Volunteer.all.select { |volunteer| volunteer.available?(search_time_range) }
   end
 
-  def has_time_range_params
+  def time_range_params?
     params[:day] && params[:start_time] && params[:end_time]
   end
 
