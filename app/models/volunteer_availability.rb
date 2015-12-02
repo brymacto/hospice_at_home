@@ -9,7 +9,9 @@ class VolunteerAvailability < ActiveRecord::Base
   validate :start_hour_possible_times
   validate :start_hour_before_end_hour
 
-  composed_of :availability_time, class_name: 'TimeRange', mapping: [%w(day day), %w(start_hour start_time), %w(end_hour end_time)]
+  composed_of :availability_time, class_name: 'TimeRange', mapping: [
+    %w(day day), %w(start_hour start_time), %w(end_hour end_time)
+  ]
 
   private
 
