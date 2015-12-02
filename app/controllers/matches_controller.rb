@@ -24,6 +24,9 @@ class MatchesController < ApplicationController
   def explorer
     @day_options = Date::DAYNAMES.zip(Date::DAYNAMES.map(&:downcase))
     @volunteers = Volunteer.all.order(id: :desc)
+    if has_time_range_params
+      @volunteers = suitable_volunteers
+    end
   end
 
   def index
@@ -46,6 +49,14 @@ class MatchesController < ApplicationController
   end
 
   private
+
+  def suitable_volunteers
+    Volunteer.all
+  end
+
+  def has_time_range_params
+    params[:day] && params[:start_time] && params[:end_time]
+  end
 
   def match_params
     params.require(:match).permit(:client_id, :volunteer_id, :day, :start_time, :end_time)
