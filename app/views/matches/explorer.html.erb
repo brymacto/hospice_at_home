@@ -17,7 +17,8 @@
 <%= submit_tag "Explore Matches" %>
 <% end %>
 
-<% if @volunteers %>
+
+<% if @volunteers && @volunteers.size > 0 %>
 <%= render "volunteers/table" %>
 <% else %>
 No volunteers match your search criteria.
