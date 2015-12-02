@@ -17,19 +17,19 @@ describe Volunteer do
   end
   describe '#available?' do
     it 'is available when volunteer has matching availability' do
-      expect(volunteer_with_availability.available?(MatchTime.new('monday', 14, 16))).to eq(true)
+      expect(volunteer_with_availability).to be_available(TimeRange.new('monday', 14, 16))
     end
 
     it 'is not available when volunteer does not have matching availability' do
-      expect(volunteer_with_availability.available?(MatchTime.new('sunday', 10, 11))).to eq(false)
+      expect(volunteer_with_availability).to_not be_available(TimeRange.new('sunday', 10, 11))
     end
 
     it 'is not available when volunteer has matching availability for only portion of shift' do
-      expect(volunteer_with_availability.available?(MatchTime.new('sunday', 10, 15))).to eq(false)
+      expect(volunteer_with_availability).to_not be_available(TimeRange.new('sunday', 10, 15))
     end
 
     it 'is not available when volunteer has no availabilities' do
-      expect(volunteer_without_availability.available?(MatchTime.new('sunday', 10, 15))).to eq(false)
+      expect(volunteer_without_availability).to_not be_available(TimeRange.new('sunday', 10, 15))
     end
   end
 end

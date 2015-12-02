@@ -10,6 +10,10 @@ class Match < ActiveRecord::Base
   validate :start_time_possible_times
   validate :start_time_before_end_time
 
+  composed_of :match_time, class_name: 'TimeRange', mapping: [
+    %w(day day), %w(start_time start_time), %w(end_time end_time)
+  ]
+
   def client_name
     Client.find(client_id).name
   end
@@ -20,17 +24,6 @@ class Match < ActiveRecord::Base
 
   def day_and_time
     "#{day.capitalize}, #{start_time} to #{end_time}"
-  end
-
-  def match_time
-    @match_time ||= MatchTime.new(day, start_time, end_time)
-  end
-
-  def match_time=(match_time)
-    self[:day] = match_time.day
-    self[:start_time] = match_time.start_time
-    self[:end_time] = match_time.end_time
-    @match_time = match_time
   end
 
   private
