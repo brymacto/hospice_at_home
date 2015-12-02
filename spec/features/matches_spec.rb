@@ -34,10 +34,17 @@ feature 'matches' do
   end
 end
 
-
 feature 'Matches Explorer' do
-  let!(:test_volunteer_available) { create(:volunteer, first_name: Faker::Name.first_name, last_name: Faker::Name.last_name) }
-  let!(:test_volunteer_not_available) { create(:volunteer, first_name: Faker::Name.first_name, last_name: Faker::Name.last_name) }
+  let!(:test_volunteer_available) do
+    create(:volunteer,
+           first_name: Faker::Name.first_name,
+           last_name: Faker::Name.last_name)
+  end
+  let!(:test_volunteer_not_available) do
+    create(:volunteer,
+           first_name: Faker::Name.first_name,
+           last_name: Faker::Name.last_name)
+  end
   let!(:test_volunteer_availability) do
     create(:volunteer_availability,
            volunteer_id: test_volunteer_available.id,
@@ -49,11 +56,10 @@ feature 'Matches Explorer' do
   scenario 'returns correct results when searching for a time range' do
     visit matches_explorer_path
     select('Monday', from: 'day')
-    fill_in('Start time', :with => '10')
-    fill_in('End time', :with => '12')
+    fill_in('Start time', with: '10')
+    fill_in('End time', with: '12')
     click_button('Explore Matches')
     expect(page).to have_content test_volunteer_available.first_name
     expect(page).to_not have_content test_volunteer_not_available.first_name
   end
-
 end
