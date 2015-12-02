@@ -51,7 +51,9 @@ class MatchesController < ApplicationController
   private
 
   def suitable_volunteers
-    Volunteer.all
+    Volunteer.find_each do |volunteer|
+      volunteer.available?(TimeRange.new(params[:day], params[:start_time].to_i, params[:end_time].to_i))
+    end
   end
 
   def has_time_range_params
