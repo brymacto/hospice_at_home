@@ -25,6 +25,9 @@ class MatchesController < ApplicationController
     @day_options = Date::DAYNAMES.zip(Date::DAYNAMES.map(&:downcase))
     @volunteers = Volunteer.all.order(id: :desc)
     @volunteers = suitable_volunteers if time_range_params?
+    @day_options_selected = params[:day]
+    @start_time_selected = params[:start_time]
+    @end_time_selected = params[:end_time]
   end
 
   def index
