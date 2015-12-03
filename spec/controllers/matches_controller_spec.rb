@@ -22,7 +22,7 @@ RSpec.describe MatchesController, type: :controller do
   end
 
   describe 'GET #explorer' do
-    it 'assigns all volunteers when no search params are included' do
+    it 'includes all volunteers when no search params are included' do
       get :explorer
 
       expect(assigns(:volunteers)).to include(test_volunteer_available)
@@ -30,14 +30,14 @@ RSpec.describe MatchesController, type: :controller do
     end
 
     it 'assigns @volunteers correctly based on search params' do
-      get :explorer, day: 'monday', start_time: 10, end_time: 12
+      get :explorer, match_exploration: { day: 'monday', start_time: 10, end_time: 12 }
 
       expect(assigns(:volunteers)).to include(test_volunteer_available)
       expect(assigns(:volunteers)).to_not include(test_volunteer_not_available)
     end
 
     it 'assigns empty @volunteers when none match search params' do
-      get :explorer, day: 'tuesday', start_time: 10, end_time: 12
+      get :explorer, match_exploration: { day: 'tuesday', start_time: 10, end_time: 12 }
 
       expect(assigns(:volunteers)).to be_empty
     end

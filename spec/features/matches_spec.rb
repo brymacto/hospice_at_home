@@ -53,6 +53,20 @@ feature 'Matches Explorer' do
            end_hour: 24)
   end
 
+  scenario 'displays validation message when field blank' do
+    visit matches_explorer_path
+    select('Monday', from: 'match_exploration_day')
+    fill_in('match_exploration_start_time', with: '10')
+    click_button('Explore Matches')
+    expect(page).to have_content "End time can't be blank"
+  end
+
+  scenario 'doesnt displays validation message when form hasnt been submitted' do
+    # @match_exploration isnt valid when page first loads because it has nil values.  This tests the logic that hides this message when user first lands on the page.
+    visit matches_explorer_path
+    expect(page).to_not have_content "End time can't be blank"
+  end
+
   scenario 'returns correct results when searching for a time range' do
     visit matches_explorer_path
     select('Monday', from: 'match_exploration_day')
