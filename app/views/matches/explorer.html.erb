@@ -1,6 +1,6 @@
 <h1>Matches Explorer</h1>
 
-<%= form_for MatchExploration.new, url: matches_explorer_path, method: :get do |f| %>
+<%= form_for (@match_exploration || MatchExploration.new), url: matches_explorer_path, method: :get do |f| %>
     <div class="width33">
       <%= label_tag(:day, "Day") %>
       <%= f.select(:day, @day_options, class: 'form_field') %>

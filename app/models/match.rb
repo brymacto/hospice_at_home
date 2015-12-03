@@ -1,7 +1,6 @@
 class Match < ActiveRecord::Base
   belongs_to :client
   belongs_to :volunteer
-  accepts_nested_attributes_for :match_explorations
 
   validates :start_time, presence: true
   validates :end_time, presence: true
