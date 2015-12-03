@@ -1,25 +1,35 @@
 <h1>Matches Explorer</h1>
 
-<%= form_tag(matches_explorer_path, method: :get) do %>
-<div class="width33">
-    <%= label_tag(:day, "Day") %>
-    <%= select_tag(:day, options_for_select(@day_options, @day_options_selected), class: 'form_field') %>
-</div>
-<div class="width33">
-    <%= label_tag(:start_time, "Start time") %>
-    <%= text_field_tag(:start_time, @start_time_selected, class: 'form_field', type: 'number', min: 0, max: 23) %>
-</div>
-<div class="width33">
-    <%= label_tag(:end_time, "End time") %>
-    <%= text_field_tag(:end_time, @end_time_selected, class: 'form_field', type: 'number', min: 1, max: 24) %>
-</div>
+<%= form_for (@match_exploration || MatchExploration.new), url: matches_explorer_path, method: :get do |f| %>
+    <div class="width33">
+      <%= label_tag(:day, "Day") %>
+      <%= f.select(:day, @day_options, class: 'form_field') %>
+    </div>
+    <div class="width33">
+      <%= label_tag(:start_time, "Start time") %>
+      <%= f.text_field(:start_time, class: 'form_field', type: 'number', min: 0, max: 23) %>
+    </div>
+    <div class="width33">
+      <%= label_tag(:end_time, "End time") %>
+      <%= f.text_field(:end_time, class: 'form_field', type: 'number', min: 1, max: 24) %>
+    </div>
 
-<%= submit_tag "Explore Matches" %>
+    <%= f.submit "Explore Matches" %>
 <% end %>
 
-
-<% if @volunteers && @volunteers.size > 0 %>
-<%= render "volunteers/table" %>
-<% else %>
-No volunteers match your search criteria.
+<% if @match_exploration && !@match_exploration.values_nil? %>
+    <% if @match_exploration.valid? %>
+        <h2>Search results for <%= @match_exploration.day.capitalize %>, from <%= @match_exploration.start_time %>
+          to <%= @match_exploration.end_time %></h2>
+        <% if @volunteers && @volunteers.size > 0 %>
+            <%= render "volunteers/table" %>
+        <% else %>
+            No volunteers match your search criteria.
+        <% end %>
+    <% else %>
+        <div class="MatchExplorer_flash">
+        <%= render :partial => "/layouts/flash", :locals => {:flash => { error: @match_exploration.errors.full_messages.to_sentence }} %>
+        </div>
+    <% end %>
 <% end %>
+

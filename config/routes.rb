@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     end
   end
   get 'matches/explorer' => 'matches#explorer', as: :matches_explorer
+  resources :match_explorations, only: 'create'
   resources :matches
   resources :volunteer_availabilities
 

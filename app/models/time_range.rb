@@ -3,8 +3,8 @@ class TimeRange
 
   def initialize(day, start_time, end_time)
     @day = day
-    @start_time = start_time
-    @end_time = end_time
+    @start_time = start_time.to_i
+    @end_time = end_time.to_i
   end
 
   def ==(other)

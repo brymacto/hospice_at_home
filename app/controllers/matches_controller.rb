@@ -22,12 +22,10 @@ class MatchesController < ApplicationController
   end
 
   def explorer
+    @match_exploration = MatchExploration.new(params[:match_exploration])
     @day_options = Date::DAYNAMES.zip(Date::DAYNAMES.map(&:downcase))
     @volunteers = Volunteer.all.order(id: :desc)
-    @volunteers = suitable_volunteers if time_range_params?
-    @day_options_selected = params[:day]
-    @start_time_selected = params[:start_time]
-    @end_time_selected = params[:end_time]
+    @volunteers = suitable_volunteers if @match_exploration.valid?
   end
 
   def index
@@ -52,8 +50,13 @@ class MatchesController < ApplicationController
   private
 
   def suitable_volunteers
-    search_time_range = TimeRange.new(params[:day], params[:start_time].to_i, params[:end_time].to_i)
-    Volunteer.all.select { |volunteer| volunteer.available?(search_time_range) }
+    search_time_range = TimeRange.new(
+      @match_exploration.day,
+      @match_exploration.start_time,
+      @match_exploration.end_time)
+    Volunteer.all.select do |volunteer|
+      volunteer.available?(search_time_range)
+    end
   end
 
   def time_range_params?
@@ -61,6 +64,12 @@ class MatchesController < ApplicationController
   end
 
   def match_params
-    params.require(:match).permit(:client_id, :volunteer_id, :day, :start_time, :end_time)
+    params.require(:match).permit(
+      match_exploration_attributes: [:client_id,
+                                     :volunteer_id,
+                                     :day,
+                                     :start_time,
+                                     :end_time]
+    )
   end
 end
