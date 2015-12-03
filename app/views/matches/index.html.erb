@@ -1,3 +1,8 @@
-<h1>Matches</h1>
+<% if @volunteer %>
+<h1>Matches for volunteer <%= link_to @volunteer.name, @volunteer %></h1>
+    <% elsif @client %>
+    <h1>Matches for client <%= link_to @client.name, @client %></h1>
+<% else %>
+    <% end %>
 <%= link_to 'Add a match', new_match_path %>
 <%= render "matches_table" %>

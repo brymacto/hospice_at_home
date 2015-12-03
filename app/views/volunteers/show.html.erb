@@ -26,7 +26,7 @@
 
 <h2>Matches</h2>
 <% if @matches.size > 0 %>
-    <%= render "matches/matches_table" %>
+    <%= render "matches/matches_table", object: @volunteer %>
 <% else %>
     <p><%= @volunteer.name %> has no matches.</p>
 <% end %>

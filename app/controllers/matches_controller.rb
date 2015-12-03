@@ -31,7 +31,7 @@ class MatchesController < ApplicationController
   end
 
   def index
-    @matches = Match.all.order(id: :desc)
+    load_matches
   end
 
   def destroy
@@ -51,11 +51,27 @@ class MatchesController < ApplicationController
 
   private
 
+  def load_matches
+    load_volunteer_and_client
+    if @volunteer
+      @matches = Match.where(volunteer_id: @volunteer.id)
+    elsif @client
+      @matches = Match.where(client_id: @client.id)
+    else
+      @matches = Match.all.order(id: :desc)
+    end
+  end
+
+  def load_volunteer_and_client
+    @volunteer = Volunteer.find(params[:volunteer_id]) if params[:volunteer_id]
+    @client = Client.find(params[:client_id]) if params[:client_id]
+  end
+
   def suitable_volunteers
     search_time_range = TimeRange.new(
-      @match_exploration.day,
-      @match_exploration.start_time,
-      @match_exploration.end_time)
+        @match_exploration.day,
+        @match_exploration.start_time,
+        @match_exploration.end_time)
     Volunteer.all.select do |volunteer|
       volunteer.available?(search_time_range)
     end
@@ -67,12 +83,12 @@ class MatchesController < ApplicationController
 
   def match_params
     params.require(:match).permit(
-                              :client_id, :volunteer_id, :day, :start_time, :end_time,
-      match_exploration_attributes: [:client_id,
-                                     :volunteer_id,
-                                     :day,
-                                     :start_time,
-                                     :end_time]
+        :client_id, :volunteer_id, :day, :start_time, :end_time,
+        match_exploration_attributes: [:client_id,
+                                       :volunteer_id,
+                                       :day,
+                                       :start_time,
+                                       :end_time]
     )
   end
 end
