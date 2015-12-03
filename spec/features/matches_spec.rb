@@ -6,6 +6,8 @@ feature 'feature: matches' do
     visit new_match_path
     select(test_client.name, from: 'match_client_id')
     select(test_volunteer.name, from: 'match_volunteer_id')
+    fill_in('match_start_time', with: '9')
+    fill_in('match_end_time', with: '10')
     click_button('Submit')
     expect(page).to have_content test_client.first_name
     expect(page).to have_content test_volunteer.first_name
