@@ -14,26 +14,22 @@
       <%= f.text_field(:end_time, class: 'form_field', type: 'number', min: 1, max: 24) %>
     </div>
 
-    <%= f.submit "Create" %>
+    <%= f.submit "Submit" %>
 <% end %>
 
-
-<% if @time_range_params %>
-    <h2>Search results for <%= @day_options_selected.capitalize %>, from <%= @start_time_selected %>
-      to <%= @end_time_selected %></h2>
-    <% if @volunteers && @volunteers.size > 0 %>
-        <%= render "volunteers/table" %>
+<% if @match_exploration %>
+    <% if @match_exploration.valid? %>
+        <h2>Search results for <%= @match_exploration.day.capitalize %>, from <%= @match_exploration.start_time %>
+          to <%= @match_exploration.end_time %></h2>
+        <% if @volunteers && @volunteers.size > 0 %>
+            <%= render "volunteers/table" %>
+        <% else %>
+            No volunteers match your search criteria.
+        <% end %>
     <% else %>
-        No volunteers match your search criteria.
+        <div class="MatchExplorer_flash">
+        <%= render :partial => "/layouts/flash", :locals => {:flash => { error: @match_exploration.errors.full_messages.to_sentence }} %>
+        </div>
     <% end %>
 <% end %>
 
-
-<p>Search valid?</p>
-<p>
-  <% if @match_exploration.valid? %>
-  Yes
-      <% else %>
-  <%= @match_exploration.errors.full_messages.to_sentence %>
-      <% end %>
-</p>

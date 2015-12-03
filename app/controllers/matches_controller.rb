@@ -26,7 +26,7 @@ class MatchesController < ApplicationController
     @day_options = Date::DAYNAMES.zip(Date::DAYNAMES.map(&:downcase))
     @volunteers = Volunteer.all.order(id: :desc)
     @time_range_params = time_range_params?
-    @volunteers = suitable_volunteers if @time_range_params
+    @volunteers = suitable_volunteers if @match_exploration.valid?
     @day_options_selected = params[:day]
     @start_time_selected = params[:start_time]
     @end_time_selected = params[:end_time]
@@ -54,7 +54,7 @@ class MatchesController < ApplicationController
   private
 
   def suitable_volunteers
-    search_time_range = TimeRange.new(params[:day], params[:start_time].to_i, params[:end_time].to_i)
+    search_time_range = TimeRange.new(@match_exploration.day, @match_exploration.start_time, @match_exploration.end_time)
     Volunteer.all.select { |volunteer| volunteer.available?(search_time_range) }
   end
 
