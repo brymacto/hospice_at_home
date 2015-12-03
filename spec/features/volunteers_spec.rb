@@ -1,5 +1,5 @@
 require 'rails_helper'
-feature 'volunteers' do
+feature 'feature: volunteers' do
   let!(:test_volunteer) { create(:volunteer) }
   let!(:test_volunteer_availability) do
     create(:volunteer_availability,

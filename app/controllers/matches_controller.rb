@@ -5,6 +5,8 @@ class MatchesController < ApplicationController
       redirect_to @match
     else
       flash[:error] = @match.errors.full_messages.to_sentence
+      redirect_to new_match_path
+
     end
   end
 
@@ -65,6 +67,7 @@ class MatchesController < ApplicationController
 
   def match_params
     params.require(:match).permit(
+                              :client_id, :volunteer_id, :day, :start_time, :end_time,
       match_exploration_attributes: [:client_id,
                                      :volunteer_id,
                                      :day,

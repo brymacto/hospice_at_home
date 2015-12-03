@@ -14,7 +14,7 @@ class MatchExploration
 
   attr_accessor :day, :start_time, :end_time
 
-  # TODO: Investigate whether composed_of can be used without ActiveRecord
+  # # TODO: Investigate whether composed_of can be used without ActiveRecord
   # composed_of :match_exploration_time_range, class_name: 'TimeRange', mapping: [
   #     %w(day day), %w(start_time start_time), %w(end_time end_time)
   # ]

@@ -1,5 +1,5 @@
 require 'rails_helper'
-feature 'clients', js: true do
+feature 'feature: clients', js: true do
   let!(:test_client) { create(:client) }
   scenario 'add a client' do
     visit new_client_path

@@ -1,5 +1,5 @@
 require 'rails_helper'
-feature 'matches' do
+feature 'feature: matches' do
   let!(:test_client) { create(:client, first_name: Faker::Name.first_name, last_name: Faker::Name.last_name) }
   let!(:test_volunteer) { create(:volunteer, first_name: Faker::Name.first_name, last_name: Faker::Name.last_name) }
   scenario 'add a match' do
@@ -7,8 +7,9 @@ feature 'matches' do
     select(test_client.name, from: 'match_client_id')
     select(test_volunteer.name, from: 'match_volunteer_id')
     click_button('Submit')
-    expect(page).to have_content 'John'
-    expect(page).to have_content 'Jane'
+    expect(page).to have_content test_client.first_name
+    expect(page).to have_content test_volunteer.first_name
+    expect(page).to_not have_content 'is not a number'
   end
 
   scenario 'view list of clients' do
@@ -34,7 +35,7 @@ feature 'matches' do
   end
 end
 
-feature 'Matches Explorer' do
+feature 'feature: Matches Explorer' do
   let!(:test_volunteer_available) do
     create(:volunteer,
            first_name: Faker::Name.first_name,
@@ -62,7 +63,8 @@ feature 'Matches Explorer' do
   end
 
   scenario 'doesnt displays validation message when form hasnt been submitted' do
-    # @match_exploration isnt valid when page first loads because it has nil values.  This tests the logic that hides this message when user first lands on the page.
+    # @match_exploration isnt valid when page first loads because it has nil values.
+    # This tests the logic that hides this message when user first lands on the page.
     visit matches_explorer_path
     expect(page).to_not have_content "End time can't be blank"
   end
