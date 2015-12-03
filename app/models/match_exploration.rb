@@ -1,7 +1,5 @@
 class MatchExploration
   include ActiveModel::Model
-  include ActiveModel::Conversion
-  extend ActiveModel::Naming
 
   validates :start_time, presence: true
   validates :end_time, presence: true
@@ -13,11 +11,6 @@ class MatchExploration
   validate :start_time_before_end_time
 
   attr_accessor :day, :start_time, :end_time
-
-  # # TODO: Investigate whether composed_of can be used without ActiveRecord
-  # composed_of :match_exploration_time_range, class_name: 'TimeRange', mapping: [
-  #     %w(day day), %w(start_time start_time), %w(end_time end_time)
-  # ]
 
   def values_nil?
     (start_time.nil?) && (end_time.nil?) && (day.nil?)
