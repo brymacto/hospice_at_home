@@ -1,7 +1,7 @@
 class MatchExploration
   include ActiveModel::Model
   include ActiveModel::Conversion
-  extend  ActiveModel::Naming
+  extend ActiveModel::Naming
 
   validates :start_time, presence: true
   validates :end_time, presence: true

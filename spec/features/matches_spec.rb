@@ -55,9 +55,9 @@ feature 'Matches Explorer' do
 
   scenario 'returns correct results when searching for a time range' do
     visit matches_explorer_path
-    select('Monday', from: 'day')
-    fill_in('Start time', with: '10')
-    fill_in('End time', with: '12')
+    select('Monday', from: 'match_exploration_day')
+    fill_in('match_exploration_start_time', with: '10')
+    fill_in('match_exploration_end_time', with: '12')
     click_button('Explore Matches')
     expect(page).to have_content test_volunteer_available.first_name
     expect(page).to_not have_content test_volunteer_not_available.first_name
