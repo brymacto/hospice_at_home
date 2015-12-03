@@ -15,8 +15,8 @@
               <%= link_to match.day_and_time, match %>
           <% end %>
         </td>
-        <td><%= match.client_name %></td>
-        <td><%= match.volunteer_name %></td>
+        <td><%= match.client.name %></td>
+        <td><%= match.volunteer.name %></td>
       </tr>
   <% end %>
 </table>

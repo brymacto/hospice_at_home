@@ -55,11 +55,11 @@ class MatchesController < ApplicationController
   def load_matches
     load_volunteer_and_client
     if @volunteer
-      @matches = Match.where(volunteer_id: @volunteer.id)
+      @matches = Match.where(volunteer_id: @volunteer.id).includes(:client, :volunteer)
     elsif @client
-      @matches = Match.where(client_id: @client.id)
+      @matches = Match.where(client_id: @client.id).includes(:client, :volunteer)
     else
-      @matches = Match.all.order(id: :desc)
+      @matches = Match.all.order(id: :desc).includes(:client, :volunteer)
     end
   end
 
