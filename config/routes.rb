@@ -7,9 +7,11 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'clients#index'
 
-  resources :clients
+  resources :clients do
+    resources :matches, only: [:show, :index]
+  end
   resources :volunteers do
-    resources :matches
+    resources :matches, only: [:show, :index]
     member do
       post 'add_volunteer_availabilities'
     end
