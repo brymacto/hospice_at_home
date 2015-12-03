@@ -22,6 +22,7 @@ class MatchesController < ApplicationController
   end
 
   def explorer
+    @match_exploration = MatchExploration.new(params[:match_exploration])
     @day_options = Date::DAYNAMES.zip(Date::DAYNAMES.map(&:downcase))
     @volunteers = Volunteer.all.order(id: :desc)
     @time_range_params = time_range_params?
@@ -62,6 +63,7 @@ class MatchesController < ApplicationController
   end
 
   def match_params
-    params.require(:match).permit(:client_id, :volunteer_id, :day, :start_time, :end_time)
+    params.require(:match).permit(match_exploration_attributes: [ :client_id, :volunteer_id, :day, :start_time, :end_time ])
+    # params.require(:match).permit(:client_id, :volunteer_id, :day, :start_time, :end_time)
   end
 end
