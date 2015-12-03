@@ -19,6 +19,10 @@ class MatchExploration
   #     %w(day day), %w(start_time start_time), %w(end_time end_time)
   # ]
 
+  def values_nil?
+    (start_time.nil?) && (end_time.nil?) && (day.nil?)
+  end
+
   private
 
   def start_time_possible_times

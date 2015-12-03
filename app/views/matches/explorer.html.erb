@@ -17,7 +17,7 @@
     <%= f.submit "Explore Matches" %>
 <% end %>
 
-<% if @match_exploration %>
+<% if @match_exploration && !@match_exploration.values_nil? %>
     <% if @match_exploration.valid? %>
         <h2>Search results for <%= @match_exploration.day.capitalize %>, from <%= @match_exploration.start_time %>
           to <%= @match_exploration.end_time %></h2>
