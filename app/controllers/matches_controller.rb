@@ -67,7 +67,7 @@ class MatchesController < ApplicationController
 
   def match_params
     params.require(:match).permit(
-                              :client_id, :volunteer_id, :day, :start_time, :end_time,
+      :client_id, :volunteer_id, :day, :start_time, :end_time,
       match_exploration_attributes: [:client_id,
                                      :volunteer_id,
                                      :day,

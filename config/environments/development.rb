@@ -1,6 +1,5 @@
 Rails.application.configure do
-
-  BetterErrors.editor = "x-mine://open?file=%{file}&line=%{line}"
+  BetterErrors.editor = 'x-mine://open?file=%{file}&line=%{line}'
 
   # Settings specified here will take precedence over those in config/application.rb.
 

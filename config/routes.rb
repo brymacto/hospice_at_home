@@ -9,6 +9,7 @@ Rails.application.routes.draw do
 
   resources :clients
   resources :volunteers do
+    resources :matches
     member do
       post 'add_volunteer_availabilities'
     end

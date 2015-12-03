@@ -1,12 +1,18 @@
 <table>
   <tr>
-  <th>Day and time</th>
-  <th>Client</th>
-  <th>Volunteer</th>
-    </tr>
+    <th>Day and time</th>
+    <th>Client</th>
+    <th>Volunteer</th>
+  </tr>
   <% @matches.each do |match| %>
       <tr>
-        <td><%= link_to match.day_and_time, match %></td>
+        <td>
+          <% if @volunteer %>
+              <%= link_to match.day_and_time, volunteer_match_path(@volunteer, match) %>
+          <% else %>
+              <%= link_to match.day_and_time, match %>
+          <% end %>
+        </td>
         <td><%= match.client_name %></td>
         <td><%= match.volunteer_name %></td>
       </tr>
