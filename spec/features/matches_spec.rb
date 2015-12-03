@@ -1,7 +1,15 @@
 require 'rails_helper'
 feature 'feature: matches' do
-  let!(:test_client) { create(:client, first_name: Faker::Name.first_name, last_name: Faker::Name.last_name) }
-  let!(:test_volunteer) { create(:volunteer, first_name: Faker::Name.first_name, last_name: Faker::Name.last_name) }
+  let!(:test_client) { create(:client, first_name: 'Jonathan', last_name: 'Doe') }
+  let!(:test_volunteer) { create(:volunteer, first_name: 'Susan', last_name: 'Smith') }
+  let!(:test_match) do
+    create(:match,
+           client_id: test_client.id,
+           volunteer_id: test_volunteer.id,
+           day: 'monday',
+           start_time: 9,
+           end_time: 10)
+  end
   scenario 'add a match' do
     visit new_match_path
     select(test_client.name, from: 'match_client_id')
@@ -9,75 +17,36 @@ feature 'feature: matches' do
     fill_in('match_start_time', with: '9')
     fill_in('match_end_time', with: '10')
     click_button('Submit')
-    expect(page).to have_content test_client.first_name
-    expect(page).to have_content test_volunteer.first_name
+    expect(page.status_code).to be(200)
+    expect(page).to have_content 'Jonathan'
+    expect(page).to have_content 'Susan'
     expect(page).to_not have_content 'is not a number'
   end
 
-  scenario 'view list of clients' do
-    visit clients_path
-    expect(page).to have_content test_client.first_name
+  scenario 'edit a match - form loads correctly' do
+    visit edit_match_path(test_match)
+    expect(page.status_code).to be(200)
+    expect(find_field('match_start_time').value).to eq '9'
+    expect(find_field('match_end_time').value).to eq '10'
+    expect(find_field('match_day').value).to eq 'monday'
+    expect(find_field('match_client_id').value).to eq test_client.id.to_s
+    expect(find_field('match_volunteer_id').value).to eq test_volunteer.id.to_s
   end
 
-  scenario 'edit client' do
-    visit edit_client_path(test_client.id)
-    expect(page).to have_content 'Edit'
-    fill_in('client_first_name', with: 'Jon')
+  scenario 'edit a match - saves and displays correctly' do
+    visit edit_match_path(test_match)
+    expect(page.status_code).to be(200)
+    fill_in('match_start_time', with: '12')
+    fill_in('match_end_time', with: '13')
     click_button('Submit')
-    expect(page).to have_content 'Jon'
+    expect(page.status_code).to be(200)
+    expect(page).to have_content 'Monday, 12 to 13'
   end
 
-  scenario 'delete client' do
-    visit clients_path
-    expect(page).to have_content test_client.first_name
-    visit edit_client_path(test_client.id)
-    click_link('Delete')
-    visit clients_path
-    expect(page).to have_no_content test_client.first_name
-  end
-end
-
-feature 'feature: Matches Explorer' do
-  let!(:test_volunteer_available) do
-    create(:volunteer,
-           first_name: Faker::Name.first_name,
-           last_name: Faker::Name.last_name)
-  end
-  let!(:test_volunteer_not_available) do
-    create(:volunteer,
-           first_name: Faker::Name.first_name,
-           last_name: Faker::Name.last_name)
-  end
-  let!(:test_volunteer_availability) do
-    create(:volunteer_availability,
-           volunteer_id: test_volunteer_available.id,
-           day: 'monday',
-           start_hour: 10,
-           end_hour: 24)
-  end
-
-  scenario 'displays validation message when field blank' do
-    visit matches_explorer_path
-    select('Monday', from: 'match_exploration_day')
-    fill_in('match_exploration_start_time', with: '10')
-    click_button('Explore Matches')
-    expect(page).to have_content "End time can't be blank"
-  end
-
-  scenario 'doesnt displays validation message when form hasnt been submitted' do
-    # @match_exploration isnt valid when page first loads because it has nil values.
-    # This tests the logic that hides this message when user first lands on the page.
-    visit matches_explorer_path
-    expect(page).to_not have_content "End time can't be blank"
-  end
-
-  scenario 'returns correct results when searching for a time range' do
-    visit matches_explorer_path
-    select('Monday', from: 'match_exploration_day')
-    fill_in('match_exploration_start_time', with: '10')
-    fill_in('match_exploration_end_time', with: '12')
-    click_button('Explore Matches')
-    expect(page).to have_content test_volunteer_available.first_name
-    expect(page).to_not have_content test_volunteer_not_available.first_name
+  scenario 'delete a match' do
+    visit edit_match_path(test_match)
+    click_link 'Delete'
+    visit match_path(test_match)
+    expect(page.status_code).to be(404)
   end
 end

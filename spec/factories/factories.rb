@@ -19,5 +19,8 @@ FactoryGirl.define do
   factory :match do
     client_id 01
     volunteer_id 01
+    day 'monday'
+    start_time 9
+    end_time 10
   end
 end

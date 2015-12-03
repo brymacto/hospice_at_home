@@ -65,7 +65,6 @@ class VolunteersController < ApplicationController
   private
 
   def volunteer_match_link_path
-
   end
 
   def load_volunteer
