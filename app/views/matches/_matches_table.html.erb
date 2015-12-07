@@ -7,13 +7,7 @@
   <% @matches.each do |match| %>
       <tr>
         <td>
-          <% if @volunteer %>
-              <%= link_to match.day_and_time, volunteer_match_path(@volunteer, match) %>
-          <% elsif @client %>
-              <%= link_to match.day_and_time, client_match_path(@client, match) %>
-          <% else %>
-              <%= link_to match.day_and_time, match %>
-          <% end %>
+          <%= link_to match.day_and_time, [@client, @volunteer, match] %>
         </td>
         <td><%= match.client.name %></td>
         <td><%= match.volunteer.name %></td>
