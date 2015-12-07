@@ -3,6 +3,8 @@ class Match < ActiveRecord::Base
   belongs_to :volunteer
 
   validates :start_time, presence: true
+  validates :client_id, presence: true
+  validates :volunteer_id, presence: true
   validates :end_time, presence: true
   validates :day, presence: true
   validates :start_time, numericality: { only_integer: true }
