@@ -5,7 +5,8 @@ class MatchesController < ApplicationController
       redirect_to @match
     else
       flash[:error] = @match.errors.full_messages.to_sentence
-      redirect_to new_match_path
+      @day_options = Date::DAYNAMES.zip(Date::DAYNAMES.map(&:downcase))
+      render (params[:from_match_explorer] ? matches_explorer_path : new_match_path)
     end
   end
 
@@ -85,7 +86,7 @@ class MatchesController < ApplicationController
 
   def match_params
     params.require(:match).permit(
-      :client_id, :volunteer_id, :day, :start_time, :end_time,
+      :client_id, :volunteer_id, :day, :start_time, :end_time, :from_match_explorer,
       match_exploration_attributes: [:client_id,
                                      :volunteer_id,
                                      :day,

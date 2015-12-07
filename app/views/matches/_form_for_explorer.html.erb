@@ -8,6 +8,7 @@
       <%= f.collection_select(:volunteer_id, @volunteers, :id, :name, prompt: true) %>
     </div>
     <%= f.hidden_field(:day, value: @match_params[:day]) %>
+    <%= hidden_field_tag(:from_match_explorer, 'true') %>
     <%= f.hidden_field(:start_time, value: @match_params[:start_time]) %>
     <%= f.hidden_field(:end_time, value: @match_params[:end_time]) %>
     <%= f.submit "Submit" %>
