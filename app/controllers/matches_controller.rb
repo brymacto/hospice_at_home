@@ -6,7 +6,6 @@ class MatchesController < ApplicationController
     else
       flash[:error] = @match.errors.full_messages.to_sentence
       redirect_to new_match_path
-
     end
   end
 

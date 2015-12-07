@@ -8,9 +8,9 @@
       <%= f.collection_select(:volunteer_id, @volunteers, :id, :name, prompt: true) %>
     </div>
 
-    <%= hidden_field_tag(:day, 'tuesday') %>
-    <%= hidden_field_tag(:start_time, '10') %>
-    <%= hidden_field_tag(:end_time, '11') %>
+    <%= f.hidden_field(:day, value: 'tuesday') %>
+    <%= f.hidden_field(:start_time, value: '10') %>
+    <%= f.hidden_field(:end_time, value: '11') %>
 
 
     <%= f.submit "Submit" %>
