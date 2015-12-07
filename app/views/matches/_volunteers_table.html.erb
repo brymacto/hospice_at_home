@@ -5,7 +5,7 @@
 
   <% @volunteers.each do |volunteer| %>
       <tr>
-        <td><a class="select_for_match" href="#">Select</a></td>
+        <td><a class="select_for_match" href="#" data-volunteer-id="<%= volunteer.id %>">Select</a></td>
         <td>
           <%= link_to "#{volunteer.first_name} #{volunteer.last_name}", volunteer %>
         </td>
