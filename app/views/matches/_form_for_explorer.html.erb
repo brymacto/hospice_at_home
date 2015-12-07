@@ -1,0 +1,17 @@
+<%= form_for @match do |f| %>
+    <div class="width50">
+      <%= label_tag(:client_association, "Client") %><br>
+      <%= f.collection_select(:client_id, Client.all, :id, :name, prompt: true) %>
+    </div>
+    <div class="width50">
+      <%= label_tag(:volunteer_association, "Volunteer") %><br>
+      <%= f.collection_select(:volunteer_id, @volunteers, :id, :name, prompt: true) %>
+    </div>
+
+    <%= hidden_field_tag(:day, 'tuesday') %>
+    <%= hidden_field_tag(:start_time, '10') %>
+    <%= hidden_field_tag(:end_time, '11') %>
+
+
+    <%= f.submit "Submit" %>
+<% end %>
