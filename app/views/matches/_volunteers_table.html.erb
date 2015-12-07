@@ -1,0 +1,16 @@
+<table>
+  <th>Select for match</th>
+  <th>Name</th>
+  <th>Actions</th>
+
+  <% @volunteers.each do |volunteer| %>
+      <tr>
+        <td><a class="select_for_match" href="#">Select</a></td>
+        <td>
+          <%= link_to "#{volunteer.first_name} #{volunteer.last_name}", volunteer %>
+        </td>
+        <td><%= link_to "Edit", edit_volunteer_path(volunteer.id) %></td>
+      </tr>
+
+  <% end %>
+</table>

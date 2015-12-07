@@ -28,7 +28,7 @@
         <h2>Search results for <%= @match_exploration.day.capitalize %>, from <%= @match_exploration.start_time %>
           to <%= @match_exploration.end_time %></h2>
         <% if @volunteers && @volunteers.size > 0 %>
-            <%= render "volunteers/table" %>
+            <%= render "volunteers_table" %>
         <% else %>
             No volunteers match your search criteria.
         <% end %>
