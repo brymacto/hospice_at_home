@@ -7,11 +7,8 @@
       <%= label_tag(:volunteer_association, "Volunteer") %><br>
       <%= f.collection_select(:volunteer_id, @volunteers, :id, :name, prompt: true) %>
     </div>
-
-    <%= f.hidden_field(:day, value: 'tuesday') %>
-    <%= f.hidden_field(:start_time, value: '10') %>
-    <%= f.hidden_field(:end_time, value: '11') %>
-
-
+    <%= f.hidden_field(:day, value: @match_params[:day]) %>
+    <%= f.hidden_field(:start_time, value: @match_params[:start_time]) %>
+    <%= f.hidden_field(:end_time, value: @match_params[:end_time]) %>
     <%= f.submit "Submit" %>
 <% end %>
