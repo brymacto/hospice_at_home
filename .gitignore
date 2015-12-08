@@ -19,4 +19,6 @@
 .idea
 /.idea
 
+.DS_Store
+
 /coverage
