@@ -4,9 +4,9 @@ class MatchesController < ApplicationController
     if @match.save
       redirect_to @match
     else
-      flash[:error] = @match.errors.full_messages.to_sentence
+      flash.now[:error] = @match.errors.full_messages.to_sentence
       @day_options = Date::DAYNAMES.zip(Date::DAYNAMES.map(&:downcase))
-      render (params[:from_match_explorer] ? matches_explorer_path : new_match_path)
+      render params[:from_match_explorer] ? matches_explorer_path : new_match_path
     end
   end
 

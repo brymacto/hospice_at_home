@@ -4,7 +4,7 @@ class VolunteersController < ApplicationController
     if @volunteer.save
       redirect_to @volunteer
     else
-      flash[:error] = @volunteer.errors.full_messages.to_sentence
+      flash.now[:error] = @volunteer.errors.full_messages.to_sentence
       render 'new'
     end
   end
@@ -39,7 +39,7 @@ class VolunteersController < ApplicationController
     if @volunteer.update(volunteer_params)
       redirect_to @volunteer
     else
-      flash[:error] = @volunteer.errors.full_messages.to_sentence
+      flash.now[:error] = @volunteer.errors.full_messages.to_sentence
       load_availabilities
       render 'edit'
     end
@@ -55,7 +55,7 @@ class VolunteersController < ApplicationController
     attrs = volunteer_availability_params
     @volunteer_availability = VolunteerAvailability.new(attrs.merge(volunteer_id: params[:id]))
     unless @volunteer_availability.save
-      flash[:error] = @volunteer_availability.errors.full_messages.to_sentence
+      flash.now[:error] = @volunteer_availability.errors.full_messages.to_sentence
     end
     load_volunteer
     load_availabilities

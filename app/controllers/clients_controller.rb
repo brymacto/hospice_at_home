@@ -4,7 +4,7 @@ class ClientsController < ApplicationController
     if @client.save
       redirect_to @client
     else
-      flash[:error] = @client.errors.full_messages.to_sentence
+      flash.now[:error] = @client.errors.full_messages.to_sentence
       render 'new'
     end
   end
@@ -37,7 +37,7 @@ class ClientsController < ApplicationController
     if @client.update(client_params)
       redirect_to @client
     else
-      flash[:error] = @client.errors.full_messages.to_sentence
+      flash.now[:error] = @client.errors.full_messages.to_sentence
       render 'edit'
     end
   end
