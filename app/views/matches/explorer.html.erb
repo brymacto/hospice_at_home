@@ -17,14 +17,14 @@
     <%= f.submit "Explore Matches" %>
 <% end %>
 
-<% if @match_exploration && !@match_exploration.values_nil? %>
-    <% if @match_exploration.valid? && (@volunteers.size > 0) %>
-        <h2>Create match</h2>
-        <p>Will create a match for <%= @match_params[:day].capitalize %> from <%= @match_params[:start_time] %>
-          to <%= @match_params[:end_time] %>.</p>
+<% if @match_exploration && @match_exploration.valid? && !@match_exploration.values_nil? %>
+        <% if (@volunteers.size > 0) %>
+            <h2>Create match</h2>
+            <p>Will create a match for <%= @match_params[:day].capitalize %> from <%= @match_params[:start_time] %>
+              to <%= @match_params[:end_time] %>.</p>
 
-        <%= render "form_for_explorer" %>
-    <% end %>
+            <%= render "form_for_explorer" %>
+        <% end %>
         <h2>Search results for <%= @match_exploration.day.capitalize %>, from <%= @match_exploration.start_time %>
           to <%= @match_exploration.end_time %></h2>
         <% if @volunteers && @volunteers.size > 0 && @match_exploration.valid? %>
@@ -32,10 +32,11 @@
         <% else %>
             No volunteers match your search criteria.
         <% end %>
-    <% if !@match_exploration.valid? %>
-        <div class="MatchExplorer_flash">
-          <%= render :partial => "/layouts/flash", :locals => {:flash => {error: @match_exploration.errors.full_messages.to_sentence}} %>
-        </div>
+<% else %>
+    <% if @match_exploration && !@match_exploration.values_nil? %>
+    <div class="MatchExplorer_flash">
+      <%= render :partial => "/layouts/flash", :locals => {:flash => {error: @match_exploration.errors.full_messages.to_sentence}} %>
+    </div>
     <% end %>
 <% end %>
 
