@@ -77,6 +77,8 @@ feature 'feature: Match creation from Matches Explorer' do
            end_hour: 24)
   end
 
+  let!(:test_client) { create(:client, first_name: 'John', last_name: 'Smith') }
+
   scenario 'doesnt display match creation form when explorer returns no volunteers' do
     visit matches_explorer_path
     select('Friday', from: 'match_exploration_day')
@@ -95,5 +97,32 @@ feature 'feature: Match creation from Matches Explorer' do
     click_button('Explore Matches')
     expect(page.status_code).to be(200)
     expect(page).to have_selector('form#new_match')
+  end
+
+  scenario 'creates match from explorer' do
+    visit matches_explorer_path
+    select('Monday', from: 'match_exploration_day')
+    fill_in('match_exploration_start_time', with: '10')
+    fill_in('match_exploration_end_time', with: '11')
+    click_button('Explore Matches')
+    select(test_volunteer_available.name, from: 'match_volunteer_id')
+    select(test_client.name, from: 'match_client_id')
+    click_button('Create match')
+    expect(page.status_code).to be(200)
+    expect(page).to have_content(test_volunteer_available.name)
+    expect(page).to have_content(test_client.name)
+  end
+
+  scenario 'displays validation error when new match form not filled in on match explorer' do
+    visit matches_explorer_path
+    select('Monday', from: 'match_exploration_day')
+    fill_in('match_exploration_start_time', with: '10')
+    fill_in('match_exploration_end_time', with: '11')
+    click_button('Explore Matches')
+    click_button('Create match')
+    expect(page.status_code).to be(200)
+    expect(page).to have_content('Matches Explorer')
+    expect(page).to have_content('be blank')
+    expect(page).to have_selector('#flash')
   end
 end
