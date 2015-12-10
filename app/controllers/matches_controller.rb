@@ -6,7 +6,7 @@ class MatchesController < ApplicationController
     else
       flash.now[:error] = @match.errors.full_messages.to_sentence
       @day_options = Date::DAYNAMES.zip(Date::DAYNAMES.map(&:downcase))
-      render params[:from_match_explorer] ? matches_explorer_path : new_match_path
+      render_after_create(params[:from_match_explorer])
     end
   end
 
@@ -93,5 +93,9 @@ class MatchesController < ApplicationController
                                      :start_time,
                                      :end_time]
     )
+  end
+
+  def render_after_create(from_match_explorer)
+    render from_match_explorer ? matches_explorer_path : new_match_path
   end
 end
