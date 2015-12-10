@@ -16,10 +16,13 @@ class Volunteer < ActiveRecord::Base
     matching_availabilities && matching_availabilities.size > 0
   end
 
+  private
   # TODO: Move above logic into availability model.
   def availability_matching?(availability, match_time)
-    ((availability.day == match_time.day) &&
-    (availability.start_hour <= match_time.start_time) &&
-    (availability.end_hour >= match_time.end_time))
+    day_matching = (availability.day == match_time.day)
+    start_time_matching = (availability.start_hour <= match_time.start_time)
+    end_time_matching = (availability.end_hour >= match_time.end_time)
+
+    day_matching && start_time_matching && end_time_matching
   end
 end
