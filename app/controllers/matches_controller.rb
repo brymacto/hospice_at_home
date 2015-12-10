@@ -11,21 +11,21 @@ class MatchesController < ApplicationController
   end
 
   def show
-    @match = Match.find(params[:id])
+    load_match_from_params
   end
 
   def edit
-    @match = Match.find(params[:id])
+    load_match_from_params
     @day_options = Date::DAYNAMES.zip(Date::DAYNAMES.map(&:downcase))
   end
 
   def new
-    @match = Match.new
+    load_match_new
     @day_options = Date::DAYNAMES.zip(Date::DAYNAMES.map(&:downcase))
   end
 
   def explorer
-    @match = Match.new
+    load_match_new
     @match_params = params[:match_exploration]
     @match_exploration = MatchExploration.new(@match_params)
     @day_options = Date::DAYNAMES.zip(Date::DAYNAMES.map(&:downcase))
@@ -38,13 +38,13 @@ class MatchesController < ApplicationController
   end
 
   def destroy
-    @match = Match.find(params[:id])
+    load_match_from_params
     @match.destroy
     redirect_to matches_path
   end
 
   def update
-    @match = Match.find(params[:id])
+    load_match_from_params
     if @match.update(match_params)
       redirect_to @match
     else
@@ -53,6 +53,13 @@ class MatchesController < ApplicationController
   end
 
   private
+
+  def load_match_new
+    @match = Match.new
+  end
+  def load_match_from_params
+    @match = Match.find(params[:id])
+  end
 
   def load_matches
     load_volunteer_and_client
