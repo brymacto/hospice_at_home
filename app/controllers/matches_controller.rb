@@ -6,31 +6,30 @@ class MatchesController < ApplicationController
     else
       flash.now[:error] = @match.errors.full_messages.to_sentence
       @day_options = Date::DAYNAMES.zip(Date::DAYNAMES.map(&:downcase))
-      render params[:from_match_explorer] ? matches_explorer_path : new_match_path
+      render_after_create(params[:from_match_explorer])
     end
   end
 
   def show
-    @match = Match.find(params[:id])
+    load_match(new: false)
   end
 
   def edit
-    @match = Match.find(params[:id])
+    load_match(new: false)
     @day_options = Date::DAYNAMES.zip(Date::DAYNAMES.map(&:downcase))
   end
 
   def new
-    @match = Match.new
+    load_match(new: true)
     @day_options = Date::DAYNAMES.zip(Date::DAYNAMES.map(&:downcase))
   end
 
   def explorer
-    @match = Match.new
+    load_match(new: true)
     @match_params = params[:match_exploration]
     @match_exploration = MatchExploration.new(@match_params)
     @day_options = Date::DAYNAMES.zip(Date::DAYNAMES.map(&:downcase))
-    @volunteers = Volunteer.all.order(id: :desc)
-    @volunteers = suitable_volunteers if @match_exploration.valid?
+    load_volunteers(@match_exploration.valid?)
   end
 
   def index
@@ -38,13 +37,13 @@ class MatchesController < ApplicationController
   end
 
   def destroy
-    @match = Match.find(params[:id])
+    load_match
     @match.destroy
     redirect_to matches_path
   end
 
   def update
-    @match = Match.find(params[:id])
+    load_match
     if @match.update(match_params)
       redirect_to @match
     else
@@ -53,6 +52,14 @@ class MatchesController < ApplicationController
   end
 
   private
+
+  def load_match(new: false)
+    if new == true
+      @match = Match.new
+      return
+    end
+    @match = Match.find(params[:id])
+  end
 
   def load_matches
     load_volunteer_and_client
@@ -70,12 +77,13 @@ class MatchesController < ApplicationController
     @client = Client.find(params[:client_id]) if params[:client_id]
   end
 
-  def suitable_volunteers
+  def load_volunteers(match_exploration_valid)
+    return if !match_exploration_valid
     search_time_range = TimeRange.new(
       @match_exploration.day,
       @match_exploration.start_time,
       @match_exploration.end_time)
-    Volunteer.all.select do |volunteer|
+    @volunteers = Volunteer.all.select do |volunteer|
       volunteer.available?(search_time_range)
     end
   end
@@ -93,5 +101,9 @@ class MatchesController < ApplicationController
                                      :start_time,
                                      :end_time]
     )
+  end
+
+  def render_after_create(from_match_explorer)
+    render from_match_explorer ? matches_explorer_path : new_match_path
   end
 end
