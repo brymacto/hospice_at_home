@@ -9,11 +9,15 @@ class Volunteer < ActiveRecord::Base
   end
 
   def available?(match_time)
-    matching_availabilities = volunteer_availabilities.select do |availability|
-      availability_matching?(availability, match_time)
-    end
+    matching_availabilities = load_matching_availabilities(match_time)
 
     matching_availabilities && matching_availabilities.size > 0
+  end
+
+  def load_matching_availabilities(match_time)
+    volunteer_availabilities.select do |availability|
+      availability_matching?(availability, match_time)
+    end
   end
 
   private
