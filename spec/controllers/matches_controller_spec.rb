@@ -22,11 +22,10 @@ RSpec.describe MatchesController, type: :controller do
   end
 
   describe 'GET #explorer' do
-    it 'includes all volunteers when no search params are included' do
+    it 'includes no volunteers when no search params are included' do
       get :explorer
 
-      expect(assigns(:volunteers)).to include(test_volunteer_available)
-      expect(assigns(:volunteers)).to include(test_volunteer_not_available)
+      expect(assigns(:volunteers)).to be_nil
     end
 
     it 'assigns @volunteers correctly based on search params' do
