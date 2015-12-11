@@ -4,7 +4,7 @@ class MatchProposalsController < ApplicationController
     @match_proposal.save
 
     match_request_volunteer_ids.each do |volunteer_id|
-      MatchRequest.create(volunteer_id: volunteer_id, status: 'pending', match_proposal_id: @match_proposal.id)
+      MatchRequest.create!(volunteer_id: volunteer_id, status: 'pending', match_proposal_id: @match_proposal.id)
     end
 
     if @match_proposal.save
