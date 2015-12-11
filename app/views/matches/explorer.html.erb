@@ -17,22 +17,31 @@
     <%= f.submit "Explore Matches" %>
 <% end %>
 
-
+<hr>
 <% if @match_exploration && !@match_exploration.values_nil? %>
     <% if @match_exploration.valid? %>
         <% if (@volunteers.size > 0) %>
+
             <h2>Create match</h2>
             <p>Will create a match for <%= @match_params[:day].capitalize %> from <%= @match_params[:start_time] %>
               to <%= @match_params[:end_time] %>.</p>
 
             <%= render "form_for_explorer" %>
+            <hr>
+            <h2>Create an email request</h2>
+
         <% end %>
-        <h2>Search results for <%= @match_exploration.day.capitalize %>, from <%= @match_exploration.start_time %>
-          to <%= @match_exploration.end_time %></h2>
-        <% if @volunteers && @volunteers.size > 0  %>
-            <%= render "volunteers_table" %>
-        <% else %>
-            No volunteers match your search criteria.
+        <%= form_for @match_request do |f| %>
+            <%= f.submit "Send email" %>
+
+            <hr>
+            <h2>Search results for <%= @match_exploration.day.capitalize %>, from <%= @match_exploration.start_time %>
+              to <%= @match_exploration.end_time %></h2>
+            <% if @volunteers && @volunteers.size > 0 %>
+                <%= render "volunteers_table" %>
+            <% else %>
+                No volunteers match your search criteria.
+            <% end %>
         <% end %>
     <% else %>
         <div class="MatchExplorer_flash">
