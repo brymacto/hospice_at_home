@@ -1,9 +1,6 @@
 class MatchProposalsController < ApplicationController
   def create
     @match_proposal = MatchProposal.new(match_proposal_params)
-
-    match_request_volunteer_ids = []
-
     @match_proposal.save
 
     match_request_volunteer_ids.each do |volunteer_id|
@@ -24,6 +21,12 @@ class MatchProposalsController < ApplicationController
 
 
   private
+
+  def match_request_volunteer_ids
+    params.keys.
+      select { |param| param.include?('select_for_email_') }.
+      map { |param| param.split('_').last }
+  end
 
   def match_proposal_params
     params.permit(:day, :start_time, :end_time, :client_id, :status).merge(client_id: params[:match_proposal][:client_id], status: 'pending')

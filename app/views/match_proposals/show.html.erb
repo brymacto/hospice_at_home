@@ -5,3 +5,10 @@
 <p>End time: <%= @match_proposal.end_time %></p>
 <p>Client: <%= link_to @match_proposal.client.name, @match_proposal.client %></p>
 <p>Status: <%= @match_proposal.status.capitalize %></p>
+
+<h2>Match Requests</h2>
+
+<% @match_proposal.match_requests.each do |match_request| %>
+  <p>Volunteer: <%= match_request.volunteer.name %></p>
+  <p>Status: <%= match_request.status %></p>
+<% end %>
