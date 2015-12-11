@@ -7,7 +7,7 @@
   <% @volunteers.each do |volunteer| %>
       <tr>
         <td>
-          <%= f.check_box("select_for_email_#{volunteer.id}") %>
+          <%= check_box_tag("select_for_email_#{volunteer.id}") %>
 
         </td>
         <td><a class="select_for_match" href="#" data-volunteer-id="<%= volunteer.id %>">Select</a></td>

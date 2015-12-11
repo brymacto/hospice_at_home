@@ -29,6 +29,7 @@ class MatchesController < ApplicationController
     @match_params = params[:match_exploration]
     @match_exploration = MatchExploration.new(@match_params)
     @day_options = Date::DAYNAMES.zip(Date::DAYNAMES.map(&:downcase))
+    @match_proposal = MatchProposal.new
     load_volunteers(@match_exploration.valid?)
   end
 
