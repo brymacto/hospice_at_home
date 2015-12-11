@@ -11,36 +11,55 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_151_129_010_306) do
+ActiveRecord::Schema.define(version: 20151211183615) do
+
   # These are extensions that must be enabled in order to support this database
-  enable_extension 'plpgsql'
+  enable_extension "plpgsql"
 
-  create_table 'clients', force: :cascade do |t|
-    t.string 'last_name'
-    t.string 'first_name'
+  create_table "clients", force: :cascade do |t|
+    t.string "last_name"
+    t.string "first_name"
   end
 
-  create_table 'matches', force: :cascade do |t|
-    t.integer 'client_id',    null: false
-    t.integer 'volunteer_id', null: false
-    t.datetime 'created_at',   null: false
-    t.datetime 'updated_at',   null: false
-    t.string 'day', null: false
-    t.integer 'start_time',   null: false
-    t.integer 'end_time',     null: false
+  create_table "match_proposals", force: :cascade do |t|
+    t.string   "day",        null: false
+    t.integer  "start_time", null: false
+    t.integer  "end_time",   null: false
+    t.integer  "client_id",  null: false
+    t.string   "status",     null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  create_table 'volunteer_availabilities', force: :cascade do |t|
-    t.string 'day', null: false
-    t.integer 'start_hour',   null: false
-    t.integer 'end_hour',     null: false
-    t.integer 'volunteer_id', null: false
-    t.datetime 'created_at',   null: false
-    t.datetime 'updated_at',   null: false
+  create_table "match_requests", force: :cascade do |t|
+    t.integer  "volunteer_id", null: false
+    t.string   "status",       null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
-  create_table 'volunteers', force: :cascade do |t|
-    t.string 'last_name'
-    t.string 'first_name'
+  create_table "matches", force: :cascade do |t|
+    t.integer  "client_id",    null: false
+    t.integer  "volunteer_id", null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.string   "day",          null: false
+    t.integer  "start_time",   null: false
+    t.integer  "end_time",     null: false
   end
+
+  create_table "volunteer_availabilities", force: :cascade do |t|
+    t.string   "day",          null: false
+    t.integer  "start_hour",   null: false
+    t.integer  "end_hour",     null: false
+    t.integer  "volunteer_id", null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  create_table "volunteers", force: :cascade do |t|
+    t.string "last_name"
+    t.string "first_name"
+  end
+
 end
