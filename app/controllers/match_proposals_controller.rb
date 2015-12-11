@@ -1,17 +1,17 @@
 class MatchProposalsController < ApplicationController
   def create
     @match_proposal = MatchProposal.new(match_proposal_params)
-    @match_proposal.save
-
-    match_request_volunteer_ids.each do |volunteer_id|
-      MatchRequest.create!(volunteer_id: volunteer_id, status: 'pending', match_proposal_id: @match_proposal.id)
-    end
 
     if @match_proposal.save
+      match_request_volunteer_ids.each do |volunteer_id|
+        MatchRequest.create!(volunteer_id: volunteer_id, status: 'pending', match_proposal_id: @match_proposal.id)
+      end
       redirect_to @match_proposal
     else
       flash.now[:error] = @match_proposal.errors.full_messages.to_sentence
-      # render 'new'
+      @day_options = Date::DAYNAMES.zip(Date::DAYNAMES.map(&:downcase))
+
+      render 'matches/explorer'
     end
   end
 
