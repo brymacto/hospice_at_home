@@ -9,6 +9,10 @@ class MatchProposalsController < ApplicationController
     end
   end
 
+  def show
+    @match_proposal = MatchProposal.find(params[:id])
+  end
+
 
   private
 

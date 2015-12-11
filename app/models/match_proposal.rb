@@ -1,7 +1,7 @@
 class MatchProposal < ActiveRecord::Base
   has_many :match_requests
   has_many :volunteers, through: :match_requests
-  has_one :client
+  belongs_to :client
 
   validates :start_time, presence: true
   validates :end_time, presence: true
