@@ -28,10 +28,16 @@
 
             <%= render "form_for_explorer" %>
             <hr>
+
             <h2>Create an email request</h2>
 
         <% end %>
         <%= form_tag('/match_proposals', method: "post") do %>
+            <%= hidden_field_tag(:start_time, @match_params[:start_time]) %>
+            <%= hidden_field_tag(:end_time, @match_params[:end_time]) %>
+            <%= hidden_field_tag(:day, @match_params[:day]) %>
+            <%= label_tag(:client_association, "Client") %><br>
+            <%= collection_select(:match_proposal, :client_id, Client.all, :id, :name) %>
             <%= submit_tag "Send email" %>
 
             <hr>
