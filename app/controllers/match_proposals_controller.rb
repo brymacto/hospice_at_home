@@ -62,7 +62,7 @@ class MatchProposalsController < ApplicationController
   def destroy
     load_match_proposal
     @match_proposal.destroy
-    redirect_to matches_path
+    redirect_to matches_path(initial_tab: 'match_proposal')
   end
 
   private

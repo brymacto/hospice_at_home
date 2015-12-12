@@ -36,6 +36,7 @@ class MatchesController < ApplicationController
   def index
     load_matches
     @match_proposals = MatchProposal.all
+    @initial_tab = params[:initial_tab]
   end
 
   def destroy
@@ -96,7 +97,7 @@ class MatchesController < ApplicationController
 
   def match_params
     params.require(:match).permit(
-      :client_id, :volunteer_id, :day, :start_time, :end_time, :from_match_explorer,
+      :client_id, :volunteer_id, :day, :start_time, :end_time, :from_match_explorer, :initial_tab,
       match_exploration_attributes: [:client_id,
                                      :volunteer_id,
                                      :day,
