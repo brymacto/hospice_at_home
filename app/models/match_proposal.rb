@@ -1,5 +1,5 @@
 class MatchProposal < ActiveRecord::Base
-  has_many :match_requests
+  has_many :match_requests, dependent: :destroy
   has_many :volunteers, through: :match_requests
   belongs_to :client
 
