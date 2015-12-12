@@ -18,6 +18,11 @@ feature 'feature: Matches Explorer' do
            start_hour: 10,
            end_hour: 24)
   end
+  let!(:test_client) do
+    create(:client,
+           first_name: 'Enrique',
+           last_name: 'Sanchez')
+  end
 
   scenario 'displays validation message when field blank' do
     visit matches_explorer_path
@@ -26,6 +31,7 @@ feature 'feature: Matches Explorer' do
     click_button('Explore Matches')
     expect(page.status_code).to be(200)
     expect(page).to have_content "End time can't be blank"
+    expect(page).to have_content "Client can't be blank"
   end
 
   scenario 'doesnt displays validation message when form hasnt been submitted' do
@@ -39,6 +45,7 @@ feature 'feature: Matches Explorer' do
   scenario 'returns correct results when searching for a time range' do
     visit matches_explorer_path
     select('Monday', from: 'match_exploration_day')
+    select(test_client.name, from: 'match_exploration_client_id')
     fill_in('match_exploration_start_time', with: '10')
     fill_in('match_exploration_end_time', with: '12')
     click_button('Explore Matches')
@@ -50,6 +57,7 @@ feature 'feature: Matches Explorer' do
   scenario 'displays message when no volunteers match given criteria' do
     visit matches_explorer_path
     select('Friday', from: 'match_exploration_day')
+    select(test_client.name, from: 'match_exploration_client_id')
     fill_in('match_exploration_start_time', with: '23')
     fill_in('match_exploration_end_time', with: '24')
     click_button('Explore Matches')
