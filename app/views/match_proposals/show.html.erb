@@ -9,11 +9,13 @@
   <tr>
     <th>Volunteer</th>
     <th>Status</th>
+    <th>Actions</th>
   </tr>
 <% @match_proposal.match_requests.each do |match_request| %>
       <tr>
         <td><%= match_request.volunteer.name %></td>
         <td><%= match_request.status %></td>
+        <td><%= link_to fa_icon("ban", class: 'margin_right'), '' %><%= link_to fa_icon("check", class: 'margin_right'), '' %></td>
       </tr>
 <% end %>
 </table>

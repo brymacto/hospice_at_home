@@ -40,6 +40,7 @@ group :development, :test do
   gem 'better_errors'
   gem 'pry'
   gem 'bourbon'
+  gem 'font-awesome-rails'
   gem 'neat'
   gem 'refills'
   gem 'rack-test'
