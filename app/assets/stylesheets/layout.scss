@@ -5,7 +5,10 @@ div.container {
   @include outer-container;
   padding-top: 1em;
 }
-
+.width25 {
+  @include span-columns(3);
+  @include omega();
+}
 .width33 {
   @include span-columns(4);
   @include omega();

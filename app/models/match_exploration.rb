@@ -4,13 +4,14 @@ class MatchExploration
   validates :start_time, presence: true
   validates :end_time, presence: true
   validates :day, presence: true
+  validates :client_id, presence: true
   validates :start_time, numericality: { only_integer: true }
   validates :end_time, numericality: { only_integer: true }
   validate :start_time_possible_times
   validate :end_time_possible_times
   validate :start_time_before_end_time
 
-  attr_accessor :day, :start_time, :end_time
+  attr_accessor :day, :start_time, :end_time, :client_id
 
   def values_nil?
     (start_time.nil?) && (end_time.nil?) && (day.nil?)

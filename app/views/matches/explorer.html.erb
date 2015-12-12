@@ -7,15 +7,19 @@
     <div class="tab-content">
 
       <%= form_for (@match_exploration || MatchExploration.new), url: matches_explorer_path, method: :get do |f| %>
-          <div class="width33">
+          <div class="width25">
             <%= label_tag(:day, "Day") %>
             <%= f.select(:day, @day_options, class: 'form_field') %>
           </div>
-          <div class="width33">
+          <div class="width25">
+            <%= label_tag(:client_id, "Client") %>
+            <%= f.select(:client_id, Client.all.collect{|client| [client.name, client.id]}, prompt: 'Select client', class: 'form_field') %>
+          </div>
+          <div class="width25">
             <%= label_tag(:start_time, "Start time") %>
             <%= f.text_field(:start_time, class: 'form_field', type: 'number', min: 0, max: 23) %>
           </div>
-          <div class="width33">
+          <div class="width25">
             <%= label_tag(:end_time, "End time") %>
             <%= f.text_field(:end_time, class: 'form_field', type: 'number', min: 1, max: 24) %>
           </div>
