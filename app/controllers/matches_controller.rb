@@ -35,6 +35,7 @@ class MatchesController < ApplicationController
 
   def index
     load_matches
+    @match_proposals = MatchProposal.all
   end
 
   def destroy

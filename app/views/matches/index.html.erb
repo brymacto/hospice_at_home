@@ -5,4 +5,22 @@
 <% else %>
     <% end %>
 <%= link_to 'Add a match', new_match_path %>
-<%= render "matches_table" %>
+
+<ul class="accordion-tabs">
+  <li class="tab-header-and-content">
+    <a href="javascript:void(0)" class="is-active tab-link">Matches</a>
+    <div class="tab-content">
+      <h2>Matches</h2>
+      <%= render "matches_table" %>
+    </div>
+  </li>
+  <li class="tab-header-and-content">
+    <a href="javascript:void(0)" class="tab-link">Match proposals</a>
+    <div class="tab-content">
+      <h2>Match proposals</h2>
+      <%= render "match_proposals/match_proposals_table" %>
+    </div>
+  </li>
+</ul>
+
+

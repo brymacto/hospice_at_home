@@ -15,6 +15,10 @@ class MatchProposal < ActiveRecord::Base
     %w(day day), %w(start_time start_time), %w(end_time end_time)
   ]
 
+  def day_and_time
+    "#{day.capitalize}, #{start_time} to #{end_time}"
+  end
+
   private
 
   def start_time_possible_times

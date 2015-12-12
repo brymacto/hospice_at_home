@@ -1,5 +1,5 @@
 <h1>Match Proposal</h1>
-
+<p>Created: <%= @match_proposal.created_at.strftime('%F') %> (<%= distance_of_time_in_words @match_proposal.created_at, Time.now %> ago)</p>
 <p>Day: <%= @match_proposal.day.capitalize %></p>
 <p>Start time: <%= @match_proposal.start_time %></p>
 <p>End time: <%= @match_proposal.end_time %></p>

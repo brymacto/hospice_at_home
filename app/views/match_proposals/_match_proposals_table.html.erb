@@ -1,0 +1,21 @@
+<table>
+  <tr>
+    <th>Day and time</th>
+    <th>Client</th>
+    <th>Status</th>
+    <th>Volunteer requests</th>
+    <th>Proposal created</th>
+  </tr>
+  <% @match_proposals.each do |match_proposal| %>
+      <tr>
+        <td>
+          <%= link_to match_proposal.day_and_time, match_proposal %>
+        </td>
+        <td><%= match_proposal.client.name %></td>
+        <td><%= match_proposal.status %></td>
+        <td><%= match_proposal.match_requests.count %></td>
+        <td><%= match_proposal.created_at.strftime('%F') %></td>
+
+      </tr>
+  <% end %>
+</table>
