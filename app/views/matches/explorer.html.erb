@@ -29,10 +29,12 @@
 
       <% if @match_exploration && !@match_exploration.values_nil? %>
           <% if @match_exploration.valid? %>
+              <hr>
               <%= form_tag('/match_proposals', method: "post") do %>
                   <%= hidden_field_tag(:start_time, @match_params[:start_time]) %>
                   <%= hidden_field_tag(:end_time, @match_params[:end_time]) %>
                   <%= hidden_field_tag(:day, @match_params[:day]) %>
+                  <%= hidden_field_tag(:client_id, @match_params[:client_id]) %>
 
                   <h2>Search results for <%= @match_exploration.day.capitalize %>,
                     from <%= @match_exploration.start_time %>
@@ -42,9 +44,7 @@
                       <h2>Create an email request</h2>
 
                       <p>For a match for <%= @match_params[:day].capitalize %> from <%= @match_params[:start_time] %>
-                        to <%= @match_params[:end_time] %>.</p>
-                      <%= label_tag(:client_association, "Client to be matched") %><br>
-                      <%= collection_select(:match_proposal, :client_id, Client.all, :id, :name) %>
+                        to <%= @match_params[:end_time] %>, with client <%= Client.find(@match_params[:client_id]).name %>.</p>
                       <%= submit_tag "Send email" %>
                   <% else %>
                       No volunteers match your search criteria.
