@@ -15,7 +15,10 @@
       <tr>
         <td><%= match_request.volunteer.name %></td>
         <td><%= match_request.status %></td>
-        <td><%= link_to fa_icon("ban", class: 'margin_right'), '' %><%= link_to fa_icon("check", class: 'margin_right'), '' %></td>
+        <td>
+          <%= link_to fa_icon("ban", class: 'margin_right'), match_request_path(match_request, status: 'rejected'), method: :put %>
+          <%= link_to fa_icon("check", class: 'margin_right'), match_request_path(match_request, status: 'accepted'), method: :put %>
+        </td>
       </tr>
 <% end %>
 </table>
