@@ -12,3 +12,8 @@
   <p>Volunteer: <%= match_request.volunteer.name %></p>
   <p>Status: <%= match_request.status %></p>
 <% end %>
+
+
+<%= link_to 'Delete match proposal', match_proposal_path(@match_proposal),
+            method: :delete,
+            data: { confirm: 'Are you sure?' } %>

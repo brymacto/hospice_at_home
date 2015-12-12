@@ -56,6 +56,19 @@ class MatchProposalsController < ApplicationController
   end
 
   def show
+    load_match_proposal
+  end
+
+  def destroy
+    load_match_proposal
+    @match_proposal.destroy
+    redirect_to matches_path
+  end
+
+  private
+
+  def load_match_proposal
     @match_proposal = MatchProposal.find(params[:id])
   end
+
 end
