@@ -35,7 +35,7 @@ class MatchesController < ApplicationController
 
   def index
     load_matches
-    @match_proposals = MatchProposal.all
+    @match_proposals = MatchProposal.all.includes(:client, :match_requests)
     @initial_tab = params[:initial_tab]
   end
 
