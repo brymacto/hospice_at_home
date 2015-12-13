@@ -37,6 +37,10 @@ div.container {
   text-align: center;
 }
 
+.matchExplorer_form {
+  @include outer-container;
+}
+
 .cell_center {
   text-align: center;
 }
