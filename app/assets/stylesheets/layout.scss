@@ -4,6 +4,7 @@ body {
 div.container {
   @include outer-container;
   padding-top: 1em;
+  padding: 1em;
 }
 .width25 {
   @include span-columns(3);
@@ -42,4 +43,12 @@ div.container {
 
 .margin_right {
   margin-right: 0.5em;
+}
+
+.float_right {
+  float: right;
+}
+
+.logo {
+  font-size: 2em;
 }

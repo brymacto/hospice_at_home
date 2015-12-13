@@ -1,6 +1,6 @@
 // Typography
 $base-font-family: $helvetica;
-$heading-font-family: $base-font-family;
+$heading-font-family: 'Signika', sans-serif;
 
 // Font Sizes
 $base-font-size: 1em;
@@ -16,7 +16,16 @@ $small-spacing: $base-spacing / 2;
 $base-z-index: 0;
 
 // Colors
+$c_primary: #3CBAC8;
+$c_callout: #F19181;
+$c_bg: #F3F5C4;
+$c_secondary: #333;
+
 $blue: #477dca;
+$red: #EA2E49;
+$bg: #DAEDE2;
+$dark-blue: #333745;
+
 $dark-gray: #333;
 $medium-gray: #999;
 $light-gray: #ddd;

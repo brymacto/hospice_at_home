@@ -1,5 +1,4 @@
 class MatchRequestsController < ApplicationController
-
   def update
     load_match_request
     @match_request.update!(match_request_params)
@@ -16,5 +15,4 @@ class MatchRequestsController < ApplicationController
   def match_request_params
     params.permit(:match_request, :status)
   end
-
 end

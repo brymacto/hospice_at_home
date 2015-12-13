@@ -41,6 +41,7 @@ group :development, :test do
   gem 'pry'
   gem 'bourbon'
   gem 'font-awesome-rails'
+  gem 'sass_rails_patch' # to allow use of erb in sass files
   gem 'neat'
   gem 'refills'
   gem 'rack-test'

@@ -96,5 +96,4 @@ feature 'feature: Match creation from Matches Explorer' do
     expect(page.status_code).to be(200)
     expect(page).to have_no_selector('form#new_match')
   end
-
 end

@@ -81,7 +81,7 @@ class MatchesController < ApplicationController
   end
 
   def load_volunteers(match_exploration_valid)
-    return if !match_exploration_valid
+    return unless match_exploration_valid
     search_time_range = TimeRange.new(
       @match_exploration.day,
       @match_exploration.start_time,

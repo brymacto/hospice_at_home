@@ -13,8 +13,8 @@ end
 
 10.times do
   Match.create(
-    client_id: Client.order("RANDOM()").first.id,
-    volunteer_id: Volunteer.order("RANDOM()").first.id,
+    client_id: Client.order('RANDOM()').first.id,
+    volunteer_id: Volunteer.order('RANDOM()').first.id,
     day: %w(monday tuesday wednesday thursday friday).sample,
     start_time: [9, 10, 11].sample,
     end_time: [12, 13, 14].sample)
@@ -31,7 +31,7 @@ end
 
 5.times do
   match_proposal = MatchProposal.create(
-    client_id: Client.order("RANDOM()").first.id,
+    client_id: Client.order('RANDOM()').first.id,
     day: %w(monday tuesday wednesday thursday friday).sample,
     start_time: [9, 10, 11].sample,
     status: 'pending',
@@ -41,6 +41,4 @@ end
   3.times do
     MatchRequest.create(volunteer_id: Volunteer.order('RANDOM()').first.id, status: 'pending', match_proposal_id: match_proposal.id)
   end
-
 end
-

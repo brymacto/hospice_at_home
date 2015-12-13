@@ -41,11 +41,11 @@
                     to <%= @match_exploration.end_time %></h2>
                   <% if @volunteers && @volunteers.size > 0 %>
                       <%= render "volunteers_table" %>
-                      <h2>Create an email request</h2>
+                      <h2>Create a match proposal</h2>
 
                       <p>For a match for <%= @match_params[:day].capitalize %> from <%= @match_params[:start_time] %>
                         to <%= @match_params[:end_time] %>, with client <%= Client.find(@match_params[:client_id]).name %>.</p>
-                      <%= submit_tag "Send email" %>
+                      <%= submit_tag "Create proposal" %>
                   <% else %>
                       No volunteers match your search criteria.
                   <% end %>

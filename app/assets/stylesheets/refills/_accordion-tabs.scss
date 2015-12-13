@@ -12,7 +12,7 @@
   //////////////////////////////////////////////////////////////////////////////////
 
   $tab-border: 1px solid $base-border-color;
-  $tab-content-background: lighten($light-gray, 10);
+  $tab-content-background: lighten($c_bg, 10);
   $tab-active-background: $tab-content-background;
   $tab-inactive-color: $base-background-color;
   $tab-inactive-hover-color: darken($light-gray, 5);

@@ -25,7 +25,7 @@ class MatchProposal < ActiveRecord::Base
       match_request_accepted = true if match_request.status = 'accepted'
     end
     self.status = 'accepted' if match_request_accepted
-    self.save
+    save
   end
 
   private

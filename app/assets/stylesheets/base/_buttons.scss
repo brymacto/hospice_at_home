@@ -1,6 +1,6 @@
 #{$all-buttons} {
   appearance: none;
-  background-color: $action-color;
+  background-color: $c_callout;
   border: 0;
   border-radius: $base-border-radius;
   color: #fff;
@@ -20,7 +20,7 @@
 
   &:hover,
   &:focus {
-    background-color: shade($action-color, 20%);
+    background-color: shade($c_callout, 20%);
     color: #fff;
   }
 

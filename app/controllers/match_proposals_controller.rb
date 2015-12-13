@@ -8,9 +8,7 @@ class CreateMatchProposal
     @match_proposal.errors.none?
   end
 
-  def match_proposal
-    @match_proposal
-  end
+  attr_reader :match_proposal
 
   def error_messages
     @match_proposal.errors.full_messages.to_sentence
@@ -31,16 +29,15 @@ class CreateMatchProposal
   end
 
   def match_request_volunteer_ids
-    @params.keys.
-      select { |param| param.include?('select_for_email_') }.
-      map { |param| param.split('_').last }
+    @params.keys
+      .select { |param| param.include?('select_for_email_') }
+      .map { |param| param.split('_').last }
   end
 
   def match_proposal_params
     @params.permit(:day, :start_time, :end_time, :client_id, :status).merge(client_id: @params[:client_id], status: 'pending')
   end
 end
-
 
 class MatchProposalsController < ApplicationController
   def create
@@ -70,5 +67,4 @@ class MatchProposalsController < ApplicationController
   def load_match_proposal
     @match_proposal = MatchProposal.find(params[:id])
   end
-
 end
