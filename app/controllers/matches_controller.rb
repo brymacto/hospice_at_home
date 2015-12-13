@@ -35,7 +35,7 @@ class MatchesController < ApplicationController
 
   def index
     load_matches
-    @match_proposals = MatchProposal.all.includes(:client, :match_requests)
+    @match_proposals = MatchProposal.all.includes(:client, :match_requests).order('match_proposals.status ASC').order('clients.last_name ASC')
     @initial_tab = params[:initial_tab]
   end
 
@@ -67,11 +67,11 @@ class MatchesController < ApplicationController
   def load_matches
     load_volunteer_and_client
     if @volunteer
-      @matches = Match.where(volunteer_id: @volunteer.id).includes(:client, :volunteer)
+      @matches = Match.where(volunteer_id: @volunteer.id).includes(:client, :volunteer).order('clients.last_name ASC')
     elsif @client
-      @matches = Match.where(client_id: @client.id).includes(:client, :volunteer)
+      @matches = Match.where(client_id: @client.id).includes(:client, :volunteer).order('clients.last_name ASC')
     else
-      @matches = Match.all.order(id: :desc).includes(:client, :volunteer)
+      @matches = Match.all.includes(:client, :volunteer).order('clients.last_name ASC')
     end
   end
 

@@ -25,7 +25,7 @@ class VolunteersController < ApplicationController
   end
 
   def index
-    @volunteers = Volunteer.all.order(id: :desc)
+    @volunteers = Volunteer.all.order(last_name: :asc)
   end
 
   def destroy

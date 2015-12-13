@@ -66,5 +66,6 @@ class MatchProposalsController < ApplicationController
 
   def load_match_proposal
     @match_proposal = MatchProposal.find(params[:id])
+    @match_requests = @match_proposal.match_requests.includes(:volunteer).order('volunteers.last_name ASC')
   end
 end
