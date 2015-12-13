@@ -86,9 +86,14 @@ class MatchesController < ApplicationController
       @match_exploration.day,
       @match_exploration.start_time,
       @match_exploration.end_time)
-    @volunteers = Volunteer.all.select do |volunteer|
-      volunteer.available?(search_time_range)
-    end
+
+    @volunteers = Volunteer.joins(:volunteer_availabilities).where(
+      "volunteer_availabilities.start_hour <= :start_time AND
+      volunteer_availabilities.end_hour >= :end_time AND
+      volunteer_availabilities.day = :day",
+      start_time: search_time_range.start_time,
+      end_time: search_time_range.end_time,
+      day: search_time_range.day).distinct.order(:last_name)
   end
 
   def time_range_params?
