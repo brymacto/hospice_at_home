@@ -9,6 +9,7 @@ class MatchProposal < ActiveRecord::Base
   validates :start_time, numericality: { only_integer: true }
   validates :end_time, numericality: { only_integer: true }
   validate :start_time_possible_times
+  validate :end_time_possible_times
   validate :start_time_before_end_time
 
   composed_of :availability_time, class_name: 'TimeRange', mapping: [
@@ -33,6 +34,11 @@ class MatchProposal < ActiveRecord::Base
   def start_time_possible_times
     return unless start_time == nil || (start_time < 0) || (start_time > 23)
     errors.add(:start_time, 'must be between 0 and 23 (12:00 AM and 11:00 PM)')
+  end
+
+  def end_time_possible_times
+    return unless end_time == nil || (end_time < 1) || (end_time > 24)
+    errors.add(:end_time, 'must be between 1 and 24 (1:00 AM and 12:00 AM)')
   end
 
   def start_time_before_end_time
