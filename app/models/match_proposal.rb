@@ -2,6 +2,7 @@ class MatchProposal < ActiveRecord::Base
   has_many :match_requests, dependent: :destroy
   has_many :volunteers, through: :match_requests
   belongs_to :client
+  validates :match_requests, presence: true
 
   composed_of :availability_time, class_name: 'TimeRange', mapping: [
     %w(day day), %w(start_time start_time), %w(end_time end_time)
