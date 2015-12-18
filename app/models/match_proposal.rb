@@ -3,14 +3,13 @@ class MatchProposal < ActiveRecord::Base
   has_many :volunteers, through: :match_requests
   belongs_to :client
 
-  validates :start_time, presence: true
-  validates :end_time, presence: true
   validates :day, presence: true
-  validates :start_time, numericality: { only_integer: true }
-  validates :end_time, numericality: { only_integer: true }
-  validate :start_time_possible_times
-  validate :end_time_possible_times
-  validate :start_time_before_end_time
+  validates :start_time, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 23 }
+  validates :end_time, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 24 }
+  validates_numericality_of :end_time,
+    message: 'must be after start time',
+    greater_than: ->(mp) { mp.start_time },
+    if: ->(mp) { mp.start_time.present? }
 
   composed_of :availability_time, class_name: 'TimeRange', mapping: [
     %w(day day), %w(start_time start_time), %w(end_time end_time)
@@ -27,22 +26,5 @@ class MatchProposal < ActiveRecord::Base
     end
     self.status = 'accepted' if match_request_accepted
     save
-  end
-
-  private
-
-  def start_time_possible_times
-    return unless start_time == nil || (start_time < 0) || (start_time > 23)
-    errors.add(:start_time, 'must be between 0 and 23 (12:00 AM and 11:00 PM)')
-  end
-
-  def end_time_possible_times
-    return unless end_time == nil || (end_time < 1) || (end_time > 24)
-    errors.add(:end_time, 'must be between 1 and 24 (1:00 AM and 12:00 AM)')
-  end
-
-  def start_time_before_end_time
-    return if start_time == nil || end_time == nil
-    errors.add(:start_time, 'must be before end time') if start_time >= end_time
   end
 end
