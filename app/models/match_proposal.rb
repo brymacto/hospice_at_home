@@ -4,6 +4,8 @@ class MatchProposal < ActiveRecord::Base
   belongs_to :client
   validates :match_requests, presence: true
 
+  accepts_nested_attributes_for :match_requests
+
   composed_of :availability_time, class_name: 'TimeRange', mapping: [
     %w(day day), %w(start_time start_time), %w(end_time end_time)
   ]

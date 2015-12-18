@@ -22,6 +22,6 @@ describe CreateMatchProposal do
   end
 
   def build_params
-    ActionController::Parameters.new({day: 'monday', start_time: 9, end_time: 10, client_id: 1, status: 'pending'})
+    ActionController::Parameters.new({day: 'monday', start_time: 9, end_time: 10, client_id: 1, status: 'pending', match_requests_attributes: [{volunteer_id: 1, status: 'pending'}]})
   end
 end
