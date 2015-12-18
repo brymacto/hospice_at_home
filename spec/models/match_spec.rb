@@ -42,7 +42,7 @@ describe Match do
     expect(match).to_not be_valid
   end
 
-  def build_match(start_time = 0, end_time = 24, day = 'monday', client_id = 1, volunteer_id = 1)
+  def build_match(start_time: 0, end_time: 24, day: 'monday', client_id: 1, volunteer_id: 1)
     Match.new(start_time: start_time, end_time: end_time, day: day, client_id: client_id, volunteer_id: volunteer_id)
   end
 end
