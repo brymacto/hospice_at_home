@@ -31,11 +31,12 @@ class MatchProposal < ActiveRecord::Base
   private
 
   def start_time_possible_times
-    return unless (start_time < 0) || (start_time > 23)
+    return unless start_time == nil || (start_time < 0) || (start_time > 23)
     errors.add(:start_time, 'must be between 0 and 23 (12:00 AM and 11:00 PM)')
   end
 
   def start_time_before_end_time
+    return if start_time == nil || end_time == nil
     errors.add(:start_time, 'must be before end time') if start_time >= end_time
   end
 end
