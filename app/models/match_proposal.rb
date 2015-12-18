@@ -3,17 +3,19 @@ class MatchProposal < ActiveRecord::Base
   has_many :volunteers, through: :match_requests
   belongs_to :client
 
+  composed_of :availability_time, class_name: 'TimeRange', mapping: [
+    %w(day day), %w(start_time start_time), %w(end_time end_time)
+  ]
+
+  DAYS_OF_THE_WEEK = %w(monday tuesday wednesday thursday friday saturday sunday)
+
   validates :day, presence: true
-  validates :start_time, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 23 }
-  validates :end_time, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 24 }
+  validates :start_time, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 24 }
+  validates :end_time, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 24 }
   validates_numericality_of :end_time,
     message: 'must be after start time',
     greater_than: ->(mp) { mp.start_time },
     if: ->(mp) { mp.start_time.present? }
-
-  composed_of :availability_time, class_name: 'TimeRange', mapping: [
-    %w(day day), %w(start_time start_time), %w(end_time end_time)
-  ]
   validate :day_is_real_day
 
   def day_and_time
@@ -30,8 +32,8 @@ class MatchProposal < ActiveRecord::Base
   end
 
   private
+
   def day_is_real_day
-    errors.add(:day, 'must be a day of the week') if
-    !%w(monday tuesday wednesday thursday friday saturday sunday).include?(day)
+    errors.add(:day, 'must be a day of the week') if !DAYS_OF_THE_WEEK.include?(day)
   end
 end
