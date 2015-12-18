@@ -14,6 +14,7 @@ class MatchProposal < ActiveRecord::Base
   composed_of :availability_time, class_name: 'TimeRange', mapping: [
     %w(day day), %w(start_time start_time), %w(end_time end_time)
   ]
+  validate :day_is_real_day
 
   def day_and_time
     "#{day.capitalize}, #{start_time} to #{end_time}"
@@ -26,5 +27,11 @@ class MatchProposal < ActiveRecord::Base
     end
     self.status = 'accepted' if match_request_accepted
     save
+  end
+
+  private
+  def day_is_real_day
+    errors.add(:day, 'must be a day of the week') if
+    !%w(monday tuesday wednesday thursday friday saturday sunday).include?(day)
   end
 end
