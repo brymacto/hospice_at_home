@@ -13,6 +13,12 @@ describe MatchProposal do
     expect(match_proposal).to_not be_valid
   end
 
+  it 'validates that start_time is present' do
+    match_proposal = MatchProposal.new(start_time: nil, end_time: 1, day: 'foo')
+
+    expect(match_proposal).to_not be_valid
+  end
+
   it 'validates that start_time is between 0 and 23' do
     match_proposal = MatchProposal.new(start_time: -1, end_time: 24, day: 'foo')
     expect(match_proposal).to_not be_valid
@@ -49,6 +55,12 @@ describe MatchProposal do
 
   it 'validates day is present' do
     match_proposal = MatchProposal.new(start_time: 0, end_time: 24, day: '')
+
+    expect(match_proposal).to_not be_valid
+  end
+
+  it 'validates that end_time is present' do
+    match_proposal = MatchProposal.new(start_time: 0, end_time: nil, day: 'foo')
 
     expect(match_proposal).to_not be_valid
   end
