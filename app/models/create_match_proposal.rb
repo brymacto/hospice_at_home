@@ -18,7 +18,6 @@ class CreateMatchProposal
 
   def create_match_proposal
     match_proposal = MatchProposal.new(match_proposal_params)
-    match_proposal.match_requests.build
     match_proposal.save
     # if match_proposal.save
     #   match_request_volunteer_ids.each do |volunteer_id|
