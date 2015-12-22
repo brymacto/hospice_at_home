@@ -15,7 +15,6 @@ describe CreateMatchProposal do
     params = build_params
     mp = CreateMatchProposal.new(params).match_proposal
     mr = mp.match_requests
-    p mr
     expect(mr.size).to eq(1)
   end
 
