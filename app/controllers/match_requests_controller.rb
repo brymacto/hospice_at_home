@@ -13,6 +13,6 @@ class MatchRequestsController < ApplicationController
   end
 
   def match_request_params
-    params.permit(:match_request, :status)
+    params.permit(:match_request, :status, :volunteer_id)
   end
 end
