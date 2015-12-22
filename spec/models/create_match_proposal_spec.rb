@@ -47,3 +47,20 @@ describe CreateMatchProposal do
     )
   end
 end
+
+
+{"start_time"=>"9",
+ "end_time"=>"10",
+ "day"=>"sunday",
+ "client_id"=>"2",
+ "select_for_email_13"=>"1",
+ "commit"=>"Create proposal",
+ "controller"=>"match_proposals",
+ "action"=>"create",
+ "match_requests_attributes"=> {
+   0=> {
+        "volunteer_id"=>"13",
+        "status"=>"pending"
+      }
+   }
+}
