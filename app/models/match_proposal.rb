@@ -2,7 +2,7 @@ class MatchProposal < ActiveRecord::Base
   has_many :match_requests, dependent: :destroy
   has_many :volunteers, through: :match_requests
   belongs_to :client
-  validates :match_requests, presence: true
+  validates :match_requests, presence: { message: "are sent to volunteers you select.  You must select volunteers to create a match proposal." }
 
   accepts_nested_attributes_for :match_requests
 
