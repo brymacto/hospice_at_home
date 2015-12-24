@@ -12,6 +12,7 @@ class ClientsController < ApplicationController
   def show
     load_client
     @matches = @client.matches
+    @match_proposals = @client.match_proposals
   end
 
   def edit
@@ -23,7 +24,7 @@ class ClientsController < ApplicationController
   end
 
   def index
-    @clients = Client.all.order(id: :desc)
+    @clients = Client.all.order(last_name: :asc)
   end
 
   def destroy

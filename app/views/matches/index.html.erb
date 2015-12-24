@@ -1,8 +1,29 @@
+<%= link_to 'Add match', new_match_path, class: [:button, 'float_right'] %>
+<h1>Matches</h1>
 <% if @volunteer %>
-<h1>Matches for volunteer <%= link_to @volunteer.name, @volunteer %></h1>
-    <% elsif @client %>
+    <h1>Matches for volunteer <%= link_to @volunteer.name, @volunteer %></h1>
+<% elsif @client %>
     <h1>Matches for client <%= link_to @client.name, @client %></h1>
-<% else %>
-    <% end %>
-<%= link_to 'Add a match', new_match_path %>
-<%= render "matches_table" %>
+<% end %>
+<ul class="accordion-tabs">
+  <li class="tab-header-and-content">
+    <a href="javascript:void(0)" class="
+      <% if @initial_tab != 'match_proposal' %>is-active
+      <% end %> tab-link">Matches</a>
+
+    <div class="tab-content">
+      <%= render "matches_table" %>
+    </div>
+  </li>
+  <li class="tab-header-and-content">
+    <a href="javascript:void(0)" class="
+      <% if @initial_tab == 'match_proposal' %>is-active
+      <% end %> tab-link">Match proposals</a>
+
+    <div class="tab-content">
+      <%= render "match_proposals/match_proposals_table" %>
+    </div>
+  </li>
+</ul>
+
+

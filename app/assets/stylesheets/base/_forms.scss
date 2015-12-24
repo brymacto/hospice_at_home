@@ -86,5 +86,33 @@ input[type="file"] {
 select {
   margin-bottom: $base-spacing;
   max-width: 100%;
-  width: auto;
+  width: 90%;
+}
+
+
+select {
+  -webkit-appearance: button;
+  -moz-appearance: button;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -webkit-padding-end: 20px;
+  -moz-padding-end: 20px;
+  -webkit-padding-start: 2px;
+  -moz-padding-start: 2px;
+  background-color: #fff; /* fallback color if gradients are not supported */
+  // TODO: add background image for arrow
+  //background-image: url(<%= asset_path 'select_arrow.png' %>), -webkit-linear-gradient(top, #E5E5E5, #F4F4F4); /* For Chrome and Safari */
+  //background-image: url(<%= asset_path 'select_arrow.png' %>), -moz-linear-gradient(top, #E5E5E5, #F4F4F4); /* For old Fx (3.6 to 15) */
+  //background-image: url(<%= asset_path 'select_arrow.png' %>), -ms-linear-gradient(top, #E5E5E5, #F4F4F4); /* For pre-releases of IE 10*/
+  //background-image: url(<%= asset_path 'select_arrow.png' %>), -o-linear-gradient(top, #E5E5E5, #F4F4F4); /* For old Opera (11.1 to 12.0) */
+  //background-image: url(<%= asset_path 'select_arrow.png' %>), linear-gradient(to bottom, #E5E5E5, #F4F4F4); /* Standard syntax; must be last */
+  background-position: center right;
+  background-repeat: no-repeat;
+  border: $base-border;
+  //color: #555;
+  font-size: inherit;
+  overflow: hidden;
+  padding: 8px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

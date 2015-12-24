@@ -1,0 +1,29 @@
+<h1>Match Proposal</h1>
+<p>Created: <%= @match_proposal.created_at.strftime('%F') %> (<%= distance_of_time_in_words @match_proposal.created_at, Time.now %> ago)</p>
+<p>Day and time requested: <%= @match_proposal.day_and_time %></p>
+<p>Client: <%= link_to @match_proposal.client.name, @match_proposal.client %></p>
+<p>Status: <%= @match_proposal.status.capitalize %></p>
+
+<h2>Match Requests</h2>
+<table>
+  <tr>
+    <th>Volunteer</th>
+    <th>Status</th>
+    <th>Actions</th>
+  </tr>
+<% @match_requests.each do |match_request| %>
+      <tr>
+        <td><%= match_request.volunteer.name %></td>
+        <td><%= match_request.status %></td>
+        <td>
+          <%= link_to fa_icon("ban", class: 'margin_right'), match_request_path(match_request, status: 'rejected'), method: :put %>
+          <%= link_to fa_icon("check", class: 'margin_right'), match_request_path(match_request, status: 'accepted'), method: :put %>
+        </td>
+      </tr>
+<% end %>
+</table>
+
+
+<%= link_to 'Delete match proposal', match_proposal_path(@match_proposal),
+            method: :delete,
+            data: { confirm: 'Are you sure?' } %>

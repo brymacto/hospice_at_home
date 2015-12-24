@@ -19,6 +19,10 @@ Rails.application.routes.draw do
   get 'matches/explorer' => 'matches#explorer', as: :matches_explorer
   resources :match_explorations, only: 'create'
   resources :matches
+  resources :match_requests, only: [:update]
+  resources :match_proposals do
+    resources :match_requests
+  end
   resources :volunteer_availabilities
 
   # Example of regular route:

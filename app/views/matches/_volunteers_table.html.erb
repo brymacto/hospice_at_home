@@ -1,13 +1,26 @@
 <table>
-  <th>Select for match</th>
+  <colgroup>
+    <col width="10%">
+    <col width="50%">
+    <col width="20%">
+    <col width="20%">
+
+  </colgroup>
+  <th class="cell_center">Send proposal</th>
   <th>Name</th>
+  <th>Score</th>
   <th>Actions</th>
 
   <% @volunteers.each do |volunteer| %>
       <tr>
-        <td><a class="select_for_match" href="#" data-volunteer-id="<%= volunteer.id %>">Select</a></td>
+        <td class="cell_center">
+          <%= check_box_tag("select_for_email_#{volunteer.id}", 1, false, :class => 'matchExplorer_checkbox') %>
+        </td>
         <td>
           <%= link_to "#{volunteer.first_name} #{volunteer.last_name}", volunteer %>
+        </td>
+        <td>
+          (score)
         </td>
         <td><%= link_to "Edit", edit_volunteer_path(volunteer.id) %></td>
       </tr>

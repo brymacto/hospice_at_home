@@ -16,5 +16,10 @@
 
 
 
-
+<h2>Match Proposals</h2>
+<% if @match_proposals.size > 0 %>
+    <%= render "match_proposals/match_proposals_table" %>
+<% else %>
+    <p><%= @client.name %> has no match proposals.</p>
+<% end %>
 

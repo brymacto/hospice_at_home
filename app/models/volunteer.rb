@@ -21,6 +21,7 @@ class Volunteer < ActiveRecord::Base
   end
 
   private
+
   # TODO: Move above logic into availability model.
   def availability_matching?(availability, match_time)
     day_matching = (availability.day == match_time.day)

@@ -4,8 +4,12 @@ body {
 div.container {
   @include outer-container;
   padding-top: 1em;
+  padding: 1em;
 }
-
+.width25 {
+  @include span-columns(3);
+  @include omega();
+}
 .width33 {
   @include span-columns(4);
   @include omega();
@@ -25,4 +29,30 @@ div.container {
 
 .MatchExplorer_flash {
   margin-top: 1em;
+}
+
+.matchExplorer_checkbox {
+  margin: 0 auto;
+  display: block;
+  text-align: center;
+}
+
+.matchExplorer_form {
+  @include outer-container;
+}
+
+.cell_center {
+  text-align: center;
+}
+
+.margin_right {
+  margin-right: 0.5em;
+}
+
+.float_right {
+  float: right;
+}
+
+.logo {
+  font-size: 2em;
 }

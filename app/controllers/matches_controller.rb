@@ -29,11 +29,14 @@ class MatchesController < ApplicationController
     @match_params = params[:match_exploration]
     @match_exploration = MatchExploration.new(@match_params)
     @day_options = Date::DAYNAMES.zip(Date::DAYNAMES.map(&:downcase))
+    @match_proposal = MatchProposal.new
     load_volunteers(@match_exploration.valid?)
   end
 
   def index
     load_matches
+    @match_proposals = MatchProposal.all.includes(:client, :match_requests).order('match_proposals.status ASC').order('clients.last_name ASC')
+    @initial_tab = params[:initial_tab]
   end
 
   def destroy
@@ -64,11 +67,11 @@ class MatchesController < ApplicationController
   def load_matches
     load_volunteer_and_client
     if @volunteer
-      @matches = Match.where(volunteer_id: @volunteer.id).includes(:client, :volunteer)
+      @matches = Match.where(volunteer_id: @volunteer.id).includes(:client, :volunteer).order('clients.last_name ASC')
     elsif @client
-      @matches = Match.where(client_id: @client.id).includes(:client, :volunteer)
+      @matches = Match.where(client_id: @client.id).includes(:client, :volunteer).order('clients.last_name ASC')
     else
-      @matches = Match.all.order(id: :desc).includes(:client, :volunteer)
+      @matches = Match.all.includes(:client, :volunteer).order('clients.last_name ASC')
     end
   end
 
@@ -78,14 +81,19 @@ class MatchesController < ApplicationController
   end
 
   def load_volunteers(match_exploration_valid)
-    return if !match_exploration_valid
+    return unless match_exploration_valid
     search_time_range = TimeRange.new(
       @match_exploration.day,
       @match_exploration.start_time,
       @match_exploration.end_time)
-    @volunteers = Volunteer.all.select do |volunteer|
-      volunteer.available?(search_time_range)
-    end
+
+    @volunteers = Volunteer.joins(:volunteer_availabilities).where(
+      "volunteer_availabilities.start_hour <= :start_time AND
+      volunteer_availabilities.end_hour >= :end_time AND
+      volunteer_availabilities.day = :day",
+      start_time: search_time_range.start_time,
+      end_time: search_time_range.end_time,
+      day: search_time_range.day).distinct.order(:last_name)
   end
 
   def time_range_params?
@@ -94,7 +102,7 @@ class MatchesController < ApplicationController
 
   def match_params
     params.require(:match).permit(
-      :client_id, :volunteer_id, :day, :start_time, :end_time, :from_match_explorer,
+      :client_id, :volunteer_id, :day, :start_time, :end_time, :from_match_explorer, :initial_tab,
       match_exploration_attributes: [:client_id,
                                      :volunteer_id,
                                      :day,

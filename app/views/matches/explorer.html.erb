@@ -1,43 +1,77 @@
-<h1>Matches Explorer</h1>
+<h1>Create match</h1>
 
-<%= form_for (@match_exploration || MatchExploration.new), url: matches_explorer_path, method: :get do |f| %>
-    <div class="width33">
-      <%= label_tag(:day, "Day") %>
-      <%= f.select(:day, @day_options, class: 'form_field') %>
+<ul class="accordion-tabs">
+  <li class="tab-header-and-content">
+    <a href="javascript:void(0)" class="is-active tab-link">Match explorer</a>
+
+    <div class="tab-content">
+
+      <%= form_for (@match_exploration || MatchExploration.new), url: matches_explorer_path, method: :get do |f| %>
+          <div class="matchExplorer_form">
+            <div class="width25">
+              <%= label_tag(:day, "Day") %>
+              <%= f.select(:day, @day_options, class: 'form_field') %>
+            </div>
+            <div class="width25">
+              <%= label_tag(:client_id, "Client") %>
+              <%= f.select(:client_id, Client.all.collect { |client| [client.name, client.id] }, prompt: 'Select client', class: 'form_field') %>
+            </div>
+            <div class="width25">
+              <%= label_tag(:start_time, "Start time") %>
+              <%= f.text_field(:start_time, class: 'form_field', type: 'number', min: 0, max: 23) %>
+            </div>
+            <div class="width25">
+              <%= label_tag(:end_time, "End time") %>
+              <%= f.text_field(:end_time, class: 'form_field', type: 'number', min: 1, max: 24) %>
+            </div>
+          </div>
+
+          <%= f.submit "Explore Matches" %>
+      <% end %>
+
+      <% if @match_exploration && !@match_exploration.values_nil? %>
+          <% if @match_exploration.valid? %>
+              <hr>
+              <%= form_tag('/match_proposals', method: "post") do %>
+                  <%= hidden_field_tag(:start_time, @match_params[:start_time]) %>
+                  <%= hidden_field_tag(:end_time, @match_params[:end_time]) %>
+                  <%= hidden_field_tag(:day, @match_params[:day]) %>
+                  <%= hidden_field_tag(:client_id, @match_params[:client_id]) %>
+
+                  <h2>Search results for <%= @match_exploration.day.capitalize %>,
+                    from <%= @match_exploration.start_time %>
+                    to <%= @match_exploration.end_time %></h2>
+                  <% if @volunteers && @volunteers.size > 0 %>
+                      <%= render "volunteers_table" %>
+                      <h2>Create a match proposal</h2>
+
+                      <p>For a match for <%= @match_params[:day].capitalize %> from <%= @match_params[:start_time] %>
+                        to <%= @match_params[:end_time] %>, with client <%= Client.find(@match_params[:client_id]).name %>.</p>
+                      <%= submit_tag "Create proposal" %>
+                  <% else %>
+                      No volunteers match your search criteria.
+                  <% end %>
+
+              <% end %>
+          <% else %>
+              <div class="MatchExplorer_flash">
+                <%= render :partial => "/layouts/flash", :locals => {:flash => {error: @match_exploration.errors.full_messages.to_sentence}} %>
+              </div>
+          <% end %>
+      <% end %>
+
+
     </div>
-    <div class="width33">
-      <%= label_tag(:start_time, "Start time") %>
-      <%= f.text_field(:start_time, class: 'form_field', type: 'number', min: 0, max: 23) %>
+  </li>
+
+  <li class="tab-header-and-content">
+    <a href="javascript:void(0)" class="tab-link">Create instant match</a>
+
+    <div class="tab-content">
+      <!--TODO: add match content-->
     </div>
-    <div class="width33">
-      <%= label_tag(:end_time, "End time") %>
-      <%= f.text_field(:end_time, class: 'form_field', type: 'number', min: 1, max: 24) %>
-    </div>
+  </li>
 
-    <%= f.submit "Explore Matches" %>
-<% end %>
+</ul>
 
-
-<% if @match_exploration && !@match_exploration.values_nil? %>
-    <% if @match_exploration.valid? %>
-        <% if (@volunteers.size > 0) %>
-            <h2>Create match</h2>
-            <p>Will create a match for <%= @match_params[:day].capitalize %> from <%= @match_params[:start_time] %>
-              to <%= @match_params[:end_time] %>.</p>
-
-            <%= render "form_for_explorer" %>
-        <% end %>
-        <h2>Search results for <%= @match_exploration.day.capitalize %>, from <%= @match_exploration.start_time %>
-          to <%= @match_exploration.end_time %></h2>
-        <% if @volunteers && @volunteers.size > 0  %>
-            <%= render "volunteers_table" %>
-        <% else %>
-            No volunteers match your search criteria.
-        <% end %>
-    <% else %>
-        <div class="MatchExplorer_flash">
-          <%= render :partial => "/layouts/flash", :locals => {:flash => {error: @match_exploration.errors.full_messages.to_sentence}} %>
-        </div>
-    <% end %>
-<% end %>
 
