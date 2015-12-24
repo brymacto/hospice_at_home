@@ -6,12 +6,12 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-20.times do
+30.times do
   Volunteer.create(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name)
   Client.create(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name)
 end
 
-10.times do
+15.times do
   Match.create(
     client_id: Client.order('RANDOM()').first.id,
     volunteer_id: Volunteer.order('RANDOM()').first.id,
@@ -29,16 +29,31 @@ end
   )
 end
 
-5.times do
-  match_proposal = MatchProposal.create(
-    client_id: Client.order('RANDOM()').first.id,
-    day: %w(monday tuesday wednesday thursday friday).sample,
-    start_time: [9, 10, 11].sample,
-    status: 'pending',
-    end_time: [12, 13, 14].sample
+10.times do
+  match_proposal_params = ActionController::Parameters.new(
+    {
+      day: %w(monday tuesday wednesday thursday friday).sample,
+      start_time: [9, 10, 11].sample,
+      end_time: [12, 13, 14].sample,
+      client_id: Client.order('RANDOM()').first.id,
+      status: 'pending',
+      match_requests_attributes: {
+        '0' => {
+          volunteer_id: Volunteer.order('RANDOM()').first.id,
+          status: 'pending'
+        },
+        '1' => {
+          volunteer_id: Volunteer.order('RANDOM()').first.id,
+          status: 'pending'
+        },
+        '2' => {
+          volunteer_id: Volunteer.order('RANDOM()').first.id,
+          status: 'pending'
+        }
+      }
+    }
   )
 
-  3.times do
-    MatchRequest.create(volunteer_id: Volunteer.order('RANDOM()').first.id, status: 'pending', match_proposal_id: match_proposal.id)
-  end
+  CreateMatchProposal.new(match_proposal_params)
+
 end
