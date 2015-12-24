@@ -12,7 +12,13 @@
           <%= link_to match_proposal.day_and_time, match_proposal %>
         </td>
         <td><%= match_proposal.client.name %></td>
-        <td><%= match_proposal.status.capitalize %></td>
+        <td>
+          <% if match_proposal.match %>
+              <%= link_to match_proposal.status.capitalize, match_proposal.match %>
+              <% else %>
+              <%= match_proposal.status.capitalize %>
+          <% end %>
+        </td>
         <td><%= match_proposal.match_requests.size %></td>
         <td><%= match_proposal.created_at.strftime('%F') %></td>
 

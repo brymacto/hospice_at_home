@@ -12,6 +12,7 @@ class MatchesController < ApplicationController
 
   def show
     load_match(new: false)
+    @match_proposal = @match.match_request.match_proposal
   end
 
   def edit
