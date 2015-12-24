@@ -25,6 +25,10 @@ class MatchProposal < ActiveRecord::Base
     "#{day.capitalize}, #{start_time} to #{end_time}"
   end
 
+  def match
+    Match.joins("LEFT JOIN match_requests ON matches.match_request_id = match_requests.id LEFT JOIN match_proposals ON match_requests.match_proposal_id = match_proposals.id").where('match_proposals.id' => self.id).first
+  end
+
   private
 
   def day_is_real_day

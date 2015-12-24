@@ -13,7 +13,7 @@ class MatchRequestsController < ApplicationController
     fail 'A match already exists for this match proposal' if @match_request.match
 
     Match.create(
-      match_proposal_id: match_proposal.id,
+      match_request_id: @match_request.id,
       client_id: match_proposal.client_id,
       volunteer_id: @match_request.volunteer_id,
       day: match_proposal.day,

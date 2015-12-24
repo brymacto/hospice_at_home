@@ -3,7 +3,11 @@
   (<%= distance_of_time_in_words @match_proposal.created_at, Time.now %> ago)</p>
 <p>Day and time requested: <%= @match_proposal.day_and_time %></p>
 <p>Client: <%= link_to @match_proposal.client.name, @match_proposal.client %></p>
-<p>Status: <%= @match_proposal.status.capitalize %></p>
+<p>Status: <%= @match_proposal.status.capitalize %>
+  <% if @match_proposal.match %>
+      <%= link_to '(View match)', @match_proposal.match %>
+  <% end %>
+</p>
 
 <h2>Match Requests</h2>
 <table>
@@ -13,12 +17,12 @@
     <th>Actions</th>
   </tr>
   <% @match_requests.each do |match_request| %>
-      <tr>
+      <tr class="request_<%= match_request.status %>">
         <td><%= match_request.volunteer.name %></td>
-        <td><%= match_request.status %></td>
+        <td><%= match_request.status.capitalize %></td>
         <td>
           <% if match_request.match %>
-                  <%= link_to 'Match', match_request.match %>
+              <%= link_to 'View match', match_request.match %>
           <% elsif !@match_proposal.match %>
               <%= link_to fa_icon("ban", class: 'margin_right'), match_request_path(match_request, status: 'rejected'), method: :put %>
               <%= link_to fa_icon("check", class: 'margin_right'), match_request_path(match_request, status: 'accepted'), method: :put %>
