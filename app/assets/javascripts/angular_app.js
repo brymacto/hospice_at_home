@@ -18,6 +18,17 @@ angular.module('hospiceAtHome', ['ngResource'])
             $scope.orderProp = ['client.last_name', 'client.first_name'];
           } else if (orderBy === 'volunteer') {
             $scope.orderProp = ['volunteer.last_name', 'volunteer.first_name'];
+          } else if (orderBy === 'date') {
+            //var dates = {
+            //  'monday': 0,
+            //  'tuesday': 1,
+            //  'wednesday': 2,
+            //  'thursday': 3,
+            //  'friday': 4,
+            //  'saturday': 5,
+            //  'sunday': 6,
+            //}
+            $scope.orderProp = ['start_time'];
           }
         };
       }])
