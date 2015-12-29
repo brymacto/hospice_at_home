@@ -2,7 +2,7 @@
 
 <%= link_to 'Back to all matches', matches_path %>
 <%= link_to 'Edit', edit_match_path(@match) %>
-<% if @match %>
+<% if @match_proposal %>
     <p>This match accepted from a <%= link_to 'match proposal', @match_proposal %> created on <%= @match_proposal.created_at.strftime('%F') %></p>
     <% end %>
 <h3>Client</h3>
