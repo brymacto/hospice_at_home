@@ -9,10 +9,14 @@
     </tr>
     <tr ng-repeat="match in matches">
       <td>
-        {{match.day | capitalize}}
+        {{ {day: match.day, start_time: match.start_time, end_time: match.end_time } | full_date | capitalize }}
       </td>
-      <td>{{match.client.first_name}} {{match.client.last_name}}</td>
-      <td>{{match.volunteer.first_name}} {{match.volunteer.last_name}}</td>
+      <td>
+        {{match.client.first_name}} {{match.client.last_name}}
+      </td>
+      <td>
+        {{match.volunteer.first_name}} {{match.volunteer.last_name}}
+      </td>
     </tr>
   </table>
 </div>
