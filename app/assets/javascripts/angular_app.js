@@ -1,11 +1,7 @@
 angular.module('hospiceAtHome', [])
-    .controller('MainCtrl', [
-      '$scope',
-      function($scope){
-        $scope.test = 'Hello world!';
-
-
-        $scope.matches = [
+    .factory('matches', [function matchesFactory() {
+      var o = {
+        matches: [
           {
             id: 16,
             client_id: 7,
@@ -39,5 +35,16 @@ angular.module('hospiceAtHome', [])
             end_time: 12,
             match_request_id: 15
           }
-        ];
+        ]
+      };
+      return o;
+    }])
+    .controller('MainCtrl', [
+      '$scope',
+      'matches',
+      function($scope, matches){
+        $scope.test = 'Hello world!';
+
+
+        $scope.matches = matches.matches;
       }]);
