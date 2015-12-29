@@ -10,8 +10,15 @@ angular.module('hospiceAtHome', ['ngResource'])
       '$scope',
       'matchFactory',
       function ($http, $scope, matchFactory, matches) {
-        $scope.test = 'Hello world!';
+        $scope.orderProp = 'client.first_name';
         $scope.matches = matchFactory.query();
+
+        $scope.setOrder = function(orderBy) {
+          if (orderBy === 'client') {
+            $scope.orderProp = ['client.last_name', 'client.first_name']
+          }
+          $scope.orderProp = orderBy;
+        };
       }])
     .filter('capitalize', function () {
       return function (input) {

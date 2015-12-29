@@ -4,10 +4,10 @@
   <table>
     <tr>
       <th>Day and time</th>
-      <th>Client</th>
-      <th>Volunteer</th>
+      <th>Client (<a ng-click="setOrder(client)">sort</a>)</th>
+      <th>Volunteer (<a ng-click="setOrder(volunteer)">sort</a>)</th>
     </tr>
-    <tr ng-repeat="match in matches">
+    <tr ng-repeat="match in matches | orderBy: orderProp">
       <td>
         <a href="/matches/{{match.id}}" class="thumb">{{ {day: match.day, start_time: match.start_time, end_time: match.end_time } | full_date | capitalize }}</a>
       </td>
