@@ -31,4 +31,3 @@ describe MatchProposal do
     match_proposal
   end
 end
-

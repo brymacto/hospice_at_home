@@ -8,6 +8,7 @@ class MatchRequestsController < ApplicationController
   end
 
   private
+
   def create_match
     match_proposal = @match_request.match_proposal
     fail 'A match already exists for this match proposal' if @match_request.match
@@ -23,7 +24,7 @@ class MatchRequestsController < ApplicationController
   end
 
   def set_parent_proposal_to_accepted
-    @match_request.match_proposal.update!({status: 'accepted'})
+    @match_request.match_proposal.update!(status: 'accepted')
   end
 
   def first_request_accepted?

@@ -29,6 +29,6 @@ class Match < ActiveRecord::Base
   private
 
   def day_is_real_day
-    errors.add(:day, 'must be a day of the week') if !DAYS_OF_THE_WEEK.include?(day)
+    errors.add(:day, 'must be a day of the week') unless DAYS_OF_THE_WEEK.include?(day)
   end
 end

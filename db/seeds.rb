@@ -31,29 +31,26 @@ end
 
 10.times do
   match_proposal_params = ActionController::Parameters.new(
-    {
-      day: %w(monday tuesday wednesday thursday friday).sample,
-      start_time: [9, 10, 11].sample,
-      end_time: [12, 13, 14].sample,
-      client_id: Client.order('RANDOM()').first.id,
-      status: 'pending',
-      match_requests_attributes: {
-        '0' => {
-          volunteer_id: Volunteer.order('RANDOM()').first.id,
-          status: 'pending'
-        },
-        '1' => {
-          volunteer_id: Volunteer.order('RANDOM()').first.id,
-          status: 'pending'
-        },
-        '2' => {
-          volunteer_id: Volunteer.order('RANDOM()').first.id,
-          status: 'pending'
-        }
+    day: %w(monday tuesday wednesday thursday friday).sample,
+    start_time: [9, 10, 11].sample,
+    end_time: [12, 13, 14].sample,
+    client_id: Client.order('RANDOM()').first.id,
+    status: 'pending',
+    match_requests_attributes: {
+      '0' => {
+        volunteer_id: Volunteer.order('RANDOM()').first.id,
+        status: 'pending'
+      },
+      '1' => {
+        volunteer_id: Volunteer.order('RANDOM()').first.id,
+        status: 'pending'
+      },
+      '2' => {
+        volunteer_id: Volunteer.order('RANDOM()').first.id,
+        status: 'pending'
       }
     }
   )
 
   CreateMatchProposal.new(match_proposal_params)
-
 end

@@ -7,7 +7,7 @@ class MatchProposalsController < ApplicationController
     else
       flash.now[:error] = service.error_messages
       @day_options = Date::DAYNAMES.zip(Date::DAYNAMES.map(&:downcase))
-      #TODO: assign @match_exploration before rendering, to maintain search.
+      # TODO: assign @match_exploration before rendering, to maintain search.
       render 'matches/explorer'
     end
   end
@@ -22,5 +22,4 @@ class MatchProposalsController < ApplicationController
     @match_proposal.destroy
     redirect_to matches_path(initial_tab: 'match_proposal')
   end
-
 end
