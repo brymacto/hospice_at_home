@@ -8,5 +8,11 @@ angular.module('hospiceAtHome', [])
         $http.get('/matches.json').success(function(data) {
           $scope.matches = data;
         });
-        //$scope.matches = matches.matches;
-      }]);
+      }])
+    .filter('capitalize', function() {
+      return function(input, scope) {
+        if (input!=null)
+          input = input.toLowerCase();
+        return input.substring(0,1).toUpperCase()+input.substring(1);
+      }
+    });;

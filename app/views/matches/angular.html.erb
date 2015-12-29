@@ -1,4 +1,3 @@
-{{test}}
 <h1>Matches Angular</h1>
 <div ng-app="hospiceAtHome" ng-controller="MainCtrl">
 
@@ -10,7 +9,7 @@
     </tr>
     <tr ng-repeat="match in matches">
       <td>
-        {{match.day}}
+        {{match.day | capitalize}}
       </td>
       <td>{{match.client_id}}</td>
       <td>{{match.volunteer_id}}</td>
