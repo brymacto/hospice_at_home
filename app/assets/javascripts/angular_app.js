@@ -1,50 +1,12 @@
 angular.module('hospiceAtHome', [])
-    .factory('matches', [function matchesFactory() {
-      var o = {
-        matches: [
-          {
-            id: 16,
-            client_id: 7,
-            volunteer_id: 14,
-            created_at: "2015-12-24T20:08:18.086Z",
-            updated_at: "2015-12-24T20:08:18.086Z",
-            day: "monday",
-            start_time: 9,
-            end_time: 12,
-            match_request_id: 15
-          },
-          {
-            id: 16,
-            client_id: 7,
-            volunteer_id: 14,
-            created_at: "2015-12-24T20:08:18.086Z",
-            updated_at: "2015-12-24T20:08:18.086Z",
-            day: "monday",
-            start_time: 9,
-            end_time: 12,
-            match_request_id: 15
-          },
-          {
-            id: 16,
-            client_id: 7,
-            volunteer_id: 14,
-            created_at: "2015-12-24T20:08:18.086Z",
-            updated_at: "2015-12-24T20:08:18.086Z",
-            day: "monday",
-            start_time: 9,
-            end_time: 12,
-            match_request_id: 15
-          }
-        ]
-      };
-      return o;
-    }])
     .controller('MainCtrl', [
+      '$http',
       '$scope',
-      'matches',
-      function($scope, matches){
+      function($http, $scope, matches){
         $scope.test = 'Hello world!';
 
-
-        $scope.matches = matches.matches;
+        $http.get('/matches.json').success(function(data) {
+          $scope.matches = data;
+        });
+        //$scope.matches = matches.matches;
       }]);
