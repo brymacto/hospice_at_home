@@ -41,4 +41,21 @@ RSpec.describe MatchesController, type: :controller do
       expect(assigns(:volunteers)).to be_empty
     end
   end
+
+  describe 'GET #index' do
+    let!(:test_match) do
+      create(:match,
+             volunteer_id: test_volunteer_available.id,
+             client_id: 1,
+             day: 'monday',
+             start_time: 10,
+             end_time: 24)
+    end
+
+    it 'returns JSON when requested' do
+      get :index, :format => :json
+      expect(JSON.parse(response.body)[0]['id']).to eql(test_match.id)
+    end
+
+  end
 end
