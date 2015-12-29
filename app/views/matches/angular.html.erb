@@ -4,8 +4,8 @@
   <table>
     <tr>
       <th>Day and time</th>
-      <th>Client (<a ng-click="setOrder(client)">sort</a>)</th>
-      <th>Volunteer (<a ng-click="setOrder(volunteer)">sort</a>)</th>
+      <th>Client (<a ng-click="setOrder('client')">sort</a>)</th>
+      <th>Volunteer (<a ng-click="setOrder('volunteer')">sort</a>)</th>
     </tr>
     <tr ng-repeat="match in matches | orderBy: orderProp">
       <td>

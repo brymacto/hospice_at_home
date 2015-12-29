@@ -15,9 +15,10 @@ angular.module('hospiceAtHome', ['ngResource'])
 
         $scope.setOrder = function(orderBy) {
           if (orderBy === 'client') {
-            $scope.orderProp = ['client.last_name', 'client.first_name']
+            $scope.orderProp = ['client.last_name', 'client.first_name'];
+          } else if (orderBy === 'volunteer') {
+            $scope.orderProp = ['volunteer.last_name', 'volunteer.first_name'];
           }
-          $scope.orderProp = orderBy;
         };
       }])
     .filter('capitalize', function () {
