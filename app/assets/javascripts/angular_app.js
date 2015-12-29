@@ -1,18 +1,22 @@
-angular.module('hospiceAtHome', [])
+angular.module('hospiceAtHome', ['ngResource'])
+    .factory('matchFactory', ['$resource',
+      function ($resource) {
+        return $resource('/matches.json', {}, {
+          query: {method: 'GET', params: {}, isArray: true}
+        });
+      }])
     .controller('MainCtrl', [
       '$http',
       '$scope',
-      function($http, $scope, matches){
+      'matchFactory',
+      function ($http, $scope, matchFactory, matches) {
         $scope.test = 'Hello world!';
-
-        $http.get('/matches.json').success(function(data) {
-          $scope.matches = data;
-        });
+        $scope.matches = matchFactory.query();
       }])
-    .filter('capitalize', function() {
-      return function(input, scope) {
-        if (input!=null)
+    .filter('capitalize', function () {
+      return function (input, scope) {
+        if (input != null)
           input = input.toLowerCase();
-        return input.substring(0,1).toUpperCase()+input.substring(1);
+        return input.substring(0, 1).toUpperCase() + input.substring(1);
       }
-    });;
+    });
