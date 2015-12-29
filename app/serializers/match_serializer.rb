@@ -1,5 +1,5 @@
 class MatchSerializer < ActiveModel::Serializer
-  attributes :day, :start_time, :end_time
+  attributes :id, :day, :start_time, :end_time
 
   has_one :volunteer
   has_one :client

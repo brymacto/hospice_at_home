@@ -9,7 +9,7 @@
     </tr>
     <tr ng-repeat="match in matches">
       <td>
-        {{ {day: match.day, start_time: match.start_time, end_time: match.end_time } | full_date | capitalize }}
+        <a href="/matches/{{match.id}}" class="thumb">{{ {day: match.day, start_time: match.start_time, end_time: match.end_time } | full_date | capitalize }}</a>
       </td>
       <td>
         {{match.client.first_name}} {{match.client.last_name}}
