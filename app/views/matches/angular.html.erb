@@ -1,4 +1,18 @@
 <h1>Matches Angular</h1>
 <div ng-app="hospiceAtHome" ng-controller="MainCtrl">
-  {{test}}
+
+  <table>
+    <tr>
+      <th>Day and time</th>
+      <th>Client</th>
+      <th>Volunteer</th>
+    </tr>
+    <tr ng-repeat="match in matches">
+      <td>
+        {{match.day}}
+      </td>
+      <td>{{match.client_id}}</td>
+      <td>{{match.volunteer_id}}</td>
+    </tr>
+  </table>
 </div>
