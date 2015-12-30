@@ -7,7 +7,14 @@ angular.module('hospiceAtHome', ['ngResource'])
         });
       }])
 
-    .controller('MainCtrl', [
+    .factory('matchProposalFactory', ['$resource',
+      function ($resource) {
+        return $resource('/match_proposals.json', {}, {
+          query: {method: 'GET', params: {}, isArray: true}
+        });
+      }])
+
+    .controller('MatchCtrl', [
       '$http',
       '$scope',
       'matchFactory',
@@ -50,6 +57,39 @@ angular.module('hospiceAtHome', ['ngResource'])
             $scope.orderProp = ['day_number', 'start_time'];
             $scope.orderAscendingDate = !$scope.orderAscendingDate;
             $scope.orderAscending = $scope.orderAscendingDate;
+          }
+        };
+      }])
+
+    .controller('MatchProposalCtrl', [
+      '$http',
+      '$scope',
+      'matchProposalFactory',
+      function ($http, $scope, matchProposalFactory) {
+        $scope.orderProp = 'client.first_name';
+        $scope.orderAscending = false;
+        $scope.orderAscendingClient = false;
+        $scope.orderAscendingVolunteer = false;
+        $scope.orderAscendingDate = false;
+        $scope.matchProposals = matchProposalFactory.query();
+
+        $scope.setOrder = function(orderBy) {
+          if (orderBy === 'client') {
+            $scope.orderProp = ['client.last_name', 'client.first_name'];
+            $scope.orderAscendingClient = !$scope.orderAscendingClient;
+            $scope.orderAscending = $scope.orderAscendingClient;
+          } else if (orderBy === 'volunteer') {
+            $scope.orderProp = ['volunteer.last_name', 'volunteer.first_name'];
+            $scope.orderAscendingVolunteer = !$scope.orderAscendingVolunteer;
+            $scope.orderAscending = $scope.orderAscendingVolunteer;
+          } else if (orderBy === 'date') {
+            $scope.orderProp = ['day_number', 'start_time'];
+            $scope.orderAscendingDate = !$scope.orderAscendingDate;
+            $scope.orderAscending = $scope.orderAscendingDate;
+          } else if (orderBy === '') {
+
+          } else if (orderBy === 'status' || orderBy === 'match_requests_size' || orderBy === 'proposal_date') {
+            $scope.orderProp = orderBy;
           }
         };
       }])
