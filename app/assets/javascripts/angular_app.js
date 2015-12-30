@@ -86,11 +86,11 @@ angular.module('hospiceAtHome', ['ngResource'])
       }
     })
 
-    .filter('full_date', function () {
+    .filter('fullDate', function () {
       return function (input) {
         full_date = "";
         full_date += input['day'];
-        full_date += ' ';
+        full_date += ', ';
         full_date += input['start_time'];
         full_date += ' to ';
         full_date += input['end_time'];
