@@ -74,16 +74,7 @@ angular.module('hospiceAtHome', ['ngResource'])
         $scope.setOrder = function (orderBy) {
           $scope.orderAscending = orderingService.setOrderAscending(orderBy, $scope.orderByLast, $scope.orderAscending);
           $scope.orderByLast = orderBy;
-
-          if (orderBy === 'client') {
-            $scope.orderProp = ['client.last_name', 'client.first_name'];
-          } else if (orderBy === 'volunteer') {
-            $scope.orderProp = ['volunteer.last_name', 'volunteer.first_name'];
-          } else if (orderBy === 'date') {
-            $scope.orderProp = ['day_number', 'start_time'];
-          } else {
-            $scope.orderProp = orderBy;
-          }
+          $scope.orderProp = orderingService.setOrderProp(orderBy);
         };
       }])
 
