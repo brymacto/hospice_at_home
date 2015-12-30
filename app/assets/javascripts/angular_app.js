@@ -22,6 +22,18 @@ angular.module('hospiceAtHome', ['ngResource'])
           } else {
             return false;
           }
+        },
+
+        setOrderProp: function(orderBy) {
+          if (orderBy === 'client') {
+            return ['client.last_name', 'client.first_name'];
+          } else if (orderBy === 'volunteer') {
+            return ['volunteer.last_name', 'volunteer.first_name'];
+          } else if (orderBy === 'date') {
+            return ['day_number', 'start_time'];
+          } else {
+            return orderBy;
+          }
         }
       }
     })
@@ -43,14 +55,7 @@ angular.module('hospiceAtHome', ['ngResource'])
         $scope.setOrder = function (orderBy) {
           $scope.orderAscending = orderingService.setOrderAscending(orderBy, $scope.orderByLast, $scope.orderAscending);
           $scope.orderByLast = orderBy;
-
-          if (orderBy === 'client') {
-            $scope.orderProp = ['client.last_name', 'client.first_name'];
-          } else if (orderBy === 'volunteer') {
-            $scope.orderProp = ['volunteer.last_name', 'volunteer.first_name'];
-          } else if (orderBy === 'date') {
-            $scope.orderProp = ['day_number', 'start_time'];
-          }
+          $scope.orderProp = orderingService.setOrderProp(orderBy);
         };
 
       }])
