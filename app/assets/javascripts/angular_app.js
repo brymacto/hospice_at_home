@@ -14,11 +14,24 @@ angular.module('hospiceAtHome', ['ngResource'])
         });
       }])
 
+    .factory('orderingService', function() {
+      return {
+        setOrderAscending: function(orderBy, orderByLast, orderAscending) {
+          if (orderByLast === orderBy) {
+            return !orderAscending;
+          } else {
+            return false;
+          }
+        }
+      }
+    })
+
     .controller('MatchCtrl', [
       '$http',
       '$scope',
       'matchFactory',
-      function ($http, $scope, matchFactory, matches) {
+      'orderingService',
+      function ($http, $scope, matchFactory, orderingService) {
         $scope.orderProp = 'client.first_name';
         $scope.orderAscending = false;
         $scope.orderByLast = null;
@@ -28,7 +41,7 @@ angular.module('hospiceAtHome', ['ngResource'])
         $scope.matches = matchFactory.query();
 
         $scope.setOrder = function (orderBy) {
-          setOrderAscending(orderBy);
+          $scope.orderAscending = orderingService.setOrderAscending(orderBy, $scope.orderByLast, $scope.orderAscending);
           $scope.orderByLast = orderBy;
 
           if (orderBy === 'client') {
@@ -40,27 +53,21 @@ angular.module('hospiceAtHome', ['ngResource'])
           }
         };
 
-        function setOrderAscending(orderBy) {
-          if ($scope.orderByLast === orderBy) {
-            $scope.orderAscending = !$scope.orderAscending;
-          } else {
-            $scope.orderAscending = false;
-          }
-        }
       }])
 
     .controller('MatchProposalCtrl', [
       '$http',
       '$scope',
       'matchProposalFactory',
-      function ($http, $scope, matchProposalFactory) {
+      'orderingService',
+      function ($http, $scope, matchProposalFactory, orderingService) {
         $scope.orderProp = 'client.first_name';
         $scope.orderAscending = false;
         $scope.orderByLast = null;
         $scope.matchProposals = matchProposalFactory.query();
 
         $scope.setOrder = function (orderBy) {
-          setOrderAscending(orderBy);
+          $scope.orderAscending = orderingService.setOrderAscending(orderBy, $scope.orderByLast, $scope.orderAscending);
           $scope.orderByLast = orderBy;
 
           if (orderBy === 'client') {
@@ -73,14 +80,6 @@ angular.module('hospiceAtHome', ['ngResource'])
             $scope.orderProp = orderBy;
           }
         };
-
-        function setOrderAscending(orderBy) {
-          if ($scope.orderByLast === orderBy) {
-            $scope.orderAscending = !$scope.orderAscending;
-          } else {
-            $scope.orderAscending = false;
-          }
-        }
       }])
 
     .filter('capitalize', function () {
