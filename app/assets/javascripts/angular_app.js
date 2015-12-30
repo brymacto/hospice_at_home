@@ -13,6 +13,10 @@ angular.module('hospiceAtHome', ['ngResource'])
       'matchFactory',
       function ($http, $scope, matchFactory, matches) {
         $scope.orderProp = 'client.first_name';
+        $scope.orderAscending = false;
+        $scope.orderAscendingClient = false;
+        $scope.orderAscendingVolunteer = false;
+        $scope.orderAscendingDate = false;
         $scope.matches = matchFactory.query(function () {
           generateDayNumbers($scope.matches);
         });
@@ -36,10 +40,16 @@ angular.module('hospiceAtHome', ['ngResource'])
         $scope.setOrder = function(orderBy) {
           if (orderBy === 'client') {
             $scope.orderProp = ['client.last_name', 'client.first_name'];
+            $scope.orderAscendingClient = !$scope.orderAscendingClient;
+            $scope.orderAscending = $scope.orderAscendingClient;
           } else if (orderBy === 'volunteer') {
             $scope.orderProp = ['volunteer.last_name', 'volunteer.first_name'];
+            $scope.orderAscendingVolunteer = !$scope.orderAscendingVolunteer;
+            $scope.orderAscending = $scope.orderAscendingVolunteer;
           } else if (orderBy === 'date') {
             $scope.orderProp = ['day_number', 'start_time'];
+            $scope.orderAscendingDate = !$scope.orderAscendingDate;
+            $scope.orderAscending = $scope.orderAscendingDate;
           }
         };
       }])
