@@ -21,26 +21,32 @@ angular.module('hospiceAtHome', ['ngResource'])
       function ($http, $scope, matchFactory, matches) {
         $scope.orderProp = 'client.first_name';
         $scope.orderAscending = false;
+        $scope.orderByLast = null;
         $scope.orderAscendingClient = false;
         $scope.orderAscendingVolunteer = false;
         $scope.orderAscendingDate = false;
         $scope.matches = matchFactory.query();
 
-        $scope.setOrder = function(orderBy) {
+        $scope.setOrder = function (orderBy) {
+          setOrderAscending(orderBy);
+          $scope.orderByLast = orderBy;
+
           if (orderBy === 'client') {
             $scope.orderProp = ['client.last_name', 'client.first_name'];
-            $scope.orderAscendingClient = !$scope.orderAscendingClient;
-            $scope.orderAscending = $scope.orderAscendingClient;
           } else if (orderBy === 'volunteer') {
             $scope.orderProp = ['volunteer.last_name', 'volunteer.first_name'];
-            $scope.orderAscendingVolunteer = !$scope.orderAscendingVolunteer;
-            $scope.orderAscending = $scope.orderAscendingVolunteer;
           } else if (orderBy === 'date') {
             $scope.orderProp = ['day_number', 'start_time'];
-            $scope.orderAscendingDate = !$scope.orderAscendingDate;
-            $scope.orderAscending = $scope.orderAscendingDate;
           }
         };
+
+        function setOrderAscending(orderBy) {
+          if ($scope.orderByLast === orderBy) {
+            $scope.orderAscending = !$scope.orderAscending;
+          } else {
+            $scope.orderAscending = false;
+          }
+        }
       }])
 
     .controller('MatchProposalCtrl', [
@@ -53,13 +59,8 @@ angular.module('hospiceAtHome', ['ngResource'])
         $scope.orderByLast = null;
         $scope.matchProposals = matchProposalFactory.query();
 
-        $scope.setOrder = function(orderBy) {
-          if ($scope.orderByLast === orderBy) {
-            $scope.orderAscending = !$scope.orderAscending;
-          } else {
-            $scope.orderAscending = false;
-          }
-
+        $scope.setOrder = function (orderBy) {
+          setOrderAscending(orderBy);
           $scope.orderByLast = orderBy;
 
           if (orderBy === 'client') {
@@ -68,10 +69,18 @@ angular.module('hospiceAtHome', ['ngResource'])
             $scope.orderProp = ['volunteer.last_name', 'volunteer.first_name'];
           } else if (orderBy === 'date') {
             $scope.orderProp = ['day_number', 'start_time'];
-          } else  {
+          } else {
             $scope.orderProp = orderBy;
           }
         };
+
+        function setOrderAscending(orderBy) {
+          if ($scope.orderByLast === orderBy) {
+            $scope.orderAscending = !$scope.orderAscending;
+          } else {
+            $scope.orderAscending = false;
+          }
+        }
       }])
 
     .filter('capitalize', function () {
@@ -82,7 +91,7 @@ angular.module('hospiceAtHome', ['ngResource'])
       }
     })
 
-    .filter('full_date', function() {
+    .filter('full_date', function () {
       return function (input) {
         full_date = "";
         full_date += input['day'];
