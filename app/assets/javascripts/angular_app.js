@@ -1,17 +1,37 @@
 angular.module('hospiceAtHome', ['ngResource'])
+
     .factory('matchFactory', ['$resource',
       function ($resource) {
         return $resource('/matches.json', {}, {
           query: {method: 'GET', params: {}, isArray: true}
         });
       }])
+
     .controller('MainCtrl', [
       '$http',
       '$scope',
       'matchFactory',
       function ($http, $scope, matchFactory, matches) {
         $scope.orderProp = 'client.first_name';
-        $scope.matches = matchFactory.query();
+        $scope.matches = matchFactory.query(function () {
+          generateDayNumbers($scope.matches);
+        });
+
+        var day_numbers = {
+          'sunday': 0,
+          'monday': 1,
+          'tuesday': 2,
+          'wednesday': 3,
+          'thursday': 4,
+          'friday': 5,
+          'saturday': 6
+        };
+
+        function generateDayNumbers (collection) {
+          angular.forEach(collection, function(object) {
+            object.day_number = day_numbers[object.day];
+          });
+        }
 
         $scope.setOrder = function(orderBy) {
           if (orderBy === 'client') {
@@ -19,19 +39,11 @@ angular.module('hospiceAtHome', ['ngResource'])
           } else if (orderBy === 'volunteer') {
             $scope.orderProp = ['volunteer.last_name', 'volunteer.first_name'];
           } else if (orderBy === 'date') {
-            //var dates = {
-            //  'monday': 0,
-            //  'tuesday': 1,
-            //  'wednesday': 2,
-            //  'thursday': 3,
-            //  'friday': 4,
-            //  'saturday': 5,
-            //  'sunday': 6,
-            //}
-            $scope.orderProp = ['start_time'];
+            $scope.orderProp = ['day_number', 'start_time'];
           }
         };
       }])
+
     .filter('capitalize', function () {
       return function (input) {
         if (input != null)
@@ -39,6 +51,7 @@ angular.module('hospiceAtHome', ['ngResource'])
         return input.substring(0, 1).toUpperCase() + input.substring(1);
       }
     })
+
     .filter('full_date', function() {
       return function (input) {
         full_date = "";
