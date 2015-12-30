@@ -9,14 +9,16 @@
       <div class="tab-content" ng-controller="MatchCtrl">
         <table>
           <tr>
-            <th>Day and time (<a ng-click="setOrder('date')">sort</a>)</th>
-            <th>Client (<a ng-click="setOrder('client')">sort</a>)</th>
-            <th>Volunteer (<a ng-click="setOrder('volunteer')">sort</a>)</th>
+            <th>Day and time <a ng-click="setOrder('date')"><%= fa_icon("sort", class: 'sort_icon') %></a></th>
+            <th>Client <a ng-click="setOrder('client')"><%= fa_icon("sort", class: 'sort_icon') %></a></th>
+            <th>Volunteer <a ng-click="setOrder('volunteer')"><%= fa_icon("sort", class: 'sort_icon') %></a></th>
           </tr>
           <tr ng-repeat="match in matches | orderBy: orderProp : orderAscending ">
             <td>
-              <a href="/matches/{{match.id}}" class="thumb">{{ {day: match.day, start_time: match.start_time,
-                end_time: match.end_time } | full_date | capitalize }}</a>
+              <a href="/matches/{{match.id}}" class="thumb">
+                {{ {day: match.day, start_time: match.start_time,
+                end_time: match.end_time } | full_date | capitalize }}
+              </a>
             </td>
             <td>
               {{match.client.first_name}} {{match.client.last_name}}
@@ -36,16 +38,18 @@
       <div class="tab-content" ng-controller="MatchProposalCtrl">
         <table>
           <tr>
-            <th>Day and time (<a ng-click="setOrder('date')">sort</a>)</th>
-            <th>Client (<a ng-click="setOrder('client')">sort</a>)</th>
-            <th>Status (<a ng-click="setOrder('status')">sort</a>)</th>
-            <th>Volunteer requests (<a ng-click="setOrder('match_requests_size')">sort</a>)</th>
-            <th>Proposal created (<a ng-click="setOrder('proposal_date')">sort</a>)</th>
+            <th>Day and time <a ng-click="setOrder('date')"><%= fa_icon("sort", class: 'sort_icon') %></a></th>
+            <th>Client <a ng-click="setOrder('client')"><%= fa_icon("sort", class: 'sort_icon') %></a></th>
+            <th>Status <a ng-click="setOrder('status')"><%= fa_icon("sort", class: 'sort_icon') %></a></th>
+            <th>Volunteer requests <a ng-click="setOrder('match_requests_size')"><%= fa_icon("sort", class: 'sort_icon') %></a></th>
+            <th>Proposal created <a ng-click="setOrder('proposal_date')"><%= fa_icon("sort", class: 'sort_icon') %></a></th>
           </tr>
           <tr ng-repeat="matchProposal in matchProposals | orderBy: orderProp : orderAscending ">
             <td>
+              <a href="/match_proposals/{{matchProposal.id}}" class="thumb">
               {{ {day: matchProposal.day, start_time: matchProposal.start_time,
               end_time: matchProposal.end_time } | full_date | capitalize }}
+                </a>
             </td>
             <td>
               {{matchProposal.client.first_name}} {{matchProposal.client.last_name}}
