@@ -5,11 +5,10 @@ describe('MatchCtrl', function(){
 
   beforeEach(module('hospiceAtHome'));
 
-  it('should create "phones" model with 3 phones', function() {
+  it('sets acsending order to false', inject(function($controller) {
     var scope = {},
-        ctrl = new MatchCtrl(scope);
-
-    expect(scope.phones.length).toBe(3);
-  });
+        ctrl = $controller('MatchCtrl', {$scope:scope});
+    expect(scope.orderAscending).toBe(false);
+  }));
 
 });
