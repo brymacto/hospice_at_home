@@ -47,9 +47,6 @@ class MatchesController < ApplicationController
     end
   end
 
-  def angular
-  end
-
   def destroy
     load_match
     @match.destroy
