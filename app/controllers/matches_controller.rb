@@ -37,6 +37,13 @@ class MatchesController < ApplicationController
     load_matches
     @match_proposals = MatchProposal.all.includes(:client, :match_requests).order('match_proposals.status ASC').order('clients.last_name ASC')
     @initial_tab = params[:initial_tab]
+    respond_to do |format|
+      format.html
+      format.json { render json: @matches }
+    end
+  end
+
+  def angular
   end
 
   def destroy

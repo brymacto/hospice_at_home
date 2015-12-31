@@ -4,9 +4,9 @@ describe CreateMatchProposal do
   it 'saves a valid match proposal' do
     params = build_params
 
-    expect {
+    expect do
       CreateMatchProposal.new(params)
-    }.to change {
+    end.to change {
       MatchProposal.count
     }.by(1)
   end
@@ -18,31 +18,29 @@ describe CreateMatchProposal do
     expect(mr.size).to eq(1)
   end
 
-  it 'does not save a invalid match proposal'  do
+  it 'does not save a invalid match proposal' do
     params = build_params.merge(start_time: nil)
 
-    expect {
+    expect do
       CreateMatchProposal.new(params)
-    }.to change {
+    end.to change {
       MatchProposal.count
     }.by(0)
   end
 
   def build_params
     ActionController::Parameters.new(
-      {
-        day: 'monday',
-        start_time: 9,
-        end_time: 10,
-        client_id: 1,
-        status: 'pending',
-        match_requests_attributes: {
-          '0' => {
-               volunteer_id: 1,
-               status: 'pending'
-              }
+      day: 'monday',
+      start_time: 9,
+      end_time: 10,
+      client_id: 1,
+      status: 'pending',
+      match_requests_attributes: {
+        '0' => {
+          volunteer_id: 1,
+          status: 'pending'
         }
-    }
+      }
     )
   end
 end

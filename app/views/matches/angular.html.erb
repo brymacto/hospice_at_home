@@ -1,0 +1,73 @@
+<h1>Matches Angular</h1>
+<div ng-app="hospiceAtHome">
+  <ul class="accordion-tabs">
+    <li class="tab-header-and-content">
+      <a href="javascript:void(0)" class="
+      <% if @initial_tab != 'match_proposal' %>is-active
+      <% end %> tab-link">Matches</a>
+
+      <div class="tab-content" ng-controller="MatchCtrl">
+        <table>
+          <tr>
+            <th>Day and time <a ng-click="setOrder('date')"><%= fa_icon("sort", class: 'sort_icon') %></a></th>
+            <th>Client <a ng-click="setOrder('client')"><%= fa_icon("sort", class: 'sort_icon') %></a></th>
+            <th>Volunteer <a ng-click="setOrder('volunteer')"><%= fa_icon("sort", class: 'sort_icon') %></a></th>
+          </tr>
+          <tr ng-repeat="match in matches | orderBy: orderProp : orderAscending ">
+            <td>
+              <a href="/matches/{{match.id}}" class="thumb">
+                {{ {day: match.day, start_time: match.start_time,
+                end_time: match.end_time } | fullDate | capitalize }}
+              </a>
+            </td>
+            <td>
+              {{match.client.first_name}} {{match.client.last_name}}
+            </td>
+            <td>
+              {{match.volunteer.first_name}} {{match.volunteer.last_name}}
+            </td>
+          </tr>
+        </table>
+      </div>
+    </li>
+    <li class="tab-header-and-content">
+      <a href="javascript:void(0)" class="
+      <% if @initial_tab == 'match_proposal' %>is-active
+      <% end %> tab-link">Match proposals</a>
+
+      <div class="tab-content" ng-controller="MatchProposalCtrl">
+        <table>
+          <tr>
+            <th>Day and time <a ng-click="setOrder('date')"><%= fa_icon("sort", class: 'sort_icon') %></a></th>
+            <th>Client <a ng-click="setOrder('client')"><%= fa_icon("sort", class: 'sort_icon') %></a></th>
+            <th>Status <a ng-click="setOrder('status')"><%= fa_icon("sort", class: 'sort_icon') %></a></th>
+            <th>Volunteer requests <a ng-click="setOrder('match_requests_size')"><%= fa_icon("sort", class: 'sort_icon') %></a></th>
+            <th>Proposal created <a ng-click="setOrder('proposal_date')"><%= fa_icon("sort", class: 'sort_icon') %></a></th>
+          </tr>
+          <tr ng-repeat="matchProposal in matchProposals | orderBy: orderProp : orderAscending ">
+            <td>
+              <a href="/match_proposals/{{matchProposal.id}}" class="thumb">
+              {{ {day: matchProposal.day, start_time: matchProposal.start_time,
+              end_time: matchProposal.end_time } | fullDate | capitalize }}
+                </a>
+            </td>
+            <td>
+              {{matchProposal.client.first_name}} {{matchProposal.client.last_name}}
+            </td>
+            <td>
+              {{matchProposal.status | capitalize}}
+            </td>
+            <td>
+              {{matchProposal.match_requests.length}}
+            </td>
+            <td>
+              {{matchProposal.proposal_date}}
+            </td>
+          </tr>
+        </table>
+      </div>
+    </li>
+  </ul>
+</div>
+
+

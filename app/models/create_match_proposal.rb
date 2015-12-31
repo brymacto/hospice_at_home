@@ -29,17 +29,17 @@ class CreateMatchProposal
   end
 
   def match_proposal_params
-    @params.permit(:day, :start_time, :end_time, :client_id, :status, {match_requests_attributes: [:volunteer_id, :status]} ).merge(client_id: @params[:client_id], status: 'pending').merge(match_request_attributes)
+    @params.permit(:day, :start_time, :end_time, :client_id, :status, match_requests_attributes: [:volunteer_id, :status]).merge(client_id: @params[:client_id], status: 'pending').merge(match_request_attributes)
   end
 
   def match_request_attributes
-    match_request_attributes = { :match_requests_attributes => { } }
+    match_request_attributes = { match_requests_attributes: {} }
 
     match_request_volunteer_ids.each_with_index do |volunteer_id, index|
       match_request_attributes[:match_requests_attributes][index] = { volunteer_id: volunteer_id, status: 'pending' }
     end
 
     return match_request_attributes if match_request_volunteer_ids.size > 0
-    return {}
+    {}
   end
 end

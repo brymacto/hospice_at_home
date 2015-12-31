@@ -5,4 +5,4 @@ require File.expand_path('../config/application', __FILE__)
 
 Rails.application.load_tasks
 
-task(:default).clear.enhance([:spec, 'rubocop:auto_correct'])
+task(:default).clear.enhance([:spec, 'spec:javascript', 'rubocop:auto_correct'])
