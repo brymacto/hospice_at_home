@@ -36,6 +36,7 @@ class MatchesController < ApplicationController
 
   def index
     load_matches
+    @no_turbolinks = true
     @match_proposals = MatchProposal.all
                        .includes(:client, :match_requests)
                        .order('match_proposals.status ASC')

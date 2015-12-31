@@ -1,6 +1,6 @@
 <%= link_to 'Add match', new_match_path, class: [:button, 'float_right'] %>
 <h1>Matches</h1>
-<div ng-app="hospiceAtHome">
+<div>
   <ul class="accordion-tabs">
     <li class="tab-header-and-content">
       <a href="javascript:void(0)" class="
@@ -70,6 +70,12 @@
     </li>
   </ul>
 </div>
+
+<script>
+  $(document).on('ready page:load', function() {
+    angular.bootstrap(document, ['hospiceAtHome']);
+  });
+</script>
 
 
 
