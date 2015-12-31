@@ -1,4 +1,4 @@
-angular.module('hospiceAtHome', ['ngResource'])
+angular.module('matchesAngularApp', ['ngResource'])
 
     .factory('matchFactory', ['$resource',
       function ($resource) {
@@ -47,9 +47,6 @@ angular.module('hospiceAtHome', ['ngResource'])
         $scope.orderProp = 'client.first_name';
         $scope.orderAscending = false;
         $scope.orderByLast = null;
-        $scope.orderAscendingClient = false;
-        $scope.orderAscendingVolunteer = false;
-        $scope.orderAscendingDate = false;
         $scope.matches = matchFactory.query();
 
         $scope.setOrder = function (orderBy) {
