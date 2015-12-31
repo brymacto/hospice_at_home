@@ -39,12 +39,11 @@ class MatchesController < ApplicationController
     @initial_tab = params[:initial_tab]
     respond_to do |format|
       format.html
-      format.json  { render json: @matches }
+      format.json { render json: @matches }
     end
   end
 
   def angular
-
   end
 
   def destroy

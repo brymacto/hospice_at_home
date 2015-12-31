@@ -1,5 +1,5 @@
 class MatchProposalSerializer < ActiveModel::Serializer
-  DAY_NUMBERS = {sunday: 0, monday: 1, tuesday: 2, wednesday: 3, thursday: 4, friday: 5, saturday: 6}
+  DAY_NUMBERS = { sunday: 0, monday: 1, tuesday: 2, wednesday: 3, thursday: 4, friday: 5, saturday: 6 }
   attributes :id, :day, :day_number, :start_time, :end_time, :status, :proposal_date, :match_requests_size
 
   has_one :client

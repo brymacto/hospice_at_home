@@ -53,9 +53,8 @@ RSpec.describe MatchesController, type: :controller do
     end
 
     it 'returns JSON when requested' do
-      get :index, :format => :json
+      get :index, format: :json
       expect(JSON.parse(response.body)[0]['id']).to eql(test_match.id)
     end
-
   end
 end
