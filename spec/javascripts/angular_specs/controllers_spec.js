@@ -110,3 +110,128 @@ describe('MatchCtrl', function () {
     );
   });
 });
+
+describe('MatchProposalCtrl', function () {
+  var scope, ctrl, $httpBackend;
+
+  beforeEach(function () {
+    jasmine.addMatchers({
+      toEqualData: function () {
+        return {
+          compare: function (actual, expected) {
+            return {
+              pass: angular.equals(actual, expected)
+            };
+          }
+        };
+      }
+    });
+  });
+
+  beforeEach(inject(function (_$httpBackend_, $rootScope, $controller) {
+    $httpBackend = _$httpBackend_;
+    $httpBackend.expectGET('/match_proposals.json').
+    respond(
+        [
+          {
+            id: 5,
+            day: "monday",
+            day_number: 1,
+            start_time: 9,
+            end_time: 12,
+            status: "accepted",
+            proposal_date: "2015-12-24",
+            match_requests_size: 3,
+            client: {
+              id: 7,
+              last_name: "Adams",
+              first_name: "Golda"
+            },
+            match_requests: [
+              {
+                status: "accepted",
+                volunteer: {
+                  id: 14,
+                  last_name: "Dietrich",
+                  first_name: "Anna"
+                }
+              },
+              {
+                status: "accepted",
+                volunteer: {
+                  id: 25,
+                  last_name: "Fadel",
+                  first_name: "Kristina"
+                }
+              },
+              {
+                status: "accepted",
+                volunteer: {
+                  id: 15,
+                  last_name: "Rutherford",
+                  first_name: "Rosalinda"
+                }
+              }
+            ]
+          }
+        ]
+    );
+
+    scope = $rootScope.$new();
+    ctrl = $controller('MatchProposalCtrl', {$scope: scope});
+  }));
+
+  it('sets acsending order to false', function () {
+    expect(scope.orderAscending).toBe(false);
+  });
+
+  it('creates a match proposals model with match proposal JSON data', function () {
+    expect(scope.matchProposals).toEqualData([]);
+    $httpBackend.flush();
+    expect(scope.matchProposals).toEqualData(
+        [
+          {
+            id: 5,
+            day: "monday",
+            day_number: 1,
+            start_time: 9,
+            end_time: 12,
+            status: "accepted",
+            proposal_date: "2015-12-24",
+            match_requests_size: 3,
+            client: {
+              id: 7,
+              last_name: "Adams",
+              first_name: "Golda"
+            },
+            match_requests: [
+              {
+                status: "accepted",
+                volunteer: {
+                  id: 14,
+                  last_name: "Dietrich",
+                  first_name: "Anna"
+                }
+              },
+              {
+                status: "accepted",
+                volunteer: {
+                  id: 25,
+                  last_name: "Fadel",
+                  first_name: "Kristina"
+                }
+              },
+              {
+                status: "accepted",
+                volunteer: {
+                  id: 15,
+                  last_name: "Rutherford",
+                  first_name: "Rosalinda"
+                }
+              }
+            ]
+          }
+        ]
+    );
+  });
+});
