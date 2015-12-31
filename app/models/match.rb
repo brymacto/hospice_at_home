@@ -1,6 +1,7 @@
 class Match < ActiveRecord::Base
   belongs_to :client
   belongs_to :volunteer
+  belongs_to :match_request
 
   DAYS_OF_THE_WEEK = %w(monday tuesday wednesday thursday friday saturday sunday)
 

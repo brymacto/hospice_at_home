@@ -12,6 +12,7 @@ class MatchesController < ApplicationController
 
   def show
     load_match(new: false)
+    @match_proposal = @match.match_request.match_proposal if @match.match_request
   end
 
   def edit
@@ -35,7 +36,10 @@ class MatchesController < ApplicationController
 
   def index
     load_matches
-    @match_proposals = MatchProposal.all.includes(:client, :match_requests).order('match_proposals.status ASC').order('clients.last_name ASC')
+    @match_proposals = MatchProposal.all
+                       .includes(:client, :match_requests)
+                       .order('match_proposals.status ASC')
+                       .order('clients.last_name ASC')
     @initial_tab = params[:initial_tab]
     respond_to do |format|
       format.html
@@ -89,10 +93,6 @@ class MatchesController < ApplicationController
 
   def load_volunteers(match_exploration_valid)
     return unless match_exploration_valid
-    search_time_range = TimeRange.new(
-      @match_exploration.day,
-      @match_exploration.start_time,
-      @match_exploration.end_time)
 
     @volunteers = Volunteer.joins(:volunteer_availabilities).where(
       "volunteer_availabilities.start_hour <= :start_time AND
@@ -101,6 +101,13 @@ class MatchesController < ApplicationController
       start_time: search_time_range.start_time,
       end_time: search_time_range.end_time,
       day: search_time_range.day).distinct.order(:last_name)
+  end
+
+  def search_time_range
+    TimeRange.new(
+      @match_exploration.day,
+      @match_exploration.start_time,
+      @match_exploration.end_time)
   end
 
   def time_range_params?

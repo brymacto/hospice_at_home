@@ -29,7 +29,19 @@ class CreateMatchProposal
   end
 
   def match_proposal_params
-    @params.permit(:day, :start_time, :end_time, :client_id, :status, match_requests_attributes: [:volunteer_id, :status]).merge(client_id: @params[:client_id], status: 'pending').merge(match_request_attributes)
+    @params.permit(
+      :day,
+      :start_time,
+      :end_time,
+      :client_id,
+      :status,
+      match_requests_attributes: [
+        :volunteer_id,
+        :status
+      ]
+    )
+      .merge(client_id: @params[:client_id], status: 'pending')
+      .merge(match_request_attributes)
   end
 
   def match_request_attributes

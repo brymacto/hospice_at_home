@@ -5,7 +5,7 @@ describe CreateMatchProposal do
     params = build_params
 
     expect do
-      CreateMatchProposal.new(params)
+      described_class.new(params)
     end.to change {
       MatchProposal.count
     }.by(1)
@@ -13,7 +13,7 @@ describe CreateMatchProposal do
 
   it 'saves match requests' do
     params = build_params
-    mp = CreateMatchProposal.new(params).match_proposal
+    mp = described_class.new(params).match_proposal
     mr = mp.match_requests
     expect(mr.size).to eq(1)
   end
@@ -22,7 +22,7 @@ describe CreateMatchProposal do
     params = build_params.merge(start_time: nil)
 
     expect do
-      CreateMatchProposal.new(params)
+      described_class.new(params)
     end.to change {
       MatchProposal.count
     }.by(0)

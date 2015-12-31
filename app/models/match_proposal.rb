@@ -25,13 +25,8 @@ class MatchProposal < ActiveRecord::Base
     "#{day.capitalize}, #{start_time} to #{end_time}"
   end
 
-  def check_status
-    match_request_accepted = false
-    match_requests.each do |match_request|
-      match_request_accepted = true if match_request.status = 'accepted'
-    end
-    self.status = 'accepted' if match_request_accepted
-    save
+  def match
+    Match.joins('LEFT JOIN match_requests ON matches.match_request_id = match_requests.id LEFT JOIN match_proposals ON match_requests.match_proposal_id = match_proposals.id').find_by('match_proposals.id' => id)
   end
 
   private
