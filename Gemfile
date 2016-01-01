@@ -24,6 +24,11 @@ gem 'active_model_serializers'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
+gem 'bourbon'
+gem 'font-awesome-rails'
+gem 'neat'
+gem 'refills'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -45,11 +50,7 @@ group :development, :test do
   gem 'quiet_assets'
   gem 'better_errors'
   gem 'pry'
-  gem 'bourbon'
-  gem 'font-awesome-rails'
   gem 'sass_rails_patch' # to allow use of erb in sass files
-  gem 'neat'
-  gem 'refills'
   gem 'rack-test'
   gem 'faker'
   gem 'factory_girl_rails'
