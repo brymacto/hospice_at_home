@@ -23,7 +23,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'active_model_serializers'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
-
+gem 'faker'
 gem 'bourbon'
 gem 'font-awesome-rails'
 gem 'neat'
@@ -52,7 +52,6 @@ group :development, :test do
   gem 'pry'
   gem 'sass_rails_patch' # to allow use of erb in sass files
   gem 'rack-test'
-  gem 'faker'
   gem 'factory_girl_rails'
   gem 'rails-footnotes'
 
