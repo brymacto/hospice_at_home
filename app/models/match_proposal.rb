@@ -29,6 +29,10 @@ class MatchProposal < ActiveRecord::Base
     Match.joins('LEFT JOIN match_requests ON matches.match_request_id = match_requests.id LEFT JOIN match_proposals ON match_requests.match_proposal_id = match_proposals.id').find_by('match_proposals.id' => id)
   end
 
+  def match_deleted_after_acceptance
+    !match && status == 'accepted'
+  end
+
   private
 
   def day_is_real_day

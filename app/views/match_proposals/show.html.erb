@@ -8,6 +8,11 @@
       <%= link_to '(View match)', @match_proposal.match %>
   <% end %>
 </p>
+<% if @match_proposal.match_deleted_after_acceptance %>
+<div class="flash-alert">
+  <span>This match proposal was accepted, but the resulting match has since been deleted.  To create a new match you can click 'accept' for a volunteer below, or start a new match proposal.</span>
+</div>
+    <% end %>
 
 <h2>Match Requests</h2>
 <table>
