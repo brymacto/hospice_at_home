@@ -25,6 +25,7 @@ Rails.application.routes.draw do
     resources :match_requests
   end
   resources :volunteer_availabilities
+  resources :volunteer_specialties
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
