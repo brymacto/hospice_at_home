@@ -11,7 +11,7 @@ class MatchRequestsController < ApplicationController
 
   def create_match
     match_proposal = @match_request.match_proposal
-    fail 'A match already exists for this match proposal' if @match_request.match
+    fail 'A match already exists for this match proposal' if @match_request.match_proposal.match
 
     Match.create(
       match_request_id: @match_request.id,
@@ -28,7 +28,7 @@ class MatchRequestsController < ApplicationController
   end
 
   def first_request_accepted?
-    !@match_request.match && match_request_params[:status] == 'accepted'
+    !@match_request.match_proposal.match && match_request_params[:status] == 'accepted'
   end
 
   def load_match_request
