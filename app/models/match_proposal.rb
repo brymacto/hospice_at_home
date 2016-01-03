@@ -2,7 +2,9 @@ class MatchProposal < ActiveRecord::Base
   has_many :match_requests, dependent: :destroy
   has_many :volunteers, through: :match_requests
   belongs_to :client
-  validates :match_requests, presence: { message: 'are sent to volunteers you select.  You must select volunteers to create a match proposal.' }
+  validates :match_requests, presence: {
+    message: 'are sent to volunteers you select.  You must select volunteers to create a match proposal.'
+  }
 
   accepts_nested_attributes_for :match_requests
 
@@ -26,7 +28,8 @@ class MatchProposal < ActiveRecord::Base
   end
 
   def match
-    Match.joins('LEFT JOIN match_requests ON matches.match_request_id = match_requests.id LEFT JOIN match_proposals ON match_requests.match_proposal_id = match_proposals.id').find_by('match_proposals.id' => id)
+    Match.joins('LEFT JOIN match_requests ON matches.match_request_id = match_requests.id LEFT JOIN match_proposals ON match_requests.match_proposal_id = match_proposals.id')
+      .find_by('match_proposals.id' => id)
   end
 
   def match_deleted_after_acceptance

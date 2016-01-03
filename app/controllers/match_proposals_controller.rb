@@ -13,7 +13,10 @@ class MatchProposalsController < ApplicationController
   end
 
   def index
-    @match_proposals = MatchProposal.all.includes(:client, :match_requests).order('match_proposals.status ASC').order('clients.last_name ASC')
+    @match_proposals = MatchProposal.all
+                       .includes(:client, :match_requests)
+                       .order('match_proposals.status ASC')
+                       .order('clients.last_name ASC')
     respond_to do |format|
       format.json { render json: @match_proposals }
     end

@@ -15,13 +15,13 @@ RSpec.describe MatchRequestsController, type: :controller do
            match_requests:
       [
         create(:match_request,
-        volunteer_id: test_volunteer.id,
-        status: 'pending'),
+               volunteer_id: test_volunteer.id,
+               status: 'pending'),
         create(:match_request,
-               volunteer_id: test_volunteer.id+1,
+               volunteer_id: test_volunteer.id + 1,
                status: 'pending')
       ]
-    )
+          )
   end
 
   let(:test_match_request) do
@@ -32,39 +32,38 @@ RSpec.describe MatchRequestsController, type: :controller do
     test_match_proposal.match_requests.last
   end
 
-
   describe 'PUT #update' do
     it 'creates a match when status set to accepted' do
-      expect {
+      expect do
         put :update, id: test_match_request.id, status: 'accepted'
-      }.to change{ Match.all.size }.by(1)
+      end.to change { Match.all.size }.by(1)
     end
 
     it 'does not create a match when status set to rejected' do
-      expect {
+      expect do
         put :update, id: test_match_request.id, status: 'rejected'
-      }.to_not change{ Match.all.size }
+      end.to_not change { Match.all.size }
     end
 
     it 'creates 1 match only when trying to accept 2 for the same proposal' do
-      expect {
+      expect do
         put :update, id: test_match_request.id, status: 'accepted'
         put :update, id: test_match_request_2.id, status: 'accepted'
-      }.to change{ Match.all.size }.by(1)
+      end.to change { Match.all.size }.by(1)
     end
 
     it 'sets parent proposal status to accepted when accepted' do
-      expect {
+      expect do
         put :update, id: test_match_request.id, status: 'accepted'
         test_match_proposal.reload
-      }.to change{ test_match_proposal.status }.from('pending').to('accepted')
+      end.to change { test_match_proposal.status }.from('pending').to('accepted')
     end
 
     it 'does not set parent proposal status to accepted when rejected' do
-      expect {
+      expect do
         put :update, id: test_match_request.id, status: 'rejected'
         test_match_proposal.reload
-      }.to_not change{ test_match_proposal.status }
+      end.to_not change { test_match_proposal.status }
     end
 
     it 'redirects user to parent match proposal after update' do
