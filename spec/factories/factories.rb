@@ -23,4 +23,18 @@ FactoryGirl.define do
     start_time 9
     end_time 10
   end
+
+  factory :match_proposal, class: 'MatchProposal' do
+    day 'monday'
+    start_time 9
+    end_time 10
+    client_id 01
+    status 'pending'
+  end
+
+  factory :match_request, class: 'MatchRequest' do
+    volunteer_id 01
+    status 'pending'
+    match_proposal_id 01
+  end
 end

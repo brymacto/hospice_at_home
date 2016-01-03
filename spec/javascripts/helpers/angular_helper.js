@@ -1,4 +1,4 @@
-//= require 'angular_app.js'
+//= require 'matches_angular_app.js'
 //= require 'angular-mocks'
 
-beforeEach(module('hospiceAtHome'));
+beforeEach(module('matchesAngularApp'));
