@@ -31,6 +31,8 @@
           <% elsif !@match_proposal.match %>
               <%= link_to fa_icon("ban", class: 'margin_right'), match_request_path(match_request, status: 'rejected'), method: :put %>
               <%= link_to fa_icon("check", class: 'margin_right'), match_request_path(match_request, status: 'accepted'), method: :put %>
+          <% elsif @match_proposal.match && match_request.status != 'rejected' %>
+              <%= link_to fa_icon("ban", class: 'margin_right'), match_request_path(match_request, status: 'rejected'), method: :put %>
           <% end %>
         </td>
       </tr>
