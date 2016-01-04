@@ -11,8 +11,9 @@ class MatchesController < ApplicationController
   end
 
   def show
-    load_match(new: false)
-    @match_proposal = @match.match_request.match_proposal if @match.match_request
+    service = LoadMatchService.new(params, load_collection: false)
+    @match = service.match
+    @match_proposal = service.match_proposal
   end
 
   def edit
@@ -35,12 +36,10 @@ class MatchesController < ApplicationController
   end
 
   def index
-    load_matches
+    service = LoadMatchService.new(params, load_collection: true)
+    @matches = service.matches
+    @match_proposals = service.match_proposals
     @no_turbolinks = true
-    @match_proposals = MatchProposal.all
-                       .includes(:client, :match_requests)
-                       .order('match_proposals.status ASC')
-                       .order('clients.last_name ASC')
     @initial_tab = params[:initial_tab]
     respond_to do |format|
       format.html
