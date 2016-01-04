@@ -1,11 +1,18 @@
-<h1>Volunteer</h1>
+<h1>Volunteer: <%= @volunteer.first_name %> <%= @volunteer.last_name %></h1>
 
 <%= link_to 'Back to all volunteers', volunteers_path %>
 <%= link_to 'Edit', edit_volunteer_path(@volunteer) %>
-<h3>First name</h3>
-<%= @volunteer.first_name  %>
-<h3>Last name</h3>
-<%= @volunteer.last_name  %>
+
+<h2>Specialties</h2>
+<% if @volunteer_specialties && @volunteer_specialties.size > 0 %>
+    <ul>
+      <% @volunteer_specialties.each do |volunteer_specialty| %>
+      <%= volunteer_specialty.name %>
+      <% end %>
+<% else %>
+    <p><%= @volunteer.name %> has no specialties.</p>
+<% end %>
+</ul>
 
 <h2>Availability</h2>
 <table>
@@ -22,7 +29,6 @@
       </tr>
   <% end %>
 </table>
-
 
 <h2>Matches</h2>
 <% if @matches.size > 0 %>
