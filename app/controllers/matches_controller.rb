@@ -29,8 +29,9 @@ class MatchesController < ApplicationController
 
   def explorer
     load_new_match
-    @match_params = params[:match_exploration]
-    @match_exploration = MatchExploration.new(@match_params)
+    @match_exploration_params = params[:match_exploration]
+    service = MatchExplorerService.new
+    @match_exploration = MatchExploration.new(@match_exploration_params)
     @day_options = Date::DAYNAMES.zip(Date::DAYNAMES.map(&:downcase))
     @match_proposal = MatchProposal.new
     load_volunteers(@match_exploration.valid?)
