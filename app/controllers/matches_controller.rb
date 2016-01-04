@@ -17,17 +17,18 @@ class MatchesController < ApplicationController
   end
 
   def edit
-    load_match(new: false)
+    service = LoadMatchService.new(params, load_collection: false)
+    @match = service.match
     @day_options = Date::DAYNAMES.zip(Date::DAYNAMES.map(&:downcase))
   end
 
   def new
-    load_match(new: true)
+    load_new_match
     @day_options = Date::DAYNAMES.zip(Date::DAYNAMES.map(&:downcase))
   end
 
   def explorer
-    load_match(new: true)
+    load_new_match
     @match_params = params[:match_exploration]
     @match_exploration = MatchExploration.new(@match_params)
     @day_options = Date::DAYNAMES.zip(Date::DAYNAMES.map(&:downcase))
@@ -48,13 +49,15 @@ class MatchesController < ApplicationController
   end
 
   def destroy
-    load_match
+    service = LoadMatchService.new(params, load_collection: false)
+    @match = service.match
     @match.destroy
     redirect_to matches_path
   end
 
   def update
-    load_match
+    service = LoadMatchService.new(params, load_collection: false)
+    @match = service.match
     if @match.update(match_params)
       redirect_to @match
     else
@@ -64,28 +67,8 @@ class MatchesController < ApplicationController
 
   private
 
-  def load_match(new: false)
-    if new == true
-      @match = Match.new
-      return
-    end
-    @match = Match.find(params[:id])
-  end
-
-  def load_matches
-    load_volunteer_and_client
-    if @volunteer
-      @matches = Match.where(volunteer_id: @volunteer.id).includes(:client, :volunteer).order('clients.last_name ASC')
-    elsif @client
-      @matches = Match.where(client_id: @client.id).includes(:client, :volunteer).order('clients.last_name ASC')
-    else
-      @matches = Match.all.includes(:client, :volunteer).order('clients.last_name ASC')
-    end
-  end
-
-  def load_volunteer_and_client
-    @volunteer = Volunteer.find(params[:volunteer_id]) if params[:volunteer_id]
-    @client = Client.find(params[:client_id]) if params[:client_id]
+  def load_new_match
+    @match = Match.new
   end
 
   def load_volunteers(match_exploration_valid)

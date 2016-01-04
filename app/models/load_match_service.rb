@@ -51,7 +51,6 @@ class LoadMatchService
     @client = Client.find(match_params[:client_id]) if match_params[:client_id]
   end
 
-
   def match_params
     @params.permit(:match, :id, :volunteer_id, :client_id)
   end
