@@ -14,16 +14,16 @@ class MatchExplorerService
   private
 
   def match_exploration_params
-    if @params == nil
+    if @params.nil?
       {}
     else
-    @params.permit(
-      :client_id,
-      :volunteer_id,
-      :day,
-      :start_time,
-      :end_time
-    )
+      @params.permit(
+        :client_id,
+        :volunteer_id,
+        :day,
+        :start_time,
+        :end_time
+      )
     end
   end
 
