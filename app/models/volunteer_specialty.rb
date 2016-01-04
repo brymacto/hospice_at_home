@@ -1,5 +1,5 @@
 class VolunteerSpecialty < ActiveRecord::Base
-  belongs_to :volunteer
+  has_and_belongs_to_many :volunteers
   belongs_to :match_proposal
 
   validates :name, presence: true
