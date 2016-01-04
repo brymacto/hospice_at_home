@@ -1,0 +1,15 @@
+<h1>Specialty</h1>
+
+<%= link_to 'Back to all specialties', volunteer_specialties_path %>
+<%= link_to 'Edit', edit_volunteer_specialty_path(@volunteer_specialty) %>
+<h3>Name</h3>
+<%= @volunteer_specialty  %>
+
+
+
+<h2>Volunteers with this specialty</h2>
+<% if @volunteers.size > 0 %>
+    TODO: display volunteers table
+<% else %>
+    <p>No volunteers have the specialty <%= @volunteer_specialty %></p>
+<% end %>
