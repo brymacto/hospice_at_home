@@ -11,36 +11,37 @@ class MatchesController < ApplicationController
   end
 
   def show
-    load_match(new: false)
-    @match_proposal = @match.match_request.match_proposal if @match.match_request
+    service = LoadMatchService.new(params, load_collection: false)
+    @match = service.match
+    @match_proposal = service.match_proposal
   end
 
   def edit
-    load_match(new: false)
+    service = LoadMatchService.new(params, load_collection: false)
+    @match = service.match
     @day_options = Date::DAYNAMES.zip(Date::DAYNAMES.map(&:downcase))
   end
 
   def new
-    load_match(new: true)
+    load_new_match
     @day_options = Date::DAYNAMES.zip(Date::DAYNAMES.map(&:downcase))
   end
 
   def explorer
-    load_match(new: true)
-    @match_params = params[:match_exploration]
-    @match_exploration = MatchExploration.new(@match_params)
-    @day_options = Date::DAYNAMES.zip(Date::DAYNAMES.map(&:downcase))
+    load_new_match
+    @match_exploration_params = params[:match_exploration]
+    service = MatchExplorerService.new(@match_exploration_params)
+    @match_exploration = service.match_exploration
+    @day_options = service.day_options
     @match_proposal = MatchProposal.new
-    load_volunteers(@match_exploration.valid?)
+    @volunteers = service.volunteers
   end
 
   def index
-    load_matches
+    service = LoadMatchService.new(params, load_collection: true)
+    @matches = service.matches
+    @match_proposals = service.match_proposals
     @no_turbolinks = true
-    @match_proposals = MatchProposal.all
-                       .includes(:client, :match_requests)
-                       .order('match_proposals.status ASC')
-                       .order('clients.last_name ASC')
     @initial_tab = params[:initial_tab]
     respond_to do |format|
       format.html
@@ -49,13 +50,15 @@ class MatchesController < ApplicationController
   end
 
   def destroy
-    load_match
+    service = LoadMatchService.new(params, load_collection: false)
+    @match = service.match
     @match.destroy
     redirect_to matches_path
   end
 
   def update
-    load_match
+    service = LoadMatchService.new(params, load_collection: false)
+    @match = service.match
     if @match.update(match_params)
       redirect_to @match
     else
@@ -65,51 +68,8 @@ class MatchesController < ApplicationController
 
   private
 
-  def load_match(new: false)
-    if new == true
-      @match = Match.new
-      return
-    end
-    @match = Match.find(params[:id])
-  end
-
-  def load_matches
-    load_volunteer_and_client
-    if @volunteer
-      @matches = Match.where(volunteer_id: @volunteer.id).includes(:client, :volunteer).order('clients.last_name ASC')
-    elsif @client
-      @matches = Match.where(client_id: @client.id).includes(:client, :volunteer).order('clients.last_name ASC')
-    else
-      @matches = Match.all.includes(:client, :volunteer).order('clients.last_name ASC')
-    end
-  end
-
-  def load_volunteer_and_client
-    @volunteer = Volunteer.find(params[:volunteer_id]) if params[:volunteer_id]
-    @client = Client.find(params[:client_id]) if params[:client_id]
-  end
-
-  def load_volunteers(match_exploration_valid)
-    return unless match_exploration_valid
-
-    @volunteers = Volunteer.joins(:volunteer_availabilities).where(
-      "volunteer_availabilities.start_hour <= :start_time AND
-      volunteer_availabilities.end_hour >= :end_time AND
-      volunteer_availabilities.day = :day",
-      start_time: search_time_range.start_time,
-      end_time: search_time_range.end_time,
-      day: search_time_range.day).distinct.order(:last_name)
-  end
-
-  def search_time_range
-    TimeRange.new(
-      @match_exploration.day,
-      @match_exploration.start_time,
-      @match_exploration.end_time)
-  end
-
-  def time_range_params?
-    params[:day] && params[:start_time] && params[:end_time]
+  def load_new_match
+    @match = Match.new
   end
 
   def match_params
