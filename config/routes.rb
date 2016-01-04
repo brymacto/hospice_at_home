@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     resources :matches, only: [:show, :index]
     member do
       post 'add_volunteer_availabilities'
+      post 'add_volunteer_specialties'
     end
   end
   get 'matches/explorer' => 'matches#explorer', as: :matches_explorer

@@ -19,6 +19,9 @@ class VolunteersController < ApplicationController
   def edit(_flash_message = nil)
     load_volunteer
     load_availabilities
+    @volunteer_specialties = @volunteer.volunteer_specialties
+    @volunteer_specialty = VolunteerSpecialty.new
+    @volunteer_specialties_options = VolunteerSpecialty.all
   end
 
   def new
@@ -52,6 +55,20 @@ class VolunteersController < ApplicationController
     @day_options = Date::DAYNAMES.zip(Date::DAYNAMES.map(&:downcase))
   end
 
+  def add_volunteer_specialties
+    attrs = volunteer_specialty_params
+    @volunteer_specialty = VolunteerSpecialty.new(attrs)
+    if !@volunteer_specialty.save
+      flash.now[:error] = @volunteer_availability.errors.full_messages.to_sentence
+    else
+      Volunteer.find(params[:id]).volunteer_specialties << @volunteer_specialty
+    end
+
+    load_volunteer
+    load_availabilities
+    @volunteer_specialties = @volunteer.volunteer_specialties
+    render 'edit'
+  end
   def add_volunteer_availabilities
     attrs = volunteer_availability_params
     @volunteer_availability = VolunteerAvailability.new(attrs.merge(volunteer_id: params[:id]))
@@ -60,6 +77,7 @@ class VolunteersController < ApplicationController
     end
     load_volunteer
     load_availabilities
+    @volunteer_specialties_options = VolunteerSpecialty.all
     render 'edit'
   end
 
@@ -70,6 +88,10 @@ class VolunteersController < ApplicationController
 
   def load_volunteer
     @volunteer = Volunteer.find(params[:id])
+  end
+
+  def volunteer_specialty_params
+    params.require(:volunteer_specialty).permit(:name)
   end
 
   def volunteer_availability_params
