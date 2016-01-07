@@ -69,6 +69,7 @@ class VolunteersController < ApplicationController
     @volunteer_specialties = @volunteer.volunteer_specialties
     render 'edit'
   end
+
   def add_volunteer_availabilities
     attrs = volunteer_availability_params
     @volunteer_availability = VolunteerAvailability.new(attrs.merge(volunteer_id: params[:id]))

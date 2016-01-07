@@ -29,6 +29,23 @@ end
   )
 end
 
+[
+  'Expressive Arts',
+  'Bereavement Support',
+  'Healing Touch',
+  'Therapeutic touch',
+  'Reiki',
+  'Reflexology',
+  'Registered Massage Therapy',
+  'Spiritual Support'
+].each do |specialty_name|
+  VolunteerSpecialty.create(name: specialty_name)
+end
+
+VolunteerSpecialty.all.each do |specialty|
+  Volunteer.order('RANDOM()').first.volunteer_specialties << specialty
+end
+
 10.times do
   match_proposal_params = ActionController::Parameters.new(
     day: %w(monday tuesday wednesday thursday friday).sample,
