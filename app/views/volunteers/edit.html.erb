@@ -14,9 +14,9 @@
 
 </ul>
 <h3>Add specialty</h3>
-<%= form_for @volunteer_specialty, url: add_volunteer_specialties_volunteer_path(@volunteer) do |f| %>
+<%= form_for @volunteer, url: {action: 'add_volunteer_specialty'} do |f| %>
     <%= label_tag(:volunteer_specialty, "Specialty") %>
-    <%= f.select :name, @volunteer_specialties_options.collect{ |volunteer_specialty| volunteer_specialty.name }, class: 'form_field' %>
+    <%= f.select :volunteer_specialty_ids, @volunteer_specialties_options.collect{ |volunteer_specialty| [volunteer_specialty.name, volunteer_specialty.id] }, class: 'form_field' %>
     <%= f.submit "Add specialty" %>
 <% end %>
 <h2>Availability</h2>

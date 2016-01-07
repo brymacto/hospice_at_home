@@ -36,6 +36,12 @@ class VolunteerSpecialtiesController < ApplicationController
     end
   end
 
+  def destroy
+    load_volunteer_specialty
+    @volunteer_specialty.destroy
+    redirect_to volunteer_specialties_path
+  end
+
   private
 
   def load_volunteer_specialty

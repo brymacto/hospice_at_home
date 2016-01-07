@@ -1,2 +1,6 @@
 <h1>Edit specialty <%= @volunteer_specialty.name %></h1>
 <%= render "form" %>
+
+<%= link_to 'Delete', volunteer_specialty_path(@volunteer_specialty),
+            method: :delete,
+            data: {confirm: 'Are you sure?'} %>

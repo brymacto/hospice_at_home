@@ -13,15 +13,19 @@ class VolunteersController < ApplicationController
     load_volunteer
     @matches = @volunteer.matches
     @volunteer_availabilities = @volunteer.volunteer_availabilities
-    @volunteer_specialties = @volunteer.volunteer_specialties
+    load_specialties
   end
 
   def edit(_flash_message = nil)
     load_volunteer
     load_availabilities
-    @volunteer_specialties = @volunteer.volunteer_specialties
+    load_specialties
     @volunteer_specialty = VolunteerSpecialty.new
     @volunteer_specialties_options = VolunteerSpecialty.all
+  end
+
+  def load_specialties
+    @volunteer_specialties = @volunteer.volunteer_specialties
   end
 
   def new
@@ -45,7 +49,7 @@ class VolunteersController < ApplicationController
     else
       flash.now[:error] = @volunteer.errors.full_messages.to_sentence
       load_availabilities
-      render 'edit'
+      redirect_to 'edit'
     end
   end
 
@@ -55,19 +59,16 @@ class VolunteersController < ApplicationController
     @day_options = Date::DAYNAMES.zip(Date::DAYNAMES.map(&:downcase))
   end
 
-  def add_volunteer_specialties
-    attrs = volunteer_specialty_params
-    @volunteer_specialty = VolunteerSpecialty.new(attrs)
-    if !@volunteer_specialty.save
-      flash.now[:error] = @volunteer_availability.errors.full_messages.to_sentence
-    else
-      Volunteer.find(params[:id]).volunteer_specialties << @volunteer_specialty
-    end
-
+  def add_volunteer_specialty
     load_volunteer
-    load_availabilities
-    @volunteer_specialties = @volunteer.volunteer_specialties
-    render 'edit'
+    volunteer_specialty = VolunteerSpecialty.find(volunteer_specialty_params[:volunteer_specialty_ids][0])
+    if @volunteer.volunteer_specialties.include?(volunteer_specialty)
+      p "ABOUT TO FLASH ERROR"
+      flash[:error] = "#{@volunteer.name} already has the specialty #{volunteer_specialty.name}"
+    else
+      @volunteer.volunteer_specialties << volunteer_specialty unless @volunteer.volunteer_specialties.include?(volunteer_specialty)
+    end
+    redirect_to @volunteer
   end
 
   def add_volunteer_availabilities
@@ -84,15 +85,12 @@ class VolunteersController < ApplicationController
 
   private
 
-  def volunteer_match_link_path
-  end
-
   def load_volunteer
     @volunteer = Volunteer.find(params[:id])
   end
 
   def volunteer_specialty_params
-    params.require(:volunteer_specialty).permit(:name)
+    params.require(:volunteer).permit(:volunteer_specialty_ids)
   end
 
   def volunteer_availability_params
@@ -100,6 +98,6 @@ class VolunteersController < ApplicationController
   end
 
   def volunteer_params
-    params.require(:volunteer).permit(:last_name, :first_name)
+    params.require(:volunteer).permit(:last_name, :first_name, :volunteer_specialty_ids)
   end
 end
