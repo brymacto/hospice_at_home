@@ -1,0 +1,7 @@
+<%= form_for @volunteer_specialty do |f| %>
+    <div class="width100">
+      <%= label_tag(:name, "Name") %>
+      <%= f.text_field :name, class: 'form_field' %>
+    </div>
+    <%= f.submit "Submit" %>
+<% end %>

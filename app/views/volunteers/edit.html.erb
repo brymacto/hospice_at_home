@@ -1,6 +1,24 @@
 <h1>Edit volunteer</h1>
 <%= link_to 'Back to volunteer', volunteer_path(@volunteer) %>
 <%= render "form" %>
+
+<h2>Specialties</h2>
+<% if @volunteer_specialties && @volunteer_specialties.size > 0 %>
+    <ul>
+      <% @volunteer_specialties.each do |volunteer_specialty| %>
+          <%= volunteer_specialty.name %>
+      <% end %>
+<% else %>
+    <p><%= @volunteer.name %> has no specialties.</p>
+<% end %>
+
+</ul>
+<h3>Add specialty</h3>
+<%= form_for @volunteer, url: {action: 'add_volunteer_specialty'} do |f| %>
+    <%= label_tag(:volunteer_specialty, "Specialty") %>
+    <%= f.select :volunteer_specialty_ids, @volunteer_specialties_options.collect{ |volunteer_specialty| [volunteer_specialty.name, volunteer_specialty.id] }, class: 'form_field' %>
+    <%= f.submit "Add specialty" %>
+<% end %>
 <h2>Availability</h2>
 <table>
   <tr>
