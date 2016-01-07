@@ -1,6 +1,6 @@
 class VolunteerSpecialtiesController < ApplicationController
   def index
-    @volunteer_specialties = VolunteerSpecialty.all
+    @volunteer_specialties = VolunteerSpecialty.all.includes(:volunteers).order('volunteer_specialties.name ASC')
   end
 
   def new
