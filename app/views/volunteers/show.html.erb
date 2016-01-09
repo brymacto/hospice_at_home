@@ -108,6 +108,10 @@
 <% end %>
 
 <h2>Matches</h2>
+<%= link_to 'Add match',
+            {controller: 'matches',
+             action: 'new',
+             volunteer_id: @volunteer.id}, class: [:button, 'float_right'] %>
 <% if @matches.size > 0 %>
     <%= render "matches/matches_table", object: @volunteer %>
 <% else %>

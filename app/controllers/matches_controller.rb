@@ -26,6 +26,7 @@ class MatchesController < ApplicationController
 
   def new
     @breadcrumb_links = [{ path: matches_path, name: 'Matches' }, { path: new_match_path, name: 'New match' }]
+    @volunteer = Volunteer.find(params[:volunteer_id]) if params[:volunteer_id]
     load_new_match
     @day_options = Date::DAYNAMES.zip(Date::DAYNAMES.map(&:downcase))
   end

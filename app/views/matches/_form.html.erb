@@ -5,7 +5,11 @@
     </div>
     <div class="width50">
       <%= label_tag(:volunteer_association, "Volunteer") %><br>
-      <%= f.collection_select(:volunteer_id, Volunteer.all, :id, :name, prompt: true) %>
+      <% if @volunteer %>
+          <%= f.collection_select(:volunteer_id, Volunteer.all, :id, :name, selected: @volunteer.id, prompt: true) %>
+      <% else %>
+          <%= f.collection_select(:volunteer_id, Volunteer.all, :id, :name, prompt: true) %>
+      <% end %>
     </div>
 
     <div class="width33">
