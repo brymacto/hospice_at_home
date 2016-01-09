@@ -66,12 +66,19 @@
     <th>Day</th>
     <th>Start time</th>
     <th>End time</th>
+    <th>Actions</th>
   </tr>
   <% @volunteer_availabilities.each do |volunteer_availability| %>
       <tr>
         <td><%= volunteer_availability.day.capitalize %></td>
         <td><%= volunteer_availability.start_hour %></td>
         <td><%= volunteer_availability.end_hour %></td>
+        <td>
+          <%= link_to 'Edit', edit_volunteer_availability_path(volunteer_availability) %>,
+          <%= link_to 'Delete', volunteer_availability_path(volunteer_availability),
+                      method: :delete
+          %>
+        </td>
       </tr>
   <% end %>
 </table>
