@@ -41,16 +41,9 @@ class MatchExplorerService
   end
 
   def match_exploration_query
-    if match_exploration.specialty_id
-      return "volunteer_availabilities.start_hour <= :start_time AND
-      volunteer_availabilities.end_hour >= :end_time AND
-      volunteer_availabilities.day = :day AND
-      volunteer_specialties.id = :volunteer_specialty_id"
-    else
-      return "volunteer_availabilities.start_hour <= :start_time AND
-      volunteer_availabilities.end_hour >= :end_time AND
-      volunteer_availabilities.day = :day"
-    end
+    "volunteer_availabilities.start_hour <= :start_time AND
+     volunteer_availabilities.end_hour >= :end_time AND
+     volunteer_availabilities.day = :day#{' AND volunteer_specialties.id = :volunteer_specialty_id' if match_exploration.specialty_id}"
   end
 
   def match_exploration_time_range
