@@ -16,6 +16,7 @@ Rails.application.routes.draw do
     member do
       post 'add_volunteer_availabilities'
       patch 'add_volunteer_specialty'
+      get 'remove_volunteer_specialty'
     end
   end
   get 'matches/explorer' => 'matches#explorer', as: :matches_explorer
