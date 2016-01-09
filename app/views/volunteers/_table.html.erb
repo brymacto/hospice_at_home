@@ -1,13 +1,15 @@
 <table>
-  <th>ID</th>
   <th>Name</th>
+  <th>Number of matches</th>
   <th>Actions</th>
 
   <% @volunteers.each do |volunteer| %>
       <tr>
-        <td><%= volunteer.id %></td>
         <td>
-          <%= link_to "#{volunteer.first_name} #{volunteer.last_name}", volunteer %>
+          <%= link_to volunteer.name, volunteer %>
+        </td>
+        <td>
+          <%= volunteer.matches.size %>
         </td>
         <td><%= link_to "Edit", edit_volunteer_path(volunteer.id) %></td>
       </tr>

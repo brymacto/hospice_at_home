@@ -37,7 +37,7 @@ class VolunteersController < ApplicationController
 
   def index
     @breadcrumb_links = [{path: volunteers_path, name: 'Volunteers'}]
-    @volunteers = Volunteer.all.order(last_name: :asc)
+    @volunteers = Volunteer.all.order(last_name: :asc).includes(:matches)
   end
 
   def destroy

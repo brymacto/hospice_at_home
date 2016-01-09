@@ -28,7 +28,7 @@ class ClientsController < ApplicationController
 
   def index
     @breadcrumb_links = [{path: clients_path, name: 'Clients'}]
-    @clients = Client.all.order(last_name: :asc)
+    @clients = Client.all.order(last_name: :asc).includes(:matches)
   end
 
   def destroy
