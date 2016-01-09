@@ -11,13 +11,13 @@ class MatchesController < ApplicationController
   end
 
   def show
-    service = LoadMatchService.new(params, load_collection: false)
+    service = LoadMatch.new(params, load_collection: false)
     @match = service.match
     @match_proposal = service.match_proposal
   end
 
   def edit
-    service = LoadMatchService.new(params, load_collection: false)
+    service = LoadMatch.new(params, load_collection: false)
     @match = service.match
     @day_options = Date::DAYNAMES.zip(Date::DAYNAMES.map(&:downcase))
   end
@@ -38,7 +38,7 @@ class MatchesController < ApplicationController
   end
 
   def index
-    service = LoadMatchService.new(params, load_collection: true)
+    service = LoadMatch.new(params, load_collection: true)
     @matches = service.matches
     @match_proposals = service.match_proposals
     @no_turbolinks = true
@@ -50,14 +50,14 @@ class MatchesController < ApplicationController
   end
 
   def destroy
-    service = LoadMatchService.new(params, load_collection: false)
+    service = LoadMatch.new(params, load_collection: false)
     @match = service.match
     @match.destroy
     redirect_to matches_path
   end
 
   def update
-    service = LoadMatchService.new(params, load_collection: false)
+    service = LoadMatch.new(params, load_collection: false)
     @match = service.match
     if @match.update(match_params)
       redirect_to @match
