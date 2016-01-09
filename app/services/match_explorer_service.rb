@@ -22,7 +22,8 @@ class MatchExplorerService
         :volunteer_id,
         :day,
         :start_time,
-        :end_time
+        :end_time,
+        :specialty_id
       )
     end
   end

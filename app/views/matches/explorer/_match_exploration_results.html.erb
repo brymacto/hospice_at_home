@@ -6,7 +6,12 @@
 
     <h2>Search results for <%= @match_exploration.day.capitalize %>,
       from <%= @match_exploration.start_time %>
-      to <%= @match_exploration.end_time %></h2>
+      to <%= @match_exploration.end_time %>
+    <% if @match_exploration.specialty_id %>
+      with specialty <%= VolunteerSpecialty.find(@match_exploration.specialty_id).name %>
+      <% end %>
+
+    </h2>
     <% if @volunteers && @volunteers.size > 0 %>
         <%= render "/matches/explorer/volunteers_table" %>
         <h2>Create a match proposal</h2>

@@ -13,19 +13,19 @@ class MatchesController < ApplicationController
   def show
     service = LoadMatch.new(params, load_collection: false)
     @match = service.match
-    @breadcrumb_links = [{ path: matches_path, name: 'Matches' }, { path: match_path(@match), name: @match.name }]
+    @breadcrumb_links = [{path: matches_path, name: 'Matches'}, {path: match_path(@match), name: @match.name}]
     @match_proposal = service.match_proposal
   end
 
   def edit
     service = LoadMatch.new(params, load_collection: false)
     @match = service.match
-    @breadcrumb_links = [{ path: matches_path, name: 'Matches' }, { path: match_path(@match), name: @match.name }, { path: edit_match_path(@match), name: 'Edit' }]
+    @breadcrumb_links = [{path: matches_path, name: 'Matches'}, {path: match_path(@match), name: @match.name}, {path: edit_match_path(@match), name: 'Edit'}]
     @day_options = Date::DAYNAMES.zip(Date::DAYNAMES.map(&:downcase))
   end
 
   def new
-    @breadcrumb_links = [{ path: matches_path, name: 'Matches' }, { path: new_match_path, name: 'New match' }]
+    @breadcrumb_links = [{path: matches_path, name: 'Matches'}, {path: new_match_path, name: 'New match'}]
     @volunteer = Volunteer.find(params[:volunteer_id]) if params[:volunteer_id]
     load_new_match
     @day_options = Date::DAYNAMES.zip(Date::DAYNAMES.map(&:downcase))
@@ -33,7 +33,7 @@ class MatchesController < ApplicationController
 
   def explorer
     load_new_match
-    @breadcrumb_links = [{ path: matches_path, name: 'Matches' }, { path: matches_explorer_path, name: 'Match explorer' }]
+    @breadcrumb_links = [{path: matches_path, name: 'Matches'}, {path: matches_explorer_path, name: 'Match explorer'}]
     @match_exploration_params = params[:match_exploration]
     service = MatchExplorerService.new(@match_exploration_params)
     @match_exploration = service.match_exploration
@@ -43,7 +43,7 @@ class MatchesController < ApplicationController
   end
 
   def index
-    @breadcrumb_links = [{ path: matches_path, name: 'Matches' }]
+    @breadcrumb_links = [{path: matches_path, name: 'Matches'}]
     service = LoadMatch.new(params, load_collection: true)
     @matches = service.matches
     @match_proposals = service.match_proposals
@@ -85,7 +85,8 @@ class MatchesController < ApplicationController
                                      :volunteer_id,
                                      :day,
                                      :start_time,
-                                     :end_time]
+                                     :end_time,
+                                     :specialty_id]
     )
   end
 

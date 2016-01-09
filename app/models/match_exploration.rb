@@ -11,7 +11,7 @@ class MatchExploration
   validate :end_time_possible_times
   validate :start_time_before_end_time
 
-  attr_accessor :day, :start_time, :end_time, :client_id
+  attr_accessor :day, :start_time, :end_time, :client_id, :specialty_id
 
   def values_nil?
     (start_time.nil?) && (end_time.nil?) && (day.nil?)
