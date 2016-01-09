@@ -1,0 +1,23 @@
+<%= form_tag('/match_proposals', method: "post") do %>
+    <%= hidden_field_tag(:start_time, @match_exploration_params[:start_time]) %>
+    <%= hidden_field_tag(:end_time, @match_exploration_params[:end_time]) %>
+    <%= hidden_field_tag(:day, @match_exploration_params[:day]) %>
+    <%= hidden_field_tag(:client_id, @match_exploration_params[:client_id]) %>
+
+    <h2>Search results for <%= @match_exploration.day.capitalize %>,
+      from <%= @match_exploration.start_time %>
+      to <%= @match_exploration.end_time %></h2>
+    <% if @volunteers && @volunteers.size > 0 %>
+        <%= render "/matches/explorer/volunteers_table" %>
+        <h2>Create a match proposal</h2>
+
+        <p>For a match for <%= @match_exploration_params[:day].capitalize %>
+          from <%= @match_exploration_params[:start_time] %>
+          to <%= @match_exploration_params[:end_time] %>, with
+          client <%= Client.find(@match_exploration_params[:client_id]).name %>.</p>
+        <%= submit_tag "Create proposal" %>
+    <% else %>
+        No volunteers match your search criteria.
+    <% end %>
+
+<% end %>

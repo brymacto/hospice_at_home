@@ -1,4 +1,4 @@
-class LoadMatchService
+class LoadMatch
   attr_reader :match, :match_proposal, :matches, :match_proposals
 
   def initialize(params, load_collection: false)

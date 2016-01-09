@@ -63,7 +63,6 @@ class VolunteersController < ApplicationController
     load_volunteer
     volunteer_specialty = VolunteerSpecialty.find(volunteer_specialty_params[:volunteer_specialty_ids][0])
     if @volunteer.volunteer_specialties.include?(volunteer_specialty)
-      p 'ABOUT TO FLASH ERROR'
       flash[:error] = "#{@volunteer.name} already has the specialty #{volunteer_specialty.name}"
     else
       @volunteer.volunteer_specialties << volunteer_specialty unless @volunteer.volunteer_specialties.include?(volunteer_specialty)
