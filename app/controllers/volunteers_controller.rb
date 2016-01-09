@@ -13,17 +13,14 @@ class VolunteersController < ApplicationController
     load_volunteer
     @breadcrumb_links = [{ path: volunteers_path, name: 'Volunteers' }, { path: volunteer_path(@volunteer), name: @volunteer.name }]
     @matches = @volunteer.matches
-    @volunteer_availabilities = @volunteer.volunteer_availabilities
+    load_availabilities
     load_specialties
+    @volunteer_specialties_options = VolunteerSpecialty.all
   end
 
   def edit(_flash_message = nil)
     load_volunteer
     @breadcrumb_links = [{ path: volunteers_path, name: 'Volunteers' }, { path: volunteer_path(@volunteer), name: @volunteer.name }, { path: edit_volunteer_path, name: 'Edit' }]
-    load_availabilities
-    load_specialties
-    @volunteer_specialty = VolunteerSpecialty.new
-    @volunteer_specialties_options = VolunteerSpecialty.all
   end
 
   def load_specialties
@@ -74,6 +71,13 @@ class VolunteersController < ApplicationController
     redirect_to @volunteer
   end
 
+  def remove_volunteer_specialty
+    load_volunteer
+    volunteer_specialty = VolunteerSpecialty.find(volunteer_specialty_removal_params[:volunteer_specialty_id])
+    @volunteer.volunteer_specialties.delete(volunteer_specialty)
+    redirect_to @volunteer
+  end
+
   def add_volunteer_availabilities
     attrs = volunteer_availability_params
     @volunteer_availability = VolunteerAvailability.new(attrs.merge(volunteer_id: params[:id]))
@@ -83,7 +87,7 @@ class VolunteersController < ApplicationController
     load_volunteer
     load_availabilities
     @volunteer_specialties_options = VolunteerSpecialty.all
-    render 'edit'
+    redirect_to @volunteer
   end
 
   private
@@ -93,7 +97,11 @@ class VolunteersController < ApplicationController
   end
 
   def volunteer_specialty_params
-    params.require(:volunteer).permit(:volunteer_specialty_ids)
+    params.require(:volunteer).permit(:volunteer, :volunteer_specialty_ids)
+  end
+
+  def volunteer_specialty_removal_params
+    params.permit(:volunteer_specialty_id)
   end
 
   def volunteer_availability_params
