@@ -24,6 +24,7 @@ class MatchProposalsController < ApplicationController
 
   def show
     @match_proposal = MatchProposal.find(params[:id])
+    @breadcrumb_links = [{ path: matches_path, name: 'Match proposals' }, { path: match_proposal_path(@match_proposal), name: @match_proposal.name }]
     @match_requests = @match_proposal.match_requests.includes(:volunteer).order('volunteers.last_name ASC')
   end
 

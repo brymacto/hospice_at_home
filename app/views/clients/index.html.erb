@@ -1,16 +1,25 @@
 <%= link_to 'Add client', new_client_path, class: [:button, 'float_right'] %>
 <h1>Clients</h1>
 <table>
-  <th>ID</th>
   <th>Name</th>
+  <th>Number of matches</th>
+  <th>Number of match proposals</th>
   <th>Actions</th>
   <% @clients.each do |client| %>
       <tr>
-        <td><%= client.id %></td>
         <td>
           <%= link_to "#{client.first_name} #{client.last_name}", client %>
         </td>
-        <td><%= link_to "Edit", edit_client_path(client.id) %></td>
+        <td>
+          <%= client.matches.size %>
+        </td>
+        <td>
+          <%= client.match_proposals.size %>
+
+        </td>
+        <td>
+          <%= link_to "Edit", edit_client_path(client.id) %>
+        </td>
       </tr>
 
   <% end %>

@@ -20,6 +20,7 @@
       <%= label_tag(:end_time, "End time") %>
       <%= f.text_field(:end_time, class: 'form_field', type: 'number', min: 1, max: 24) %>
     </div>
-
-    <%= f.submit "Submit" %>
+    <div style="clear:both;">
+      <%= f.submit "Submit" %>
+    </div>
 <% end %>

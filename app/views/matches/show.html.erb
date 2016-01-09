@@ -1,14 +1,30 @@
+<%= link_to 'Edit match', edit_match_path(@match), class: [:button, 'float_right'] %>
 <h1>Match</h1>
 
-<%= link_to 'Back to all matches', matches_path %>
-<%= link_to 'Edit', edit_match_path(@match) %>
 <% if @match_proposal %>
-    <p>This match accepted from a <%= link_to 'match proposal', @match_proposal %> created on <%= @match_proposal.created_at.strftime('%F') %></p>
-    <% end %>
-<h3>Client</h3>
-<p><%= link_to @match.client_name, client_path(@match.client_id) %></p>
-<h3>Volunteer</h3>
-<p><%= link_to @match.volunteer_name, volunteer_path(@match.volunteer_id) %></p>
-<h3>Day and time</h3>
-<p><%= @match.day_and_time %></p>
+    <p>This match accepted from a <%= link_to 'match proposal', @match_proposal %> created
+      on <%= @match_proposal.created_at.strftime('%F') %></p>
+<% end %>
+
+<table class="meta_table">
+  <tr>
+    <th>Client</th>
+    <td>
+      <%= link_to @match.client_name, client_path(@match.client_id) %>
+    </td>
+  </tr>
+  <tr>
+    <th>Volunteer</th>
+    <td>
+      <%= link_to @match.volunteer_name, volunteer_path(@match.volunteer_id) %>
+    </td>
+  </tr>
+  <tr>
+    <th>Day and time</th>
+    <td>
+      <%= @match.day_and_time %>
+    </td>
+  </tr>
+</table>
+
 

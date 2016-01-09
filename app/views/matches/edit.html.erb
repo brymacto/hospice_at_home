@@ -1,6 +1,3 @@
+<%= link_to 'Delete this match', match_path(@match), class: [:button, 'float_right'], method: :delete, data: { confirm: 'Are you sure?' } %>
 <h1>Edit match</h1>
 <%= render "form" %>
-
-<%= link_to 'Delete', match_path(@match),
-            method: :delete,
-            data: { confirm: 'Are you sure?' } %>

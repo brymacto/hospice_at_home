@@ -26,6 +26,10 @@ class Match < ActiveRecord::Base
     "#{day.capitalize}, #{start_time} to #{end_time}"
   end
 
+  def name
+    "#{client.name} and #{volunteer.name}"
+  end
+
   private
 
   def day_is_real_day

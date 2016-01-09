@@ -1,18 +1,16 @@
-<h1>Edit volunteer</h1>
-<%= link_to 'Back to volunteer', volunteer_path(@volunteer) %>
+<%= link_to 'Delete this volunteer', volunteer_path(@volunteer), class: [:button, 'float_right'], method: :delete, data: { confirm: 'Are you sure?' } %>
+<h1>Edit volunteer: <%= @volunteer.name %></h1>
 <%= render "form" %>
 
 <h2>Specialties</h2>
 <% if @volunteer_specialties && @volunteer_specialties.size > 0 %>
-    <ul>
-      <% @volunteer_specialties.each do |volunteer_specialty| %>
-          <%= volunteer_specialty.name %>
-      <% end %>
+    <% @volunteer_specialties.each do |volunteer_specialty| %>
+        <span class="badge badge-notice"><%= link_to volunteer_specialty.name, volunteer_specialty %></span>
+    <% end %>
 <% else %>
     <p><%= @volunteer.name %> has no specialties.</p>
 <% end %>
 
-</ul>
 <h3>Add specialty</h3>
 <%= form_for @volunteer, url: {action: 'add_volunteer_specialty'} do |f| %>
     <%= label_tag(:volunteer_specialty, "Specialty") %>
@@ -56,11 +54,9 @@
       <%= label_tag(:end_hour, "End time") %>
       <%= f.text_field :end_hour, class: 'form_field', type: 'number', min: 1, max: 24 %>
     </div>
-
+    <div style="clear:both">
     <%= f.submit "Add availability" %>
+    </div>
 <% end %>
 
-<%= link_to 'Delete', volunteer_path(@volunteer),
-            method: :delete,
-            data: {confirm: 'Are you sure?'} %>
 

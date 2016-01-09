@@ -1,13 +1,43 @@
+<%= link_to 'Delete this match proposal', match_proposal_path(@match_proposal), class: [:button, 'float_right'], method: :delete, data: { confirm: 'Are you sure?' } %>
+
 <h1>Match Proposal</h1>
-<p>Created: <%= @match_proposal.created_at.strftime('%F') %>
-  (<%= distance_of_time_in_words @match_proposal.created_at, Time.now %> ago)</p>
-<p>Day and time requested: <%= @match_proposal.day_and_time %></p>
-<p>Client: <%= link_to @match_proposal.client.name, @match_proposal.client %></p>
-<p>Status: <%= @match_proposal.status.capitalize %>
-  <% if @match_proposal.match %>
-      <%= link_to '(View match)', @match_proposal.match %>
-  <% end %>
-</p>
+
+<table class="meta_table">
+  <tr>
+    <th>ID</th>
+    <td>
+      <%= @match_proposal.id %>
+    </td>
+  </tr>
+  <tr>
+    <th>Client</th>
+    <td>
+      <%= link_to @match_proposal.client.name, @match_proposal.client %>
+    </td>
+  </tr>
+  <tr>
+    <th>Status</th>
+    <td>
+      <%= @match_proposal.status.capitalize %>
+      <% if @match_proposal.match %>
+          <%= link_to '(View match)', @match_proposal.match %>
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <th>Day and time proposed</th>
+    <td>
+      <%= @match_proposal.day_and_time %>
+    </td>
+  </tr>
+  <tr>
+    <th>Date created</th>
+    <td>
+      <%= formatted_created_at(@match_proposal) %>
+    </td>
+  </tr>
+</table>
+
 <% if @match_proposal.match_deleted_after_acceptance %>
 <div class="flash-alert">
   <span>This match proposal was accepted, but the resulting match has since been deleted.  To create a new match you can click 'accept' for a volunteer below, or start a new match proposal.</span>
@@ -38,8 +68,3 @@
       </tr>
   <% end %>
 </table>
-
-
-<%= link_to 'Delete match proposal', match_proposal_path(@match_proposal),
-            method: :delete,
-            data: {confirm: 'Are you sure?'} %>
