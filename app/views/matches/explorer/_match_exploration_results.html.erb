@@ -8,7 +8,7 @@
       from <%= @match_exploration.start_time %>
       to <%= @match_exploration.end_time %></h2>
     <% if @volunteers && @volunteers.size > 0 %>
-        <%= render "volunteers_table" %>
+        <%= render "/matches/explorer/volunteers_table" %>
         <h2>Create a match proposal</h2>
 
         <p>For a match for <%= @match_exploration_params[:day].capitalize %>
