@@ -11,23 +11,23 @@ class ClientsController < ApplicationController
 
   def show
     load_client
-    @breadcrumb_links = [{path: clients_path, name: 'Clients'}, {path: client_path(@client), name: @client.name}]
+    @breadcrumb_links = [{ path: clients_path, name: 'Clients' }, { path: client_path(@client), name: @client.name }]
     @matches = @client.matches
     @match_proposals = @client.match_proposals
   end
 
   def edit
     load_client
-    @breadcrumb_links = [{path: clients_path, name: 'Clients'}, {path: client_path(@client), name: @client.name}, {path: edit_client_path(@client), name: 'Edit'}]
+    @breadcrumb_links = [{ path: clients_path, name: 'Clients' }, { path: client_path(@client), name: @client.name }, { path: edit_client_path(@client), name: 'Edit' }]
   end
 
   def new
-    @breadcrumb_links = [{path: clients_path, name: 'Clients'}, {path: new_client_path, name: 'New'}]
+    @breadcrumb_links = [{ path: clients_path, name: 'Clients' }, { path: new_client_path, name: 'New' }]
     @client = Client.new
   end
 
   def index
-    @breadcrumb_links = [{path: clients_path, name: 'Clients'}]
+    @breadcrumb_links = [{ path: clients_path, name: 'Clients' }]
     @clients = Client.all.order(last_name: :asc).includes(:matches)
   end
 

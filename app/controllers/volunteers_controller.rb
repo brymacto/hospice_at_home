@@ -11,7 +11,7 @@ class VolunteersController < ApplicationController
 
   def show
     load_volunteer
-    @breadcrumb_links = [{path: volunteers_path, name: 'Volunteers'}, {path: volunteer_path(@volunteer), name: @volunteer.name}]
+    @breadcrumb_links = [{ path: volunteers_path, name: 'Volunteers' }, { path: volunteer_path(@volunteer), name: @volunteer.name }]
     @matches = @volunteer.matches
     @volunteer_availabilities = @volunteer.volunteer_availabilities
     load_specialties
@@ -19,7 +19,7 @@ class VolunteersController < ApplicationController
 
   def edit(_flash_message = nil)
     load_volunteer
-    @breadcrumb_links = [{path: volunteers_path, name: 'Volunteers'}, {path: volunteer_path(@volunteer), name: @volunteer.name}, {path: edit_volunteer_path, name: 'Edit'}]
+    @breadcrumb_links = [{ path: volunteers_path, name: 'Volunteers' }, { path: volunteer_path(@volunteer), name: @volunteer.name }, { path: edit_volunteer_path, name: 'Edit' }]
     load_availabilities
     load_specialties
     @volunteer_specialty = VolunteerSpecialty.new
@@ -31,12 +31,12 @@ class VolunteersController < ApplicationController
   end
 
   def new
-    @breadcrumb_links = [{path: volunteers_path, name: 'Volunteers'}, {path: new_volunteer_path, name: 'Add volunteer'}]
+    @breadcrumb_links = [{ path: volunteers_path, name: 'Volunteers' }, { path: new_volunteer_path, name: 'Add volunteer' }]
     @volunteer = Volunteer.new
   end
 
   def index
-    @breadcrumb_links = [{path: volunteers_path, name: 'Volunteers'}]
+    @breadcrumb_links = [{ path: volunteers_path, name: 'Volunteers' }]
     @volunteers = Volunteer.all.order(last_name: :asc).includes(:matches)
   end
 
