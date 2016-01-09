@@ -15,6 +15,7 @@ class VolunteersController < ApplicationController
     @matches = @volunteer.matches
     @volunteer_availabilities = @volunteer.volunteer_availabilities
     load_specialties
+    @volunteer_specialties_options = VolunteerSpecialty.all
   end
 
   def edit(_flash_message = nil)

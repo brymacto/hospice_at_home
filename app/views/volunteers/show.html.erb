@@ -31,11 +31,26 @@
 <h2>Specialties</h2>
 
 <% if @volunteer_specialties && @volunteer_specialties.size > 0 %>
-      <% @volunteer_specialties.each do |volunteer_specialty| %>
-      <span class="badge badge-notice"><%= link_to volunteer_specialty.name, volunteer_specialty %></span>
-      <% end %>
+    <% @volunteer_specialties.each do |volunteer_specialty| %>
+        <span class="badge badge-notice"><%= link_to volunteer_specialty.name, volunteer_specialty %></span>
+    <% end %>
 <% else %>
     <p><%= @volunteer.name %> has no specialties.</p>
+<% end %>
+
+<%= form_for @volunteer, url: {action: 'add_volunteer_specialty'}, html: {class: :horizontal_form} do |f| %>
+    <div class="label">
+      <%= label_tag(:volunteer_specialty, "Add specialty:") %>
+    </div>
+    <div class="input stretch">
+      <%= f.select :volunteer_specialty_ids,
+          @volunteer_specialties_options.collect { |volunteer_specialty| [volunteer_specialty.name, volunteer_specialty.id] },
+          selected: @volunteer_specialties_options.first,
+          class: 'form_field' %>
+    </div>
+    <div class="button">
+      <%= f.submit "Add" %>
+    </div>
 <% end %>
 
 

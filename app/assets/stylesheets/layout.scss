@@ -77,6 +77,11 @@ h2, h3 {
   margin-top: 1em;
 }
 
+h2 {
+  background-color: tint($c_primary, 80%);
+  padding: 0.5em;
+  color: tint($c_primary, 10%);
+}
 
 .meta_table th, td {
   border-bottom-width: 0px;
@@ -87,4 +92,28 @@ h2, h3 {
   background-color: tint($light-gray, 65%);
   border: 1px solid $light-gray;
   padding: 1em;
+}
+
+form.horizontal_form {
+  display: table;
+  clear: both;
+  margin: 1em;
+  width: 100%;
+}
+
+form.horizontal_form div {
+  display: table-cell;
+  padding: 0.5em;
+}
+
+form.horizontal_form div.stretch {
+  width: 90%
+}
+
+form.horizontal_form div.stretch input, form.horizontal_form div.stretch select {
+  width: 100%
+}
+
+form.horizontal_form div.label {
+  white-space: nowrap;
 }
