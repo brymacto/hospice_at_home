@@ -21,10 +21,6 @@ class VolunteersController < ApplicationController
   def edit(_flash_message = nil)
     load_volunteer
     @breadcrumb_links = [{ path: volunteers_path, name: 'Volunteers' }, { path: volunteer_path(@volunteer), name: @volunteer.name }, { path: edit_volunteer_path, name: 'Edit' }]
-    load_availabilities
-    load_specialties
-    @volunteer_specialty = VolunteerSpecialty.new
-    @volunteer_specialties_options = VolunteerSpecialty.all
   end
 
   def load_specialties
