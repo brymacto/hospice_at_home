@@ -110,12 +110,27 @@ form.horizontal_form div.stretch {
   width: 90%
 }
 
+form.horizontal_form div.stretch_short {
+  width: 60%
+}
+
 form.horizontal_form div.stretch input, form.horizontal_form div.stretch select {
   width: 100%
 }
 
+form.horizontal_form div.input input, form.horizontal_form div.input select {
+  margin-bottom: 0em;
+  margin-top: 0em;
+  vertical-align: center;
+  margin-right: 0px;
+}
+
 form.horizontal_form div.label {
   white-space: nowrap;
+}
+
+form.horizontal_form div.button {
+  text-align: right;
 }
 
 .red, a.red {

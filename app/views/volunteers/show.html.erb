@@ -50,9 +50,9 @@
     </div>
     <div class="input stretch">
       <%= f.select :volunteer_specialty_ids,
-          @volunteer_specialties_options.collect { |volunteer_specialty| [volunteer_specialty.name, volunteer_specialty.id] },
-          selected: @volunteer_specialties_options.first,
-          class: 'form_field' %>
+                   @volunteer_specialties_options.collect { |volunteer_specialty| [volunteer_specialty.name, volunteer_specialty.id] },
+                   selected: @volunteer_specialties_options.first,
+                   class: 'form_field' %>
     </div>
     <div class="button">
       <%= f.submit "Add" %>
@@ -75,6 +75,30 @@
       </tr>
   <% end %>
 </table>
+
+<%= form_for @volunteer_availability, url: add_volunteer_availabilities_volunteer_path(@volunteer), html: {class: :horizontal_form} do |f| %>
+    <div class="label">
+      <%= label_tag(:day, "Add availability:") %>
+    </div>
+    <div class="input" style="width: 50%;">
+      <%= f.select :day, @day_options, class: 'form_field' %>
+    </div>
+    <div class="label">
+      <%= label_tag(:start_hour, "from:") %>
+    </div>
+    <div class="input">
+      <%= f.text_field :start_hour, class: 'form_field', type: 'number', min: 0, max: 23 %>
+    </div>
+    <div class="label">
+      <%= label_tag(:end_hour, "to:") %>
+    </div>
+    <div class="input">
+      <%= f.text_field :end_hour, class: 'form_field', type: 'number', min: 1, max: 24 %>
+    </div>
+    <div class="button">
+      <%= f.submit "Add" %>
+    </div>
+<% end %>
 
 <h2>Matches</h2>
 <% if @matches.size > 0 %>

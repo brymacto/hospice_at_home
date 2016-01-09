@@ -13,7 +13,7 @@ class VolunteersController < ApplicationController
     load_volunteer
     @breadcrumb_links = [{ path: volunteers_path, name: 'Volunteers' }, { path: volunteer_path(@volunteer), name: @volunteer.name }]
     @matches = @volunteer.matches
-    @volunteer_availabilities = @volunteer.volunteer_availabilities
+    load_availabilities
     load_specialties
     @volunteer_specialties_options = VolunteerSpecialty.all
   end
@@ -91,7 +91,7 @@ class VolunteersController < ApplicationController
     load_volunteer
     load_availabilities
     @volunteer_specialties_options = VolunteerSpecialty.all
-    render 'edit'
+    redirect_to @volunteer
   end
 
   private
