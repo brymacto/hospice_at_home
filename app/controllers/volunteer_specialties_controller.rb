@@ -1,9 +1,11 @@
 class VolunteerSpecialtiesController < ApplicationController
   def index
+    @breadcrumb_links = [{path: volunteer_specialties_path, name: 'Specialties'}]
     @volunteer_specialties = VolunteerSpecialty.all.includes(:volunteers).order('volunteer_specialties.name ASC')
   end
 
   def new
+    @breadcrumb_links = [{path: volunteer_specialties_path, name: 'Specialties'}, {path: new_volunteer_specialty_path, name: 'New specialty'}]
     @volunteer_specialty = VolunteerSpecialty.new
   end
 
@@ -19,11 +21,13 @@ class VolunteerSpecialtiesController < ApplicationController
 
   def show
     load_volunteer_specialty
+    @breadcrumb_links = [{path: volunteer_specialties_path, name: 'Specialties'}, {path: volunteer_specialty_path(@volunteer_specialty), name: @volunteer_specialty.name}]
     @volunteers = @volunteer_specialty.volunteers
   end
 
   def edit
     load_volunteer_specialty
+    @breadcrumb_links = [{path: volunteer_specialties_path, name: 'Specialties'}, {path: volunteer_specialty_path(@volunteer_specialty), name: @volunteer_specialty.name}, {path: edit_volunteer_specialty_path, name: 'Edit'}]
   end
 
   def update

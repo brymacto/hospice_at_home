@@ -1,0 +1,9 @@
+<div class="breadcrumb">
+  <a href="<%= root_path %>"><%= fa_icon "home" %></a>
+  <% if @breadcrumb_links && @breadcrumb_links.size > 0 %>
+    <% @breadcrumb_links.each do |breadcrumb_link| %>
+      <a href="<%= breadcrumb_link[:path] %>"><%= breadcrumb_link[:name] %></a>
+    <% end %>
+  <% end %>
+</div>
+

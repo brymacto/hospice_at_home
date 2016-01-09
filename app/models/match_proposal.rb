@@ -37,6 +37,10 @@ class MatchProposal < ActiveRecord::Base
     !match && status == 'accepted'
   end
 
+  def name
+    "Match proposal for #{client.name}"
+  end
+
   private
 
   def day_is_real_day

@@ -13,6 +13,7 @@
 <% end %>
 <%= render "refills/navigation" %>
 <div class="container">
+  <%= render 'shared/breadcrumbs' %>
   <%= render :partial => "/layouts/flash", :locals => {:flash => flash} %>
   <%= yield %>
 </div>
