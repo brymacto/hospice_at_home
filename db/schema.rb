@@ -11,14 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160104190503) do
+ActiveRecord::Schema.define(version: 20160109205056) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "clients", force: :cascade do |t|
-    t.string "last_name"
-    t.string "first_name"
+    t.string   "last_name"
+    t.string   "first_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "match_proposals", force: :cascade do |t|
@@ -60,7 +62,9 @@ ActiveRecord::Schema.define(version: 20160104190503) do
   end
 
   create_table "volunteer_specialties", force: :cascade do |t|
-    t.string "name"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "volunteer_specialties_volunteers", id: false, force: :cascade do |t|
@@ -71,8 +75,10 @@ ActiveRecord::Schema.define(version: 20160104190503) do
   add_index "volunteer_specialties_volunteers", ["volunteer_id", "volunteer_specialty_id"], name: "vol_specialty_volunteer_id_index", unique: true, using: :btree
 
   create_table "volunteers", force: :cascade do |t|
-    t.string "last_name"
-    t.string "first_name"
+    t.string   "last_name"
+    t.string   "first_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end

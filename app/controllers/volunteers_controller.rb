@@ -27,7 +27,7 @@ class VolunteersController < ApplicationController
   end
 
   def load_specialties
-    @volunteer_specialties = @volunteer.volunteer_specialties
+    @volunteer_specialties = @volunteer.volunteer_specialties.order(name: :asc)
   end
 
   def new

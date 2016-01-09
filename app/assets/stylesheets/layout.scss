@@ -72,3 +72,19 @@ a[ng-click]{
 td {
   padding: 0.75em 0.75em;
 }
+
+h2, h3 {
+  margin-top: 1em;
+}
+
+
+.meta_table th, td {
+  border-bottom-width: 0px;
+  padding: 0.5rem;
+}
+
+.meta_table {
+  background-color: tint($light-gray, 65%);
+  border: 1px solid $light-gray;
+  padding: 1em;
+}

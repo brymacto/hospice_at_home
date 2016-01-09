@@ -1,11 +1,32 @@
-<h1>Client</h1>
+<%= link_to 'Edit client', edit_client_path(@client), class: [:button, 'float_right'] %>
+<h1>Client: <%= @client.name %></h1>
 
-<%= link_to 'Back to all clients', clients_path  %> |
-<%= link_to 'Edit', edit_client_path(@client) %>
-<h3>First name</h3>
-<p><%= @client.first_name %></p>
-<h3>Last name</h3>
-<p><%= @client.last_name %></p>
+<table class="meta_table">
+  <tr>
+    <th>ID</th>
+    <td>
+      <%= @client.id %>
+    </td>
+  </tr>
+  <tr>
+    <th>First name</th>
+    <td>
+      <%= @client.first_name %>
+    </td>
+  </tr>
+  <tr>
+    <th>Last name</th>
+    <td>
+      <%= @client.last_name %>
+    </td>
+  </tr>
+  <tr>
+    <th>Date created</th>
+    <td>
+      <%= formatted_created_at(@client) %>
+    </td>
+  </tr>
+</table>
 
 <h2>Matches</h2>
 <% if @matches.size > 0 %>
@@ -13,8 +34,6 @@
 <% else %>
     <p><%= @client.name %> has no matches.</p>
 <% end %>
-
-
 
 <h2>Match Proposals</h2>
 <% if @match_proposals.size > 0 %>
