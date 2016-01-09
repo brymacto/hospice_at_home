@@ -30,11 +30,11 @@ feature 'feature: volunteers' do
   end
   feature 'volunteer availabilities' do
     scenario 'add volunteer availability' do
-      visit edit_volunteer_path(test_volunteer.id)
+      visit volunteer_path(test_volunteer.id)
       fill_in('volunteer_availability_start_hour', with: '9')
       fill_in('volunteer_availability_end_hour', with: '10')
       select('Monday', from: 'volunteer_availability_day')
-      click_button('Add availability')
+      click_button('add_availability')
       expect(page).to have_content 'Monday'
       expect(page).to have_content '9'
       expect(page).to have_content '10'
