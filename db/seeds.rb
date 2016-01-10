@@ -45,7 +45,7 @@ end
 VolunteerSpecialty.all.each do |specialty|
   20.times do
     volunteer = Volunteer.order('RANDOM()').first
-    volunteer.volunteer_specialties << specialty if !volunteer.volunteer_specialties.include?(specialty)
+    volunteer.volunteer_specialties << specialty unless volunteer.volunteer_specialties.include?(specialty)
   end
 end
 

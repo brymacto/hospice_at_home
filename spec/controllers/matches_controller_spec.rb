@@ -30,7 +30,6 @@ RSpec.describe MatchesController, type: :controller do
 
     it 'assigns @volunteers correctly based on search params' do
       get :explorer, match_exploration: { day: 'monday', start_time: 10, end_time: 12, client_id: 1 }
-
       expect(assigns(:volunteers)).to include(test_volunteer_available)
       expect(assigns(:volunteers)).to_not include(test_volunteer_not_available)
     end
