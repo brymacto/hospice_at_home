@@ -7,6 +7,18 @@ RSpec.describe MatchesController, type: :controller do
       first_name: Faker::Name.first_name,
       last_name: Faker::Name.last_name)
   end
+
+  let!(:test_volunteer_specialty) do
+    create(:volunteer_specialty)
+  end
+
+  let!(:test_volunteer_with_specialty) do
+    create(
+      :volunteer,
+      first_name: Faker::Name.first_name,
+      last_name: Faker::Name.last_name,
+      volunteer_specialties: [test_volunteer_specialty])
+  end
   let!(:test_volunteer_not_available) do
     create(
       :volunteer,
@@ -19,6 +31,11 @@ RSpec.describe MatchesController, type: :controller do
            day: 'monday',
            start_hour: 10,
            end_hour: 24)
+    create(:volunteer_availability,
+           volunteer_id: test_volunteer_with_specialty.id,
+           day: 'monday',
+           start_hour: 10,
+           end_hour: 24)
   end
 
   describe 'GET #explorer' do
@@ -28,9 +45,16 @@ RSpec.describe MatchesController, type: :controller do
       expect(assigns(:volunteers)).to be_nil
     end
 
-    it 'assigns @volunteers correctly based on search params' do
+    it 'assigns @volunteers correctly based on availability search params' do
       get :explorer, match_exploration: { day: 'monday', start_time: 10, end_time: 12, client_id: 1 }
       expect(assigns(:volunteers)).to include(test_volunteer_available)
+      expect(assigns(:volunteers)).to_not include(test_volunteer_not_available)
+    end
+
+    it 'assigns @volunteers correctly based on specialty search params' do
+      get :explorer, match_exploration: { day: 'monday', start_time: 10, end_time: 12, client_id: 1, specialty_id: test_volunteer_specialty.id }
+      expect(assigns(:volunteers)).to include(test_volunteer_with_specialty)
+      expect(assigns(:volunteers)).to_not include(test_volunteer_available)
       expect(assigns(:volunteers)).to_not include(test_volunteer_not_available)
     end
 

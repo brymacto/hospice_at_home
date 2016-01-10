@@ -37,4 +37,8 @@ FactoryGirl.define do
     status 'pending'
     match_proposal_id 01
   end
+
+  factory :volunteer_specialty, class: 'VolunteerSpecialty' do
+    name 'Expressive Arts'
+  end
 end
