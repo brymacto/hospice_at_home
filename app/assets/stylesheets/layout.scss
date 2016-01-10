@@ -6,6 +6,12 @@ div.container {
   padding-top: 1em;
   padding: 1em;
 }
+
+.width10 {
+  @include span-columns(2);
+  @include omega();
+}
+
 .width25 {
   @include span-columns(3);
   @include omega();
@@ -143,4 +149,10 @@ form.horizontal_form div.button {
 
 .specialty {
   font-size: 1em;
+}
+
+.required_fields {
+  font-size: 0.75em;
+  font-style: italic;
+  float: right;
 }
