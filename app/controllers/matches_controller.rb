@@ -40,6 +40,7 @@ class MatchesController < ApplicationController
     @day_options = service.day_options
     @match_proposal = MatchProposal.new
     @volunteers = service.volunteers
+    @specialty_selected_value = @match_exploration.specialty_id if @match_exploration
   end
 
   def index
@@ -85,7 +86,8 @@ class MatchesController < ApplicationController
                                      :volunteer_id,
                                      :day,
                                      :start_time,
-                                     :end_time]
+                                     :end_time,
+                                     :specialty_id]
     )
   end
 

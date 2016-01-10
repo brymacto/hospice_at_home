@@ -2,8 +2,7 @@ class VolunteerAvailabilitiesController < ApplicationController
   def destroy
     load_volunteer_availability
     @volunteer_availability.destroy
-    # render nothing: true
-    redirect_to edit_volunteer_path(@volunteer)
+    redirect_to volunteer_path(@volunteer)
   end
 
   def edit
