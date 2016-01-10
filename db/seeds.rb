@@ -6,7 +6,7 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-30.times do
+50.times do
   Volunteer.create(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name)
   Client.create(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name)
 end
@@ -20,7 +20,7 @@ end
     end_time: [12, 13, 14].sample)
 end
 
-60.times do
+100.times do
   VolunteerAvailability.create(
     volunteer_id: Volunteer.order('RANDOM()').first.id,
     start_hour: [9, 10, 13].sample,
@@ -43,14 +43,17 @@ end
 end
 
 VolunteerSpecialty.all.each do |specialty|
-  Volunteer.order('RANDOM()').first.volunteer_specialties << specialty
+  20.times do
+    volunteer = Volunteer.order('RANDOM()').first
+    volunteer.volunteer_specialties << specialty if !volunteer.volunteer_specialties.include?(specialty)
+  end
 end
 
 10.times do
   match_proposal_params = ActionController::Parameters.new(
     day: %w(monday tuesday wednesday thursday friday).sample,
-    start_time: [9, 10, 11].sample,
-    end_time: [12, 13, 14].sample,
+    start_time: [7, 8, 9].sample,
+    end_time: [16, 18, 20].sample,
     client_id: Client.order('RANDOM()').first.id,
     status: 'pending',
     match_requests_attributes: {

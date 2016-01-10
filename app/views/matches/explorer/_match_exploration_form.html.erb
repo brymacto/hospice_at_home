@@ -18,14 +18,7 @@
       </div>
       <div class="width25" style="clear:both;">
         <%= label_tag(:specialty_id, "Specialty") %>
-        <%
-           if @match_exploration.specialty_id
-             specialty_selected_value = @match_exploration.specialty_id
-           else
-             specialty_selected_value = nil
-           end
-        %>
-        <%= f.select(:specialty_id, VolunteerSpecialty.all.collect { |volunteer_specialty| [volunteer_specialty.name, volunteer_specialty.id] }.unshift(["No specialty specified", nil]), class: 'form_field', selected: specialty_selected_value) %>
+        <%= f.select(:specialty_id, VolunteerSpecialty.all.collect { |volunteer_specialty| [volunteer_specialty.name, volunteer_specialty.id] }.unshift(["No specialty specified", nil]), class: 'form_field', selected: @specialty_selected_value) %>
       </div>
     </div>
 

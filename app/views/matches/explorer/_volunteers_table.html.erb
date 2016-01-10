@@ -2,14 +2,11 @@
   <colgroup>
     <col width="10%">
     <col width="50%">
-    <col width="20%">
-    <col width="20%">
-
+    <col>
   </colgroup>
   <th class="cell_center">Send proposal</th>
   <th>Name</th>
   <th>Score</th>
-  <th>Actions</th>
 
   <% @volunteers.each do |volunteer| %>
       <tr>
@@ -22,7 +19,6 @@
         <td>
           (score)
         </td>
-        <td><%= link_to "Edit", edit_volunteer_path(volunteer.id) %></td>
       </tr>
 
   <% end %>
