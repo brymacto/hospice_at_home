@@ -20,7 +20,8 @@
           from <%= @match_exploration_params[:start_time] %>
           to <%= @match_exploration_params[:end_time] %>, with
           client <%= Client.find(@match_exploration_params[:client_id]).name %>.</p>
-        <%= submit_tag "Create proposal" %>
+        <div id="create-proposal-warning" style="display: none;" class="flash-alert"></div>
+        <%= submit_tag "Create proposal", id: 'create_proposal_button' %>
     <% else %>
         No volunteers match your search criteria.
     <% end %>

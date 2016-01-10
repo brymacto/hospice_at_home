@@ -6,4 +6,12 @@ $(document).on('ready page:load', function () {
             return $(this).val() == volunteer_id;
         }).prop('selected', true);
     });
+
+  $('#create_proposal_button').click(function (event) {
+    if (!$('.matchExplorer_checkbox').is(':checked')) {
+      event.preventDefault();
+      $('#create-proposal-warning').text('You must select volunteers above before creating a match proposal.');
+      $('#create-proposal-warning').show();
+    }
+  });
 });
