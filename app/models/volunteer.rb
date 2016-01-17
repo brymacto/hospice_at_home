@@ -2,8 +2,13 @@ class Volunteer < ActiveRecord::Base
   has_many :matches, dependent: :destroy
   has_many :volunteer_availabilities, dependent: :destroy
   has_and_belongs_to_many :volunteer_specialties
+
   validates :first_name, presence: true
   validates :last_name, presence: true
+
+  geocoded_by :full_address
+  after_validation :geocode,
+                   :if => lambda { |volunteer| volunteer.any_address_changed? }
 
   def name
     "#{first_name} #{last_name}"
