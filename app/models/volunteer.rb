@@ -26,6 +26,10 @@ class Volunteer < ActiveRecord::Base
     end
   end
 
+  def any_address_changed?
+    address_changed? || city_changed? || province_changed? || postal_code_changed?
+  end
+
   private
 
   # TODO: Move above logic into availability model.
