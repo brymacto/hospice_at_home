@@ -7,5 +7,21 @@
       <%= label_tag(:last_name, "Last Name") %>
       <%= f.text_field :last_name, class: 'form_field' %>
     </div>
-<%= f.submit "Submit" %>
+    <div class="width50">
+      <%= label_tag(:address, "Address") %>
+      <%= f.text_field :address, class: 'form_field' %>
+    </div>
+    <div class="width50">
+      <%= label_tag(:city, "City") %>
+      <%= f.text_field :city, class: 'form_field' %>
+    </div>
+    <div class="width50">
+      <%= label_tag(:province, "Province") %>
+      <%= f.text_field :province, class: 'form_field' %>
+    </div>
+    <div class="width50">
+      <%= label_tag(:postal_code, "Postal Code") %>
+      <%= f.text_field :postal_code, class: 'form_field' %>
+    </div>
+    <%= f.submit "Submit" %>
 <% end %>

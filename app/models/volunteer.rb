@@ -9,6 +9,11 @@ class Volunteer < ActiveRecord::Base
     "#{first_name} #{last_name}"
   end
 
+  def full_address
+    return if !has_address?
+    "#{address}, #{city} #{province}, #{postal_code}"
+  end
+
   def available?(match_time)
     matching_availabilities = load_matching_availabilities(match_time)
 
@@ -30,5 +35,9 @@ class Volunteer < ActiveRecord::Base
     end_time_matching = (availability.end_hour >= match_time.end_time)
 
     day_matching && start_time_matching && end_time_matching
+  end
+
+  def has_address?
+    address != nil && address.size > 0
   end
 end

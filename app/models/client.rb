@@ -7,4 +7,15 @@ class Client < ActiveRecord::Base
   def name
     "#{first_name} #{last_name}"
   end
+
+  def full_address
+    return if !has_address?
+    "#{address}, #{city} #{province}, #{postal_code}"
+  end
+
+  private
+
+  def has_address?
+    address != nil && address.size > 0
+  end
 end
