@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160109205056) do
+ActiveRecord::Schema.define(version: 20160117212012) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,12 @@ ActiveRecord::Schema.define(version: 20160109205056) do
     t.string   "first_name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.decimal  "longitude",   precision: 9, scale: 6
+    t.decimal  "latitude",    precision: 9, scale: 6
+    t.string   "address"
+    t.string   "city"
+    t.string   "province"
+    t.string   "postal_code"
   end
 
   create_table "match_proposals", force: :cascade do |t|
