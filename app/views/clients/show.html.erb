@@ -50,23 +50,5 @@
 
 <% if @client.has_been_geocoded? %>
 <h2>Location</h2>
-<div id="map"></div>
-    <script type="text/javascript">
-
-      var map;
-
-      function initMap() {
-        var latLng = {lat: <%= @client.latitude %>, lng: <%= @client.longitude %>};
-        map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 14,
-          center: latLng
-        });
-        var marker = new google.maps.Marker({
-          position: latLng,
-          map: map,
-          title: '<%= @client.name %>'
-        });
-      }
-
-    </script>
+    <%= render partial: "shared/map", locals: {map_subject: @client} %>
 <% end %>
