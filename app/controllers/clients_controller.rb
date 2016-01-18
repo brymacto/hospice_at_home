@@ -14,6 +14,7 @@ class ClientsController < ApplicationController
     @breadcrumb_links = [{ path: clients_path, name: 'Clients' }, { path: client_path(@client), name: @client.name }]
     @matches = @client.matches
     @match_proposals = @client.match_proposals
+    @load_map_js = true
   end
 
   def edit
@@ -54,6 +55,6 @@ class ClientsController < ApplicationController
   end
 
   def client_params
-    params.require(:client).permit(:last_name, :first_name)
+    params.require(:client).permit(:last_name, :first_name, :address, :city, :province, :postal_code)
   end
 end

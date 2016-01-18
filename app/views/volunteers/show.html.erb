@@ -21,6 +21,12 @@
     </td>
   </tr>
   <tr>
+    <th>Address</th>
+    <td>
+      <%= @volunteer.full_address %>
+    </td>
+  </tr>
+  <tr>
     <th>Date created</th>
     <td>
       <%= formatted_created_at(@volunteer) %>
@@ -116,4 +122,9 @@
 <%= link_to 'Add match',
             {controller: 'matches',
              action: 'new',
-             volunteer_id: @volunteer.id}, class: [:button, 'float_right'], id: 'add_match' %>
+             volunteer_id: @volunteer.id}, class: [:button, 'float_right', 'bottom_margin'], id: 'add_match' %>
+
+<% if @volunteer.has_been_geocoded? %>
+<h2>Location</h2>
+    <%= render partial: "shared/map", locals: {map_subject: @volunteer} %>
+<% end %>

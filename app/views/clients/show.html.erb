@@ -21,6 +21,12 @@
     </td>
   </tr>
   <tr>
+    <th>Address</th>
+    <td>
+      <%= @client.full_address %>
+    </td>
+  </tr>
+  <tr>
     <th>Date created</th>
     <td>
       <%= formatted_created_at(@client) %>
@@ -42,3 +48,7 @@
     <p><%= @client.name %> has no match proposals.</p>
 <% end %>
 
+<% if @client.has_been_geocoded? %>
+<h2>Location</h2>
+    <%= render partial: "shared/map", locals: {map_subject: @client} %>
+<% end %>

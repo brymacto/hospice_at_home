@@ -16,6 +16,7 @@ class VolunteersController < ApplicationController
     load_availabilities
     load_specialties
     @volunteer_specialties_options = VolunteerSpecialty.all
+    @load_map_js = true
   end
 
   def edit(_flash_message = nil)
@@ -109,6 +110,6 @@ class VolunteersController < ApplicationController
   end
 
   def volunteer_params
-    params.require(:volunteer).permit(:last_name, :first_name, :volunteer_specialty_ids)
+    params.require(:volunteer).permit(:last_name, :first_name, :volunteer_specialty_ids, :address, :city, :province, :postal_code)
   end
 end
