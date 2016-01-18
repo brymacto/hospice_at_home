@@ -1,6 +1,6 @@
 namespace :geocode do
   desc 'Geocodes clients and volunteers'
-  task "update_coords" => :environment do
+  task 'update_coords' => :environment do
     clients = Client.where(latitude: nil, longitude: nil)
     clients.each do |client|
       client.geocode
@@ -22,6 +22,5 @@ namespace :geocode do
         puts "Fail: volunteer #{volunteer.name}"
       end
     end
-
   end
 end

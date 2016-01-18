@@ -8,14 +8,14 @@ class Volunteer < ActiveRecord::Base
 
   geocoded_by :full_address
   after_validation :geocode,
-                   :if => lambda { |volunteer| volunteer.any_address_changed? }
+                   if: ->(volunteer) { volunteer.any_address_changed? }
 
   def name
     "#{first_name} #{last_name}"
   end
 
   def full_address
-    return if !has_address?
+    return unless has_address?
     "#{address}, #{city} #{province}, #{postal_code}"
   end
 
@@ -36,7 +36,7 @@ class Volunteer < ActiveRecord::Base
   end
 
   def has_been_geocoded?
-    latitude != nil && longitude != nil
+    !latitude.nil? && !longitude.nil?
   end
 
   private
@@ -51,6 +51,6 @@ class Volunteer < ActiveRecord::Base
   end
 
   def has_address?
-    address != nil && address.size > 0
+    !address.nil? && address.size > 0
   end
 end

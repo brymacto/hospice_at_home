@@ -1,5 +1,4 @@
 class Client < ActiveRecord::Base
-
   has_many :matches, dependent: :destroy
   has_many :match_proposals, dependent: :destroy
 
@@ -8,14 +7,14 @@ class Client < ActiveRecord::Base
 
   geocoded_by :full_address
   after_validation :geocode,
-                   :if => lambda { |client| client.any_address_changed? }
+                   if: ->(client) { client.any_address_changed? }
 
   def name
     "#{first_name} #{last_name}"
   end
 
   def full_address
-    return if !has_address?
+    return unless has_address?
     "#{address}, #{city} #{province}, #{postal_code}"
   end
 
@@ -24,12 +23,12 @@ class Client < ActiveRecord::Base
   end
 
   def has_been_geocoded?
-    latitude != nil && longitude != nil
+    !latitude.nil? && !longitude.nil?
   end
 
   private
 
   def has_address?
-    address != nil && address.size > 0
+    !address.nil? && address.size > 0
   end
 end
