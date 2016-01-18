@@ -5,6 +5,15 @@
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
+  <% if @load_map_js == true %>
+      <script defer src="https://maps.googleapis.com/maps/api/js?key=<%= Rails.application.secrets.google_maps_browser_api %>">
+      </script>
+      <script>
+      $(document).on('ready page:load', function () {
+      initMap();
+      });
+      </script>
+  <% end %>
 </head>
 <% if @no_turbolinks && @no_turbolinks == true %>
     <body data-no-turbolink="true">

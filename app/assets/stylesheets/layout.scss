@@ -59,6 +59,10 @@ div.container {
   float: right;
 }
 
+.bottom_margin {
+  margin-bottom: 1em;
+}
+
 .logo {
   font-size: 2em;
 }
@@ -81,6 +85,7 @@ td {
 
 h2, h3 {
   margin-top: 1em;
+  clear: both;
 }
 
 h2 {
@@ -155,4 +160,9 @@ form.horizontal_form div.button {
   font-size: 0.75em;
   font-style: italic;
   float: right;
+}
+
+#map {
+  width: 100%;
+  height: 400px;
 }

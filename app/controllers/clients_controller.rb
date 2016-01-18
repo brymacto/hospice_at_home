@@ -14,6 +14,7 @@ class ClientsController < ApplicationController
     @breadcrumb_links = [{ path: clients_path, name: 'Clients' }, { path: client_path(@client), name: @client.name }]
     @matches = @client.matches
     @match_proposals = @client.match_proposals
+    @load_map_js = true
   end
 
   def edit

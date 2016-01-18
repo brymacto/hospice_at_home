@@ -16,6 +16,7 @@ class VolunteersController < ApplicationController
     load_availabilities
     load_specialties
     @volunteer_specialties_options = VolunteerSpecialty.all
+    @load_map_js = true
   end
 
   def edit(_flash_message = nil)

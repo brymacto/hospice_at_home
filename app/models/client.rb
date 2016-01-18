@@ -23,6 +23,10 @@ class Client < ActiveRecord::Base
     address_changed? || city_changed? || province_changed? || postal_code_changed?
   end
 
+  def has_been_geocoded?
+    latitude != nil && longitude != nil
+  end
+
   private
 
   def has_address?

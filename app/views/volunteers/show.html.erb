@@ -122,4 +122,27 @@
 <%= link_to 'Add match',
             {controller: 'matches',
              action: 'new',
-             volunteer_id: @volunteer.id}, class: [:button, 'float_right'], id: 'add_match' %>
+             volunteer_id: @volunteer.id}, class: [:button, 'float_right', 'bottom_margin'], id: 'add_match' %>
+
+<% if @volunteer.has_been_geocoded? %>
+<h2>Location</h2>
+<div id="map"></div>
+    <script type="text/javascript">
+
+      var map;
+
+      function initMap() {
+        var latLng = {lat: <%= @volunteer.latitude %>, lng: <%= @volunteer.longitude %>};
+        map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 14,
+          center: latLng
+        });
+        var marker = new google.maps.Marker({
+          position: latLng,
+          map: map,
+          title: '<%= @volunteer.name %>'
+        });
+      }
+
+    </script>
+<% end %>
