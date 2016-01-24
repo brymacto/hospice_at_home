@@ -46,6 +46,7 @@ module BreadcrumbGenerator
   def breadcrumb_controller_name(breadcrumb_class)
     breadcrumb_class
       .to_s
+      .underscore
       .downcase
       .pluralize
   end
