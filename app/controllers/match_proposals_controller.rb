@@ -1,4 +1,6 @@
 class MatchProposalsController < ApplicationController
+  include BreadcrumbGenerator
+
   def create
     service = CreateMatchProposal.new(params)
     if service.successful?
@@ -24,8 +26,8 @@ class MatchProposalsController < ApplicationController
 
   def show
     @match_proposal = MatchProposal.find(params[:id])
-    @breadcrumb_links = [{ path: matches_path, name: 'Match proposals' }, { path: match_proposal_path(@match_proposal), name: @match_proposal.name }]
     @match_requests = @match_proposal.match_requests.includes(:volunteer).order('volunteers.last_name ASC')
+    load_breadcrumbs([matches_path, 'Match proposals'], [match_proposal_path(@match_proposal), @match_proposal.name])
   end
 
   def destroy

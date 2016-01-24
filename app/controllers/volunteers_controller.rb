@@ -1,4 +1,6 @@
 class VolunteersController < ApplicationController
+  include BreadcrumbGenerator
+
   def create
     @volunteer = Volunteer.new(volunteer_params)
     if @volunteer.save
@@ -11,17 +13,17 @@ class VolunteersController < ApplicationController
 
   def show
     load_volunteer
-    @breadcrumb_links = [{ path: volunteers_path, name: 'Volunteers' }, { path: volunteer_path(@volunteer), name: @volunteer.name }]
     @matches = @volunteer.matches
     load_availabilities
     load_specialties
     @volunteer_specialties_options = VolunteerSpecialty.all
     @load_map_js = true
+    load_breadcrumbs([volunteers_path, 'Volunteers'], [volunteer_path(@volunteer), @volunteer.name])
   end
 
   def edit(_flash_message = nil)
     load_volunteer
-    @breadcrumb_links = [{ path: volunteers_path, name: 'Volunteers' }, { path: volunteer_path(@volunteer), name: @volunteer.name }, { path: edit_volunteer_path, name: 'Edit' }]
+    load_breadcrumbs([volunteers_path, 'Volunteers'], [volunteer_path(@volunteer), @volunteer.name], [edit_volunteer_path, 'Edit'])
   end
 
   def load_specialties
@@ -29,13 +31,13 @@ class VolunteersController < ApplicationController
   end
 
   def new
-    @breadcrumb_links = [{ path: volunteers_path, name: 'Volunteers' }, { path: new_volunteer_path, name: 'Add volunteer' }]
     @volunteer = Volunteer.new
+    load_breadcrumbs([volunteers_path, 'Volunteers'], [new_volunteer_path, 'Add volunteer'])
   end
 
   def index
-    @breadcrumb_links = [{ path: volunteers_path, name: 'Volunteers' }]
     @volunteers = Volunteer.all.order(last_name: :asc).includes(:matches)
+    load_breadcrumbs([volunteers_path, 'Volunteers'])
   end
 
   def destroy

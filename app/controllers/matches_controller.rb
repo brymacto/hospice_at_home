@@ -1,4 +1,6 @@
 class MatchesController < ApplicationController
+  include BreadcrumbGenerator
+
   def create
     @match = Match.new(match_params)
     if @match.save
@@ -13,27 +15,26 @@ class MatchesController < ApplicationController
   def show
     service = LoadMatch.new(params, load_collection: false)
     @match = service.match
-    @breadcrumb_links = [{ path: matches_path, name: 'Matches' }, { path: match_path(@match), name: @match.name }]
     @match_proposal = service.match_proposal
+    load_breadcrumbs([matches_path, 'Matches'], [match_path(@match), @match.name])
   end
 
   def edit
     service = LoadMatch.new(params, load_collection: false)
     @match = service.match
-    @breadcrumb_links = [{ path: matches_path, name: 'Matches' }, { path: match_path(@match), name: @match.name }, { path: edit_match_path(@match), name: 'Edit' }]
     @day_options = Date::DAYNAMES.zip(Date::DAYNAMES.map(&:downcase))
+    load_breadcrumbs([matches_path, 'Matches'], [match_path(@match), @match.name], [edit_match_path(@match), 'Edit'])
   end
 
   def new
-    @breadcrumb_links = [{ path: matches_path, name: 'Matches' }, { path: new_match_path, name: 'New match' }]
     @volunteer = Volunteer.find(params[:volunteer_id]) if params[:volunteer_id]
     load_new_match
     @day_options = Date::DAYNAMES.zip(Date::DAYNAMES.map(&:downcase))
+    load_breadcrumbs([matches_path, 'Matches'], [new_match_path, 'New match'])
   end
 
   def explorer
     load_new_match
-    @breadcrumb_links = [{ path: matches_path, name: 'Matches' }, { path: matches_explorer_path, name: 'Match explorer' }]
     @match_exploration_params = params[:match_exploration]
     service = MatchExplorerService.new(@match_exploration_params)
     @match_exploration = service.match_exploration
@@ -41,15 +42,16 @@ class MatchesController < ApplicationController
     @match_proposal = MatchProposal.new
     @volunteers = service.volunteers
     @specialty_selected_value = @match_exploration.specialty_id if @match_exploration
+    load_breadcrumbs([matches_path, 'Matches'], [matches_explorer_path, 'Match explorer'])
   end
 
   def index
-    @breadcrumb_links = [{ path: matches_path, name: 'Matches' }]
     service = LoadMatch.new(params, load_collection: true)
     @matches = service.matches
     @match_proposals = service.match_proposals
     @no_turbolinks = true
     @initial_tab = params[:initial_tab]
+    load_breadcrumbs([matches_path, 'Matches'])
     respond_to do |format|
       format.html
       format.json { render json: @matches }
