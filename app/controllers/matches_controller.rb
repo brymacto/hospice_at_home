@@ -16,21 +16,21 @@ class MatchesController < ApplicationController
     service = LoadMatch.new(params, load_collection: false)
     @match = service.match
     @match_proposal = service.match_proposal
-    load_breadcrumbs([matches_path, 'Matches'], [match_path(@match), @match.name])
+    load_breadcrumbs_new(Match, @match)
   end
 
   def edit
     service = LoadMatch.new(params, load_collection: false)
     @match = service.match
     @day_options = Date::DAYNAMES.zip(Date::DAYNAMES.map(&:downcase))
-    load_breadcrumbs([matches_path, 'Matches'], [match_path(@match), @match.name], [edit_match_path(@match), 'Edit'])
+    load_breadcrumbs_new(Match, @match, :edit)
   end
 
   def new
     @volunteer = Volunteer.find(params[:volunteer_id]) if params[:volunteer_id]
     load_new_match
     @day_options = Date::DAYNAMES.zip(Date::DAYNAMES.map(&:downcase))
-    load_breadcrumbs([matches_path, 'Matches'], [new_match_path, 'New match'])
+    load_breadcrumbs_new(Match, nil, :new)
   end
 
   def explorer
@@ -42,7 +42,7 @@ class MatchesController < ApplicationController
     @match_proposal = MatchProposal.new
     @volunteers = service.volunteers
     @specialty_selected_value = @match_exploration.specialty_id if @match_exploration
-    load_breadcrumbs([matches_path, 'Matches'], [matches_explorer_path, 'Match explorer'])
+    load_breadcrumbs_new(Match, nil, :match_explorer)
   end
 
   def index
@@ -51,7 +51,7 @@ class MatchesController < ApplicationController
     @match_proposals = service.match_proposals
     @no_turbolinks = true
     @initial_tab = params[:initial_tab]
-    load_breadcrumbs([matches_path, 'Matches'])
+    load_breadcrumbs_new(Match)
     respond_to do |format|
       format.html
       format.json { render json: @matches }

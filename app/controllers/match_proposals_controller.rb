@@ -9,7 +9,6 @@ class MatchProposalsController < ApplicationController
     else
       flash.now[:error] = service.error_messages
       @day_options = Date::DAYNAMES.zip(Date::DAYNAMES.map(&:downcase))
-      # TODO: assign @match_exploration before rendering, to maintain search.
       render 'matches/explorer'
     end
   end
@@ -21,13 +20,14 @@ class MatchProposalsController < ApplicationController
                        .order('clients.last_name ASC')
     respond_to do |format|
       format.json { render json: @match_proposals }
+      format.html { redirect_to matches_path }
     end
   end
 
   def show
     @match_proposal = MatchProposal.find(params[:id])
     @match_requests = @match_proposal.match_requests.includes(:volunteer).order('volunteers.last_name ASC')
-    load_breadcrumbs([matches_path, 'Match proposals'], [match_proposal_path(@match_proposal), @match_proposal.name])
+    load_breadcrumbs_new(MatchProposal, @match_proposal)
   end
 
   def destroy

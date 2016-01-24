@@ -18,12 +18,12 @@ class VolunteersController < ApplicationController
     load_specialties
     @volunteer_specialties_options = VolunteerSpecialty.all
     @load_map_js = true
-    load_breadcrumbs([volunteers_path, 'Volunteers'], [volunteer_path(@volunteer), @volunteer.name])
+    load_breadcrumbs_new(Volunteer, @volunteer)
   end
 
   def edit(_flash_message = nil)
     load_volunteer
-    load_breadcrumbs([volunteers_path, 'Volunteers'], [volunteer_path(@volunteer), @volunteer.name], [edit_volunteer_path, 'Edit'])
+    load_breadcrumbs_new(Volunteer, @volunteer, :edit)
   end
 
   def load_specialties
@@ -32,12 +32,12 @@ class VolunteersController < ApplicationController
 
   def new
     @volunteer = Volunteer.new
-    load_breadcrumbs([volunteers_path, 'Volunteers'], [new_volunteer_path, 'Add volunteer'])
+    load_breadcrumbs_new(Volunteer, nil, :new)
   end
 
   def index
     @volunteers = Volunteer.all.order(last_name: :asc).includes(:matches)
-    load_breadcrumbs([volunteers_path, 'Volunteers'])
+    load_breadcrumbs_new(Volunteer)
   end
 
   def destroy

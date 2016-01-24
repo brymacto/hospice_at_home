@@ -16,22 +16,22 @@ class ClientsController < ApplicationController
     @matches = @client.matches
     @match_proposals = @client.match_proposals
     @load_map_js = true
-    load_breadcrumbs([clients_path, 'Clients'], [client_path(@client), @client.name])
+    load_breadcrumbs_new(Client, @client)
   end
 
   def edit
     load_client
-    load_breadcrumbs([clients_path, 'Clients'], [client_path(@client), @client.name], [edit_client_path(@client), 'Edit'])
+    load_breadcrumbs_new(Client, @client, :edit)
   end
 
   def new
     @client = Client.new
-    load_breadcrumbs([clients_path, 'Clients'], [new_client_path, 'New'])
+    load_breadcrumbs_new(Client, nil, :new)
   end
 
   def index
     @clients = Client.all.order(last_name: :asc).includes(:matches)
-    load_breadcrumbs([clients_path, 'Clients'])
+    load_breadcrumbs_new(Client)
   end
 
   def destroy
