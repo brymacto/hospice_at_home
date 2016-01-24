@@ -1,4 +1,6 @@
 class ClientsController < ApplicationController
+  include BreadcrumbGenerator
+
   def create
     @client = Client.new(client_params)
     if @client.save
@@ -11,25 +13,25 @@ class ClientsController < ApplicationController
 
   def show
     load_client
-    @breadcrumb_links = [{ path: clients_path, name: 'Clients' }, { path: client_path(@client), name: @client.name }]
     @matches = @client.matches
     @match_proposals = @client.match_proposals
     @load_map_js = true
+    load_breadcrumbs(Client, @client)
   end
 
   def edit
     load_client
-    @breadcrumb_links = [{ path: clients_path, name: 'Clients' }, { path: client_path(@client), name: @client.name }, { path: edit_client_path(@client), name: 'Edit' }]
+    load_breadcrumbs(Client, @client, :edit)
   end
 
   def new
-    @breadcrumb_links = [{ path: clients_path, name: 'Clients' }, { path: new_client_path, name: 'New' }]
     @client = Client.new
+    load_breadcrumbs(Client, nil, :new)
   end
 
   def index
-    @breadcrumb_links = [{ path: clients_path, name: 'Clients' }]
     @clients = Client.all.order(last_name: :asc).includes(:matches)
+    load_breadcrumbs(Client)
   end
 
   def destroy

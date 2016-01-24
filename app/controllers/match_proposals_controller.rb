@@ -1,4 +1,6 @@
 class MatchProposalsController < ApplicationController
+  include BreadcrumbGenerator
+
   def create
     service = CreateMatchProposal.new(params)
     if service.successful?
@@ -7,7 +9,6 @@ class MatchProposalsController < ApplicationController
     else
       flash.now[:error] = service.error_messages
       @day_options = Date::DAYNAMES.zip(Date::DAYNAMES.map(&:downcase))
-      # TODO: assign @match_exploration before rendering, to maintain search.
       render 'matches/explorer'
     end
   end
@@ -19,13 +20,14 @@ class MatchProposalsController < ApplicationController
                        .order('clients.last_name ASC')
     respond_to do |format|
       format.json { render json: @match_proposals }
+      format.html { redirect_to matches_path }
     end
   end
 
   def show
     @match_proposal = MatchProposal.find(params[:id])
-    @breadcrumb_links = [{ path: matches_path, name: 'Match proposals' }, { path: match_proposal_path(@match_proposal), name: @match_proposal.name }]
     @match_requests = @match_proposal.match_requests.includes(:volunteer).order('volunteers.last_name ASC')
+    load_breadcrumbs(MatchProposal, @match_proposal)
   end
 
   def destroy
