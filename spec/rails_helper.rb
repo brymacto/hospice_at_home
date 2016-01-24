@@ -39,6 +39,7 @@ require_relative 'support/factory_girl'
 ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
+  config.include Rails.application.routes.url_helpers
   config.use_transactional_fixtures = false
 
   config.before(:suite) do

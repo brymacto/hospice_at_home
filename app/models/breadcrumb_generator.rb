@@ -5,8 +5,10 @@ module BreadcrumbGenerator
     add_object_to_breadcrumb(breadcrumb_object)
 
     actions.each do |action|
-      @breadcrumb_links << action_breadcrumb(breadcrumb_object, action)
+      @breadcrumb_links << action_breadcrumb(breadcrumb_class, breadcrumb_object, action)
     end
+
+    @breadcrumb_links
   end
 
   private
@@ -23,9 +25,10 @@ module BreadcrumbGenerator
     {path: url_for(breadcrumb_object), name: breadcrumb_object.name}
   end
 
-  def action_breadcrumb(breadcrumb_object, action)
+  def action_breadcrumb(breadcrumb_class, breadcrumb_object, action)
     return match_explorer_breadcrumb if action == :match_explorer
-    {path: url_for({action: action}), name: action.capitalize}
+    breadcrumb_object_id = (breadcrumb_object ? breadcrumb_object.id : nil)
+    {path: url_for({controller: controller_name(breadcrumb_class), action: action, id: breadcrumb_object_id}), name: action.to_s.capitalize}
   end
 
   def match_explorer_breadcrumb
@@ -38,6 +41,13 @@ module BreadcrumbGenerator
       .name
       .underscore
       .humanize
+      .pluralize
+  end
+
+  def controller_name(breadcrumb_class)
+    breadcrumb_class
+      .to_s
+      .downcase
       .pluralize
   end
 end
