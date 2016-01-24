@@ -1,7 +1,7 @@
 module BreadcrumbGenerator
   def load_breadcrumbs(breadcrumb_class, breadcrumb_object = nil, *actions)
     @breadcrumb_links = [class_breadcrumb(breadcrumb_class)]
-    add_object_to_breadcrumb(breadcrumb_object)
+    add_object_to_breadcrumb_links(breadcrumb_object)
 
     actions.each do |action|
       @breadcrumb_links << action_breadcrumb(breadcrumb_class, breadcrumb_object, action)
@@ -12,7 +12,7 @@ module BreadcrumbGenerator
 
   private
 
-  def add_object_to_breadcrumb(breadcrumb_object)
+  def add_object_to_breadcrumb_links(breadcrumb_object)
     @breadcrumb_links << object_breadcrumb(breadcrumb_object) if breadcrumb_object
   end
 
