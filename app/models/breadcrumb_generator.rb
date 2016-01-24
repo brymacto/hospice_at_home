@@ -1,11 +1,6 @@
 module BreadcrumbGenerator
-  def load_breadcrumbs(*breadcrumbs)
-    @breadcrumb_links = breadcrumbs.map do |breadcrumb|
-      {path: breadcrumb[0], name: breadcrumb[1]}
-    end
-  end
 
-  def load_breadcrumbs_new(breadcrumb_class, breadcrumb_object = nil, *actions)
+  def load_breadcrumbs(breadcrumb_class, breadcrumb_object = nil, *actions)
     @breadcrumb_links = [class_breadcrumb(breadcrumb_class)]
     add_object_to_breadcrumb(breadcrumb_object)
 

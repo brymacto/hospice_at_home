@@ -3,12 +3,12 @@ class VolunteerSpecialtiesController < ApplicationController
 
   def index
     @volunteer_specialties = VolunteerSpecialty.all.includes(:volunteers).order('volunteer_specialties.name ASC')
-    load_breadcrumbs_new(VolunteerSpecialty)
+    load_breadcrumbs(VolunteerSpecialty)
   end
 
   def new
     @volunteer_specialty = VolunteerSpecialty.new
-    load_breadcrumbs_new(VolunteerSpecialty, nil, :new)
+    load_breadcrumbs(VolunteerSpecialty, nil, :new)
   end
 
   def create
@@ -24,12 +24,12 @@ class VolunteerSpecialtiesController < ApplicationController
   def show
     load_volunteer_specialty
     @volunteers = @volunteer_specialty.volunteers
-    load_breadcrumbs_new(VolunteerSpecialty, @volunteer_specialty)
+    load_breadcrumbs(VolunteerSpecialty, @volunteer_specialty)
   end
 
   def edit
     load_volunteer_specialty
-    load_breadcrumbs_new(VolunteerSpecialty, @volunteer_specialty, :edit)
+    load_breadcrumbs(VolunteerSpecialty, @volunteer_specialty, :edit)
   end
 
   def update
