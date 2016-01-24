@@ -14,7 +14,7 @@ describe BreadcrumbGenerator do
     it 'works with a class only' do
       expect(load_breadcrumbs(Volunteer)).to(
         eql(
-          [{path: 'http://localhost:3000/volunteers', name: 'Volunteers'}]
+          [{ path: 'http://localhost:3000/volunteers', name: 'Volunteers' }]
         )
       )
     end
@@ -23,8 +23,8 @@ describe BreadcrumbGenerator do
       expect(load_breadcrumbs(Volunteer, test_volunteer)).to(
         eql(
           [
-            {path: 'http://localhost:3000/volunteers', name: 'Volunteers'},
-            {path: "http://localhost:3000/volunteers/#{test_volunteer.id}", name: 'Jane Doe'}
+            { path: 'http://localhost:3000/volunteers', name: 'Volunteers' },
+            { path: "http://localhost:3000/volunteers/#{test_volunteer.id}", name: 'Jane Doe' }
           ]
         )
       )
@@ -34,9 +34,9 @@ describe BreadcrumbGenerator do
       expect(load_breadcrumbs(Volunteer, test_volunteer, :edit)).to(
         eql(
           [
-            {path: 'http://localhost:3000/volunteers', name: 'Volunteers'},
-            {path: "http://localhost:3000/volunteers/#{test_volunteer.id}", name: 'Jane Doe'},
-            {path: "http://localhost:3000/volunteers/#{test_volunteer.id}/edit", name: 'Edit'}
+            { path: 'http://localhost:3000/volunteers', name: 'Volunteers' },
+            { path: "http://localhost:3000/volunteers/#{test_volunteer.id}", name: 'Jane Doe' },
+            { path: "http://localhost:3000/volunteers/#{test_volunteer.id}/edit", name: 'Edit' }
           ]
         )
       )
@@ -46,8 +46,8 @@ describe BreadcrumbGenerator do
       expect(load_breadcrumbs(Volunteer, nil, :new)).to(
         eql(
           [
-            {path: 'http://localhost:3000/volunteers', name: 'Volunteers'},
-            {path: 'http://localhost:3000/volunteers/new', name: 'New'}
+            { path: 'http://localhost:3000/volunteers', name: 'Volunteers' },
+            { path: 'http://localhost:3000/volunteers/new', name: 'New' }
           ]
         )
       )
