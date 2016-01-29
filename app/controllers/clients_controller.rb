@@ -30,7 +30,7 @@ class ClientsController < ApplicationController
   end
 
   def index
-    @clients = Client.all.order(last_name: :asc).includes(:matches)
+    @clients = Client.all.order(last_name: :asc).includes(:matches, :match_proposals)
     load_breadcrumbs(Client)
   end
 
