@@ -7,7 +7,6 @@ class MatchesController < ApplicationController
       redirect_to @match
     else
       flash.now[:error] = @match.errors.full_messages.to_sentence
-      @day_options = Date::DAYNAMES.zip(Date::DAYNAMES.map(&:downcase))
       render_after_create(params[:from_match_explorer])
     end
   end
@@ -22,14 +21,12 @@ class MatchesController < ApplicationController
   def edit
     service = LoadMatch.new(params, load_collection: false)
     @match = service.match
-    @day_options = Date::DAYNAMES.zip(Date::DAYNAMES.map(&:downcase))
     load_breadcrumbs(Match, @match, :edit)
   end
 
   def new
     @volunteer = Volunteer.find(params[:volunteer_id]) if params[:volunteer_id]
     load_new_match
-    @day_options = Date::DAYNAMES.zip(Date::DAYNAMES.map(&:downcase))
     load_breadcrumbs(Match, nil, :new)
   end
 
@@ -38,7 +35,6 @@ class MatchesController < ApplicationController
     @match_exploration_params = params[:match_exploration]
     service = MatchExplorerService.new(@match_exploration_params)
     @match_exploration = service.match_exploration
-    @day_options = service.day_options
     @match_proposal = MatchProposal.new
     @volunteers = service.volunteers
     @specialty_selected_value = @match_exploration.specialty_id if @match_exploration

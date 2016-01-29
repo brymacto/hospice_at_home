@@ -60,7 +60,6 @@ class VolunteersController < ApplicationController
   def load_availabilities
     @volunteer_availability = VolunteerAvailability.new
     @volunteer_availabilities = @volunteer.volunteer_availabilities
-    @day_options = Date::DAYNAMES.zip(Date::DAYNAMES.map(&:downcase))
   end
 
   def add_volunteer_specialty
