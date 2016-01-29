@@ -2,17 +2,17 @@ require 'rails_helper'
 
 describe VolunteerAvailabilityService do
   let!(:test_volunteer) { create(:volunteer) }
-  let(:params_from_volunteer_show_page) { ActionController::Parameters.new(
-    {
-      "controller" => "volunteers",
-      "action" => "show",
-      "id" => "#{test_volunteer.id}"
-    }
-  ) }
+  let(:params_from_volunteer_show_page) do
+    ActionController::Parameters.new(
+      'controller' => 'volunteers',
+      'action' => 'show',
+      'id' => "#{test_volunteer.id}"
+    )
+  end
   let(:test_availability) { create(:volunteer_availability, volunteer_id: test_volunteer.id) }
   let(:test_availability_for_other_volunteer) { create(:volunteer_availability, volunteer_id: test_volunteer.id + 1) }
-  let(:volunteer_availability_params) { {"start_hour" => "7", "end_hour" => "6", "day" => "sunday"} }
-  let(:volunteer_availability_bad_params) { {"start_hour" => "6", "end_hour" => "7", "day" => "sunday"} }
+  let(:volunteer_availability_params) { { 'start_hour' => '7', 'end_hour' => '6', 'day' => 'sunday' } }
+  let(:volunteer_availability_bad_params) { { 'start_hour' => '6', 'end_hour' => '7', 'day' => 'sunday' } }
 
   it 'instantiates correctly' do
     service = VolunteerAvailabilityService.new(params_from_volunteer_show_page)
@@ -27,9 +27,9 @@ describe VolunteerAvailabilityService do
     vol_availability_params = generate_volunteer_availability_params
     service = VolunteerAvailabilityService.new(params_from_volunteer_show_page)
 
-    expect {
+    expect do
       service.new_volunteer_availability(vol_availability_params)
-    }.to change { VolunteerAvailability.count }.by(1)
+    end.to change { VolunteerAvailability.count }.by(1)
   end
 
   it 'confirms when a volunteer availability was successfully saved' do
@@ -41,18 +41,17 @@ describe VolunteerAvailabilityService do
     expect(result).to eql(true)
   end
 
-
   it 'does not save a volunteer availability that has errors' do
-    vol_availability_params = generate_volunteer_availability_params({start_hour: 7, end_hour: 6})
+    vol_availability_params = generate_volunteer_availability_params(start_hour: 7, end_hour: 6)
     service = VolunteerAvailabilityService.new(params_from_volunteer_show_page)
 
-    expect {
+    expect do
       service.new_volunteer_availability(vol_availability_params)
-    }.to_not change { VolunteerAvailability.count }
+    end.to_not change { VolunteerAvailability.count }
   end
 
   it 'confirms when a volunteer availability was not successfully saved' do
-    vol_availability_params = generate_volunteer_availability_params({start_hour: 7, end_hour: 6})
+    vol_availability_params = generate_volunteer_availability_params(start_hour: 7, end_hour: 6)
     service = VolunteerAvailabilityService.new(params_from_volunteer_show_page)
 
     result = service.new_volunteer_availability(vol_availability_params)
@@ -61,16 +60,16 @@ describe VolunteerAvailabilityService do
   end
 
   it 'returns errors for a volunteer availability' do
-    vol_availability_params = generate_volunteer_availability_params({start_hour: 7, end_hour: 6})
+    vol_availability_params = generate_volunteer_availability_params(start_hour: 7, end_hour: 6)
     service = VolunteerAvailabilityService.new(params_from_volunteer_show_page)
 
     service.new_volunteer_availability(vol_availability_params)
     result = service.volunteer_availability_errors
 
-    expect(result).to eql("Start hour must be before end hour")
+    expect(result).to eql('Start hour must be before end hour')
   end
 end
 
 def generate_volunteer_availability_params(attrs = {})
-  {"start_hour" => attrs.fetch(:start_hour, 6), "end_hour" => attrs.fetch(:end_hour, 7), "day" => attrs.fetch(:day, 'sunday')}
+  { 'start_hour' => attrs.fetch(:start_hour, 6), 'end_hour' => attrs.fetch(:end_hour, 7), 'day' => attrs.fetch(:day, 'sunday') }
 end

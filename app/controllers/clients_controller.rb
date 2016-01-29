@@ -57,7 +57,7 @@ class ClientsController < ApplicationController
   end
 
   def load_matches
-    return if @client == nil
+    return if @client.nil?
     @matches = @client.matches
     @match_proposals = @client.match_proposals
   end

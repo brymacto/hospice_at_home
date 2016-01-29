@@ -9,7 +9,7 @@ class VolunteerAvailabilityService
   end
 
   def new_volunteer_availability(attrs)
-    return create_volunteer_availability(attrs)
+    create_volunteer_availability(attrs)
   end
 
   def create_volunteer_availability(attrs)
