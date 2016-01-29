@@ -57,11 +57,6 @@ class VolunteersController < ApplicationController
     end
   end
 
-  def load_availabilities
-    @volunteer_availability = VolunteerAvailability.new
-    @volunteer_availabilities = @volunteer.volunteer_availabilities
-  end
-
   def add_volunteer_specialty
     load_volunteer
     volunteer_specialty = VolunteerSpecialty.find(volunteer_specialty_params[:volunteer_specialty_ids][0])
@@ -81,13 +76,15 @@ class VolunteersController < ApplicationController
   end
 
   def add_volunteer_availabilities
-    attrs = volunteer_availability_params
-    @volunteer_availability = VolunteerAvailability.new(attrs.merge(volunteer_id: params[:id]))
-    unless @volunteer_availability.save
-      flash.now[:error] = @volunteer_availability.errors.full_messages.to_sentence
+    service = VolunteerAvailabilityService.new(params)
+
+    unless service.new_volunteer_availability(volunteer_availability_params)
+      flash[:error] = service.volunteer_availability_errors
     end
+
     load_volunteer
     load_availabilities
+
     @volunteer_specialties_options = VolunteerSpecialty.all
     redirect_to @volunteer
   end
@@ -96,6 +93,12 @@ class VolunteersController < ApplicationController
 
   def load_volunteer
     @volunteer = Volunteer.find(params[:id])
+  end
+
+  def load_availabilities
+    service = VolunteerAvailabilityService.new(params)
+    @volunteer_availability = service.volunteer_availability
+    @volunteer_availabilities = service.volunteer_availabilities
   end
 
   def volunteer_specialty_params
