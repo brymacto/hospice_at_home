@@ -1,11 +1,10 @@
 class VolunteerSpecialtyService
-  attr_reader :volunteer_specialty, :flash_message
+  attr_reader :volunteer, :volunteer_specialty, :flash_message
 
   def initialize(params)
     @params = params
     @volunteer = Volunteer.find(@params[:id])
     @volunteer_specialty = VolunteerSpecialty.find(@params[:volunteer][:volunteer_specialty_ids][0])
-    @volunteer_availabilities = @volunteer.volunteer_availabilities
     @flash_message = nil
   end
 
