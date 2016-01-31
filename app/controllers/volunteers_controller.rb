@@ -74,11 +74,9 @@ class VolunteersController < ApplicationController
 
   def add_volunteer_availabilities
     service = VolunteerAvailabilityService.new(params)
+    service.new_volunteer_availability(volunteer_availability_params)
 
-    unless service.new_volunteer_availability(volunteer_availability_params)
-      flash[:error] = service.volunteer_availability_errors
-    end
-
+    flash[:error] = service.volunteer_availability_errors
     load_volunteer
     load_availabilities
 

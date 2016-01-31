@@ -9,10 +9,6 @@ class VolunteerAvailabilityService
   end
 
   def new_volunteer_availability(attrs)
-    create_volunteer_availability(attrs)
-  end
-
-  def create_volunteer_availability(attrs)
     attrs.merge!(volunteer_id: @volunteer.id)
     @volunteer_availability = VolunteerAvailability.new(attrs)
     @volunteer_availability.save
