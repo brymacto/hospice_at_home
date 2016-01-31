@@ -59,19 +59,16 @@ class VolunteersController < ApplicationController
 
   def add_volunteer_specialty
     load_volunteer
-    volunteer_specialty = VolunteerSpecialty.find(volunteer_specialty_params[:volunteer_specialty_ids][0])
-    if @volunteer.volunteer_specialties.include?(volunteer_specialty)
-      flash[:error] = "#{@volunteer.name} already has the specialty #{volunteer_specialty.name}"
-    else
-      @volunteer.volunteer_specialties << volunteer_specialty unless @volunteer.volunteer_specialties.include?(volunteer_specialty)
-    end
+    service = VolunteerSpecialtyService.new(params)
+    service.add_specialty_to_volunteer
+    flash[:error] = service.flash_message
     redirect_to @volunteer
   end
 
   def remove_volunteer_specialty
     load_volunteer
-    volunteer_specialty = VolunteerSpecialty.find(volunteer_specialty_removal_params[:volunteer_specialty_id])
-    @volunteer.volunteer_specialties.delete(volunteer_specialty)
+    service = VolunteerSpecialtyService.new(params)
+    service.remove_specialty_from_volunteer
     redirect_to @volunteer
   end
 

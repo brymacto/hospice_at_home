@@ -39,11 +39,14 @@
 <% if @volunteer_specialties && @volunteer_specialties.size > 0 %>
     <% @volunteer_specialties.each do |volunteer_specialty| %>
         <span class="badge badge-notice specialty"><%= link_to volunteer_specialty.name, volunteer_specialty %>
-          <%= link_to fa_icon('close'),
-                      {controller: 'volunteers',
-                       action: 'remove_volunteer_specialty',
-                       volunteer_specialty_id: volunteer_specialty.id},
-                      class: 'red remove_specialty' %>
+          <%= link_to fa_icon('close'), {
+                                          controller: 'volunteers',
+                                          action: 'remove_volunteer_specialty',
+                                          volunteer: {
+                                            volunteer_specialty_ids: [volunteer_specialty.id]
+                                          }
+                                        },
+                                        class: 'red remove_specialty' %>
         </span>
     <% end %>
 <% else %>
