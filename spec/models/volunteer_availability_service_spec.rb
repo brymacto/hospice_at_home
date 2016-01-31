@@ -11,8 +11,6 @@ describe VolunteerAvailabilityService do
   end
   let(:test_availability) { create(:volunteer_availability, volunteer_id: test_volunteer.id) }
   let(:test_availability_for_other_volunteer) { create(:volunteer_availability, volunteer_id: test_volunteer.id + 1) }
-  let(:volunteer_availability_params) { { 'start_hour' => '7', 'end_hour' => '6', 'day' => 'sunday' } }
-  let(:volunteer_availability_bad_params) { { 'start_hour' => '6', 'end_hour' => '7', 'day' => 'sunday' } }
 
   it 'instantiates correctly' do
     service = VolunteerAvailabilityService.new(params_from_volunteer_show_page)
