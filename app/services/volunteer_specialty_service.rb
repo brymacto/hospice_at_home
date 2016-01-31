@@ -4,7 +4,7 @@ class VolunteerSpecialtyService
   def initialize(params)
     @params = params
     @volunteer = Volunteer.find(@params[:id])
-    @volunteer_specialty = VolunteerSpecialty.find(@params[:volunteer][:volunteer_specialty_ids][0])
+    @volunteer_specialty = VolunteerSpecialty.find(@params[:volunteer][:volunteer_specialty_ids])
     @flash_message = nil
   end
 

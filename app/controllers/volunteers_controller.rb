@@ -55,7 +55,7 @@ class VolunteersController < ApplicationController
   def add_volunteer_specialty
     load_volunteer
 
-    service = VolunteerSpecialtyService.new(params)
+    service = VolunteerSpecialtyService.new(volunteer_specialty_params)
     service.add_specialty_to_volunteer
 
     flash[:error] = service.flash_message
@@ -64,15 +64,14 @@ class VolunteersController < ApplicationController
 
   def remove_volunteer_specialty
     load_volunteer
-
-    service = VolunteerSpecialtyService.new(params)
+    service = VolunteerSpecialtyService.new(volunteer_specialty_params)
     service.remove_specialty_from_volunteer
 
     redirect_to @volunteer
   end
 
   def add_volunteer_availabilities
-    service = VolunteerAvailabilityService.new(params)
+    service = VolunteerAvailabilityService.new(volunteer_availability_service_params)
     service.new_volunteer_availability(volunteer_availability_params)
 
     flash[:error] = service.volunteer_availability_errors
@@ -103,7 +102,7 @@ class VolunteersController < ApplicationController
   end
 
   def load_availabilities
-    service = VolunteerAvailabilityService.new(params)
+    service = VolunteerAvailabilityService.new(volunteer_availability_service_params)
     @volunteer_availability = service.volunteer_availability
     @volunteer_availabilities = service.volunteer_availabilities
   end
@@ -116,7 +115,15 @@ class VolunteersController < ApplicationController
     params.require(:volunteer_availability).permit(:start_hour, :end_hour, :day)
   end
 
+  def volunteer_availability_service_params
+    params.permit(:id)
+  end
+
   def volunteer_params
     params.require(:volunteer).permit(:last_name, :first_name, :volunteer_specialty_ids, :address, :city, :province, :postal_code)
+  end
+
+  def volunteer_specialty_params
+    params.permit(:id, volunteer: [:volunteer_specialty_ids])
   end
 end

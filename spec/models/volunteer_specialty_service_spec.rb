@@ -9,7 +9,7 @@ describe VolunteerAvailabilityService do
       'controller' => 'volunteers',
       'action' => 'add_volunteer_specialty',
       'volunteer' => {
-        'volunteer_specialty_ids' => [test_specialty.id.to_s]
+        'volunteer_specialty_ids' => test_specialty.id.to_s
       },
       'id' => "#{test_volunteer.id}"
     )
