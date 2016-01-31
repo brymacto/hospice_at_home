@@ -39,11 +39,14 @@
 <% if @volunteer_specialties && @volunteer_specialties.size > 0 %>
     <% @volunteer_specialties.each do |volunteer_specialty| %>
         <span class="badge badge-notice specialty"><%= link_to volunteer_specialty.name, volunteer_specialty %>
-          <%= link_to fa_icon('close'),
-                      {controller: 'volunteers',
-                       action: 'remove_volunteer_specialty',
-                       volunteer_specialty_id: volunteer_specialty.id},
-                      class: 'red remove_specialty' %>
+          <%= link_to fa_icon('close'), {
+                                          controller: 'volunteers',
+                                          action: 'remove_volunteer_specialty',
+                                          volunteer: {
+                                            volunteer_specialty_ids: volunteer_specialty.id
+                                          }
+                                        },
+                                        class: 'red remove_specialty' %>
         </span>
     <% end %>
 <% else %>
@@ -94,7 +97,7 @@
       <%= label_tag(:day, "Add availability:") %>
     </div>
     <div class="input" style="width: 50%;">
-      <%= f.select :day, @day_options, class: 'form_field' %>
+      <%= f.select :day, DAY_OPTIONS, class: 'form_field' %>
     </div>
     <div class="label">
       <%= label_tag(:start_hour, "from:") %>

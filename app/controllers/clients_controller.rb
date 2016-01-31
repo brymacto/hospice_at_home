@@ -6,15 +6,14 @@ class ClientsController < ApplicationController
     if @client.save
       redirect_to @client
     else
-      flash.now[:error] = @client.errors.full_messages.to_sentence
+      load_flash_errors
       render 'new'
     end
   end
 
   def show
     load_client
-    @matches = @client.matches
-    @match_proposals = @client.match_proposals
+    load_matches
     @load_map_js = true
     load_breadcrumbs(Client, @client)
   end
@@ -30,7 +29,7 @@ class ClientsController < ApplicationController
   end
 
   def index
-    @clients = Client.all.order(last_name: :asc).includes(:matches)
+    load_client(all: true)
     load_breadcrumbs(Client)
   end
 
@@ -45,15 +44,26 @@ class ClientsController < ApplicationController
     if @client.update(client_params)
       redirect_to @client
     else
-      flash.now[:error] = @client.errors.full_messages.to_sentence
+      load_flash_errors
       render 'edit'
     end
   end
 
   private
 
-  def load_client
+  def load_client(all = false)
+    return @clients = Client.all.order(last_name: :asc).includes(:matches, :match_proposals) if all
     @client = Client.find(params[:id])
+  end
+
+  def load_matches
+    return if @client.nil?
+    @matches = @client.matches
+    @match_proposals = @client.match_proposals
+  end
+
+  def load_flash_errors
+    flash.now[:error] = @client.errors.full_messages.to_sentence
   end
 
   def client_params

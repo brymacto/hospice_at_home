@@ -12,10 +12,8 @@ class VolunteersController < ApplicationController
   end
 
   def show
-    load_volunteer
+    load_assigns(:volunteer, :availabilities, :volunteer_specialties)
     @matches = @volunteer.matches
-    load_availabilities
-    load_specialties
     @volunteer_specialties_options = VolunteerSpecialty.all
     @load_map_js = true
     load_breadcrumbs(Volunteer, @volunteer)
@@ -26,17 +24,13 @@ class VolunteersController < ApplicationController
     load_breadcrumbs(Volunteer, @volunteer, :edit)
   end
 
-  def load_specialties
-    @volunteer_specialties = @volunteer.volunteer_specialties.order(name: :asc)
-  end
-
   def new
     @volunteer = Volunteer.new
     load_breadcrumbs(Volunteer, nil, :new)
   end
 
   def index
-    @volunteers = Volunteer.all.order(last_name: :asc).includes(:matches)
+    load_volunteers
     load_breadcrumbs(Volunteer)
   end
 
@@ -48,6 +42,7 @@ class VolunteersController < ApplicationController
 
   def update
     load_volunteer
+
     if @volunteer.update(volunteer_params)
       redirect_to @volunteer
     else
@@ -57,61 +52,78 @@ class VolunteersController < ApplicationController
     end
   end
 
-  def load_availabilities
-    @volunteer_availability = VolunteerAvailability.new
-    @volunteer_availabilities = @volunteer.volunteer_availabilities
-    @day_options = Date::DAYNAMES.zip(Date::DAYNAMES.map(&:downcase))
-  end
-
   def add_volunteer_specialty
     load_volunteer
-    volunteer_specialty = VolunteerSpecialty.find(volunteer_specialty_params[:volunteer_specialty_ids][0])
-    if @volunteer.volunteer_specialties.include?(volunteer_specialty)
-      flash[:error] = "#{@volunteer.name} already has the specialty #{volunteer_specialty.name}"
-    else
-      @volunteer.volunteer_specialties << volunteer_specialty unless @volunteer.volunteer_specialties.include?(volunteer_specialty)
-    end
+
+    service = VolunteerSpecialtyService.new(volunteer_specialty_params)
+    service.add_specialty_to_volunteer
+
+    flash[:error] = service.flash_message
     redirect_to @volunteer
   end
 
   def remove_volunteer_specialty
     load_volunteer
-    volunteer_specialty = VolunteerSpecialty.find(volunteer_specialty_removal_params[:volunteer_specialty_id])
-    @volunteer.volunteer_specialties.delete(volunteer_specialty)
+    service = VolunteerSpecialtyService.new(volunteer_specialty_params)
+    service.remove_specialty_from_volunteer
+
     redirect_to @volunteer
   end
 
   def add_volunteer_availabilities
-    attrs = volunteer_availability_params
-    @volunteer_availability = VolunteerAvailability.new(attrs.merge(volunteer_id: params[:id]))
-    unless @volunteer_availability.save
-      flash.now[:error] = @volunteer_availability.errors.full_messages.to_sentence
-    end
-    load_volunteer
+    service = VolunteerAvailabilityService.new(volunteer_availability_service_params)
+    service.new_volunteer_availability(volunteer_availability_params)
+
+    flash[:error] = service.volunteer_availability_errors
+    load_assigns(:volunteer, :availabities)
     load_availabilities
+
     @volunteer_specialties_options = VolunteerSpecialty.all
     redirect_to @volunteer
   end
 
   private
 
+  def load_assigns(*assigns)
+    assigns.map!(&:to_sym)
+
+    load_volunteer if assigns.include?(:volunteer)
+    load_volunteers if assigns.include?(:volunteers)
+    load_availabilities if assigns.include?(:availabilities)
+    load_volunteer_specialties if assigns.include?(:volunteer_specialties)
+  end
+
   def load_volunteer
     @volunteer = Volunteer.find(params[:id])
   end
 
-  def volunteer_specialty_params
-    params.require(:volunteer).permit(:volunteer, :volunteer_specialty_ids)
+  def load_volunteers
+    @volunteers = Volunteer.all.order(last_name: :asc).includes(:matches)
   end
 
-  def volunteer_specialty_removal_params
-    params.permit(:volunteer_specialty_id)
+  def load_availabilities
+    service = VolunteerAvailabilityService.new(volunteer_availability_service_params)
+    @volunteer_availability = service.volunteer_availability
+    @volunteer_availabilities = service.volunteer_availabilities
+  end
+
+  def load_volunteer_specialties
+    @volunteer_specialties = @volunteer.volunteer_specialties.order(name: :asc)
   end
 
   def volunteer_availability_params
     params.require(:volunteer_availability).permit(:start_hour, :end_hour, :day)
   end
 
+  def volunteer_availability_service_params
+    params.permit(:id)
+  end
+
   def volunteer_params
     params.require(:volunteer).permit(:last_name, :first_name, :volunteer_specialty_ids, :address, :city, :province, :postal_code)
+  end
+
+  def volunteer_specialty_params
+    params.permit(:id, volunteer: [:volunteer_specialty_ids])
   end
 end

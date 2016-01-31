@@ -19,7 +19,7 @@ describe BreadcrumbGenerator do
       )
     end
 
-    it 'works with a class and an object' do
+    it 'works with a class and an instance' do
       expect(load_breadcrumbs(Volunteer, test_volunteer)).to(
         eql(
           [
@@ -30,7 +30,7 @@ describe BreadcrumbGenerator do
       )
     end
 
-    it 'works with a class, an object, and an action' do
+    it 'works with a class, an instance, and an action' do
       expect(load_breadcrumbs(Volunteer, test_volunteer, :edit)).to(
         eql(
           [
@@ -42,7 +42,7 @@ describe BreadcrumbGenerator do
       )
     end
 
-    it 'works with a class, and an action, but no object' do
+    it 'works with a class, and an action, but no instance' do
       expect(load_breadcrumbs(Volunteer, nil, :new)).to(
         eql(
           [

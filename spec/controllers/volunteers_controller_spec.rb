@@ -57,12 +57,12 @@ RSpec.describe VolunteersController, type: :controller do
 
     it 'removes volunteer specialty' do
       expect(test_volunteer.volunteer_specialties.count).to eq(1)
-      get :remove_volunteer_specialty, id: test_volunteer.id, volunteer_specialty_id: test_specialty.id
+      get :remove_volunteer_specialty, id: test_volunteer.id, volunteer: { volunteer_specialty_ids: test_specialty.id }
       expect(test_volunteer.volunteer_specialties.count).to eq(0)
     end
 
     it 'redirects to volunteer show view' do
-      get :remove_volunteer_specialty, id: test_volunteer.id, volunteer_specialty_id: test_specialty.id
+      get :remove_volunteer_specialty, id: test_volunteer.id, volunteer: { volunteer_specialty_ids: test_specialty.id }
       expect(response).to redirect_to(volunteer_path(test_volunteer))
     end
   end

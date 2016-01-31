@@ -8,7 +8,6 @@ class MatchProposalsController < ApplicationController
       redirect_to @match_proposal
     else
       flash.now[:error] = service.error_messages
-      @day_options = Date::DAYNAMES.zip(Date::DAYNAMES.map(&:downcase))
       render 'matches/explorer'
     end
   end

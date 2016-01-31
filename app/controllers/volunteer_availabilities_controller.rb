@@ -7,7 +7,6 @@ class VolunteerAvailabilitiesController < ApplicationController
 
   def edit
     load_volunteer_availability
-    @day_options = Date::DAYNAMES.zip(Date::DAYNAMES.map(&:downcase))
   end
 
   def update
