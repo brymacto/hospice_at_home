@@ -6,6 +6,26 @@ class VolunteerAvailabilityMergingService
     @availabilities_already_merged = []
   end
 
+  def merge
+    merge_duplicate_availabilities
+    refresh_availabilities
+    merge_bordering_availabilities
+  end
+
+  private
+
+  def merge_duplicate_availabilities
+    @availabilities.each do |availability|
+      return if @availabilities_already_merged.include?(availability)
+
+      duplicate_availabilities = get_duplicate_availabilities(availability)
+
+      duplicate_availabilities.each do |duplicate_availability|
+        merge_availabilities(availability, duplicate_availability)
+      end
+    end
+  end
+
   def merge_bordering_availabilities
     @availabilities.each do |availability|
       return if @availabilities_already_merged.include?(availability)
@@ -18,9 +38,14 @@ class VolunteerAvailabilityMergingService
     end
   end
 
-  private
+  def refresh_availabilities
+    @availabilities = @volunteer.reload.volunteer_availabilities
+    @availabilities_already_merged = []
+  end
 
   def merge_availabilities(availability_1, availability_2)
+    return if availability_1 == availability_2
+
     ordered_availabilities = get_ordered_availabilities(availability_1, availability_2)
 
     create_merged_availability(availability_1.day, ordered_availabilities[0], ordered_availabilities[1])
@@ -39,6 +64,21 @@ class VolunteerAvailabilityMergingService
       availability.start_hour
     end
   end
+
+  def get_duplicate_availabilities(availability)
+    @availabilities.select do |availability_for_comparison|
+      availabilities_are_equal(availability, availability_for_comparison)
+    end
+  end
+
+  def availabilities_are_equal(availability_1, availability_2)
+    availability_1 != availability_2 &&
+      availability_1.day == availability_2.day &&
+      availability_1.start_hour == availability_2.start_hour &&
+      availability_1.end_hour == availability_2.end_hour &&
+      availability_1.volunteer == availability_2.volunteer
+  end
+
 
   def get_bordering_availabilities(availability)
     @availabilities.select do |availability_for_comparison|

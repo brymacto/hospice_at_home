@@ -4,12 +4,24 @@ describe VolunteerAvailabilityMergingService do
   let!(:test_volunteer) { create(:volunteer) }
 
   describe '#merge_volunteer_availability' do
+    it 'merges duplicate volunteer availabilities' do
+      generate_availability({day: 'monday', start_hour: 9, end_hour: 10})
+      generate_availability({day: 'monday', start_hour: 9, end_hour: 10})
+      service = VolunteerAvailabilityMergingService.new(test_volunteer)
+
+      expect { service.merge }.to(
+        change { test_volunteer.reload.volunteer_availabilities.size }.by(-1)
+      )
+
+      expect(test_volunteer.reload.volunteer_availabilities).to include_availability(VolunteerAvailability.new(start_hour: 9, end_hour: 10, day: 'monday', volunteer: test_volunteer))
+    end
+
     it 'merges bordering volunteer availabilities' do
       generate_availability({day: 'monday', start_hour: 9, end_hour: 10})
       generate_availability({day: 'monday', start_hour: 10, end_hour: 11})
       service = VolunteerAvailabilityMergingService.new(test_volunteer)
 
-      expect { service.merge_bordering_availabilities }.to(
+      expect { service.merge }.to(
         change { test_volunteer.reload.volunteer_availabilities.size }.by(-1)
       )
 
@@ -21,7 +33,7 @@ describe VolunteerAvailabilityMergingService do
       generate_availability({day: 'monday', start_hour: 11, end_hour: 12})
       service = VolunteerAvailabilityMergingService.new(test_volunteer)
 
-      expect { service.merge_bordering_availabilities }.to_not(
+      expect { service.merge }.to_not(
         change { test_volunteer.reload.volunteer_availabilities }
       )
     end
@@ -31,7 +43,7 @@ describe VolunteerAvailabilityMergingService do
       generate_availability({day: 'monday', start_hour: 0, end_hour: 1})
       service = VolunteerAvailabilityMergingService.new(test_volunteer)
 
-      expect { service.merge_bordering_availabilities }.to_not(
+      expect { service.merge }.to_not(
         change { test_volunteer.reload.volunteer_availabilities }
       )
     end
@@ -41,7 +53,7 @@ describe VolunteerAvailabilityMergingService do
       generate_availability({day: 'monday', start_hour: 10, end_hour: 12})
       service = VolunteerAvailabilityMergingService.new(test_volunteer)
 
-      expect { service.merge_bordering_availabilities }.to_not(
+      expect { service.merge }.to_not(
         change { test_volunteer.reload.volunteer_availabilities }
       )
 

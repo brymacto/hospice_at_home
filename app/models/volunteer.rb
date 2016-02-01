@@ -41,7 +41,7 @@ class Volunteer < ActiveRecord::Base
 
   def merge_volunteer_availabilities
     service = VolunteerAvailabilityMergingService.new(self)
-    service.merge_bordering_availabilities
+    service.merge
   end
 
   private
