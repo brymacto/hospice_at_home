@@ -3,10 +3,12 @@ class VolunteerAvailabilityMergingService
   def initialize(volunteer)
     @volunteer = volunteer
     @availabilities = @volunteer.volunteer_availabilities
+    @availabilities_already_merged = []
   end
 
   def merge_volunteer_availability
     @availabilities.each do |availability|
+      return if @availabilities_already_merged.include?(availability)
       bordering_availabilities = get_bordering_availabilities(availability)
       bordering_availabilities.each do |bordering_availability|
         merge_availabilities(availability, bordering_availability)
@@ -22,34 +24,29 @@ class VolunteerAvailabilityMergingService
 
     create_availability(
       day,
-      ordered_availabilities[:earlier].start_hour,
-      ordered_availabilities[:later].end_hour
+      ordered_availabilities[0].start_hour,
+      ordered_availabilities[1].end_hour
     )
 
-    destroy_availability(availability_1, availability_2)
+    mark_availabilities_as_merged(availability_1, availability_2)
+    destroy_availabilities(availability_1, availability_2)
   end
 
-  def destroy_availability(*availabilities)
-    availabilities.each do |availability|
-      availability.destroy
-    end
+  def mark_availabilities_as_merged(*availabilities)
+    availabilities.each { |availability| @availabilities_already_merged << availability }
+  end
+
+  def destroy_availabilities(*availabilities)
+    availabilities.each(&:destroy)
   end
 
   def create_availability(day, start_hour, end_hour)
-    VolunteerAvailability.create(day: day, start_hour: start_hour, end_hour: end_hour, volunteer: @volunteer)
+    VolunteerAvailability.create!(day: day, start_hour: start_hour, end_hour: end_hour, volunteer: @volunteer)
   end
 
   def get_ordered_availabilities(availability_1, availability_2)
-    if availability_1.start_hour << availability_2.start_hour
-      return {
-        earlier: availability_1,
-        later: availability_2
-      }
-    else
-      return {
-        earlier: availability_2,
-        later: availability_1
-      }
+    [availability_1, availability_2].sort_by! do |availability|
+      availability.start_hour
     end
   end
 

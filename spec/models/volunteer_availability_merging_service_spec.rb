@@ -35,6 +35,18 @@ describe VolunteerAvailabilityMergingService do
         change { test_volunteer.reload.volunteer_availabilities }
       )
     end
+
+    it 'does not duplicate merged availabilities (using @availabilities_already_merged)' do
+      generate_availability({day: 'monday', start_hour: 9, end_hour: 10})
+      generate_availability({day: 'monday', start_hour: 10, end_hour: 12})
+      service = VolunteerAvailabilityMergingService.new(test_volunteer)
+
+      expect { service.merge_volunteer_availability }.to_not(
+        change { test_volunteer.reload.volunteer_availabilities }
+      )
+
+      expect(test_volunteer.reload.volunteer_availabilities).to includes_only_one_availability(VolunteerAvailability.new(start_hour: 9, end_hour: 12, day: 'monday', volunteer: test_volunteer))
+    end
   end
 end
 
@@ -51,6 +63,18 @@ end
 RSpec::Matchers.define :include_availability do |availability_being_compared|
   match do |availabilities|
     availabilities.any? do |availability|
+      availability.day == availability_being_compared.day &&
+        availability.start_hour == availability_being_compared.start_hour &&
+        availability.end_hour == availability_being_compared.end_hour &&
+        availability.volunteer == availability_being_compared.volunteer
+    end
+  end
+end
+
+
+RSpec::Matchers.define :includes_only_one_availability do |availability_being_compared|
+  match do |availabilities|
+    availabilities.one? do |availability|
       availability.day == availability_being_compared.day &&
         availability.start_hour == availability_being_compared.start_hour &&
         availability.end_hour == availability_being_compared.end_hour &&
