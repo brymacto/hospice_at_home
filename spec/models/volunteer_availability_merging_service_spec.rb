@@ -49,14 +49,12 @@ def generate_availability(args = {})
 end
 
 RSpec::Matchers.define :include_availability do |availability_being_compared|
-  match do |actual|
-    includes_availability = false
-    actual.each do |availability|
-
-      includes_availability = true if availability.day == availability_being_compared.day &&
+  match do |availabilities|
+    availabilities.any? do |availability|
+      availability.day == availability_being_compared.day &&
         availability.start_hour == availability_being_compared.start_hour &&
-        availability.end_hour == availability_being_compared.end_hour
+        availability.end_hour == availability_being_compared.end_hour &&
+        availability.volunteer == availability_being_compared.volunteer
     end
-    includes_availability
   end
 end
