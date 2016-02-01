@@ -39,6 +39,11 @@ class Volunteer < ActiveRecord::Base
     !latitude.nil? && !longitude.nil?
   end
 
+  def merge_volunteer_availabilities
+    service = VolunteerAvailabilityMergingService.new(self)
+    service.merge_bordering_availabilities
+  end
+
   private
 
   # TODO: Move above logic into availability model.

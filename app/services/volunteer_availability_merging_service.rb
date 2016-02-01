@@ -6,7 +6,7 @@ class VolunteerAvailabilityMergingService
     @availabilities_already_merged = []
   end
 
-  def merge_volunteer_availability
+  def merge_bordering_availabilities
     @availabilities.each do |availability|
       return if @availabilities_already_merged.include?(availability)
 
