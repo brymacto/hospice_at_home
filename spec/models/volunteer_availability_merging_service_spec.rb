@@ -2,25 +2,38 @@ require 'rails_helper'
 
 describe VolunteerAvailabilityMergingService do
   let!(:test_volunteer) { create(:volunteer) }
-  let!(:bordering_availability_1) { generate_availability({day: 'monday', start_time: 9, end_time: 10}) }
-  let!(:bordering_availability_2) { generate_availability({day: 'monday', start_time: 10, end_time: 11}) }
-  let!(:nonbordering_availability) { generate_availability({day: 'tuesday', start_time: 10, end_time: 11}) }
 
   describe '#merge_volunteer_availability' do
     it 'merges bordering volunteer availabilities' do
+      generate_availability({day: 'monday', start_hour: 9, end_hour: 10})
+      generate_availability({day: 'monday', start_hour: 10, end_hour: 11})
       service = VolunteerAvailabilityMergingService.new(test_volunteer)
 
-      expect do
-        service.merge_volunteer_availability
-      end.to change { test_volunteer.reload.volunteer_availabilities.size }.by(-1)
+      expect { service.merge_volunteer_availability }.to(
+        change { test_volunteer.reload.volunteer_availabilities.size }.by(-1)
+      )
+
+      expect(test_volunteer.reload.volunteer_availabilities).to include_availability(VolunteerAvailability.new(start_hour: 9, end_hour: 11, day: 'monday', volunteer: test_volunteer))
     end
 
-    xit 'does not merge non-bordering volunteer availabilities' do
+    it 'does not merge non-bordering volunteer availabilities' do
+      generate_availability({day: 'monday', start_hour: 9, end_hour: 10})
+      generate_availability({day: 'monday', start_hour: 11, end_hour: 12})
+      service = VolunteerAvailabilityMergingService.new(test_volunteer)
 
+      expect { service.merge_volunteer_availability }.to_not(
+        change { test_volunteer.reload.volunteer_availabilities }
+      )
     end
 
-    xit 'does not merge availabilities that merge at midnight, and are on different days' do
+    it 'does not merge availabilities that merge at midnight, and are on different days' do
+      generate_availability({day: 'monday', start_hour: 23, end_hour: 24})
+      generate_availability({day: 'monday', start_hour: 0, end_hour: 1})
+      service = VolunteerAvailabilityMergingService.new(test_volunteer)
 
+      expect { service.merge_volunteer_availability }.to_not(
+        change { test_volunteer.reload.volunteer_availabilities }
+      )
     end
   end
 end
@@ -30,7 +43,20 @@ def generate_availability(args = {})
     :volunteer_availability,
     volunteer_id: test_volunteer.id,
     day: args.fetch(:day, 'monday'),
-    start_time: args.fetch(:start_time, 9),
-    end_time: args.fetch(:end_time, 10)
+    start_hour: args.fetch(:start_hour, 9),
+    end_hour: args.fetch(:end_hour, 10)
   )
+end
+
+RSpec::Matchers.define :include_availability do |availability_being_compared|
+  match do |actual|
+    includes_availability = false
+    actual.each do |availability|
+
+      includes_availability = true if availability.day == availability_being_compared.day &&
+        availability.start_hour == availability_being_compared.start_hour &&
+        availability.end_hour == availability_being_compared.end_hour
+    end
+    includes_availability
+  end
 end
