@@ -4,6 +4,8 @@ class VolunteerAvailabilityMergingService
     @volunteer = volunteer
     @availabilities = @volunteer.volunteer_availabilities
     @availabilities_already_merged = []
+    @availabilities_for_comparison = []
+    @availabilities_for_merging = []
   end
 
   def merge
@@ -19,11 +21,12 @@ class VolunteerAvailabilityMergingService
   def merge_duplicate_availabilities
     @availabilities.each do |availability|
       return if already_merged?(availability)
-
-      duplicate_availabilities = get_duplicate_availabilities(availability)
+      @availabilities_for_comparison = [availability]
+      duplicate_availabilities = get_duplicate_availabilities
 
       duplicate_availabilities.each do |duplicate_availability|
-        merge_availabilities(availability, duplicate_availability)
+        @availabilities_for_merging = [availability, duplicate_availability]
+        merge_availabilities
       end
     end
   end
@@ -31,11 +34,12 @@ class VolunteerAvailabilityMergingService
   def merge_bordering_availabilities
     @availabilities.each do |availability|
       return if already_merged?(availability)
-
-      bordering_availabilities = get_bordering_availabilities(availability)
+      @availabilities_for_comparison = [availability]
+      bordering_availabilities = get_bordering_availabilities
 
       bordering_availabilities.each do |bordering_availability|
-        merge_availabilities(availability, bordering_availability)
+        @availabilities_for_merging = [availability, bordering_availability]
+        merge_availabilities
       end
     end
   end
@@ -43,72 +47,68 @@ class VolunteerAvailabilityMergingService
   def merge_overlapping_availabilities
     @availabilities.each do |availability|
       return if already_merged?(availability)
-
-      overlapping_availabilities = get_overlapping_availabilities(availability)
+      @availabilities_for_comparison = [availability]
+      overlapping_availabilities = get_overlapping_availabilities
 
       overlapping_availabilities.each do |overlapping_availability|
-        merge_availabilities(availability, overlapping_availability)
+        @availabilities_for_merging = [availability, overlapping_availability]
+        merge_availabilities
       end
     end
   end
 
-  def merge_availabilities(availability_1, availability_2)
-    return if availability_1 == availability_2
+  def merge_availabilities
+    return if availabilities_are_same_object
 
-    create_merged_availability(availability_1, availability_2)
+    create_merged_availability(@availabilities_for_merging[0], @availabilities_for_merging[1])
 
-    mark_availabilities_as_merged(availability_1, availability_2)
+    mark_availabilities_as_merged(@availabilities_for_merging[0], @availabilities_for_merging[1])
 
-    destroy_availabilities(availability_1, availability_2)
+    destroy_availabilities(@availabilities_for_merging[0], @availabilities_for_merging[1])
   end
 
   def mark_availabilities_as_merged(*availabilities)
     availabilities.each { |availability| @availabilities_already_merged << availability }
   end
 
-  def get_duplicate_availabilities(availability)
+  def get_duplicate_availabilities
     @availabilities.select do |availability_for_comparison|
-      availabilities_are_duplicates(availability, availability_for_comparison)
+      @availabilities_for_comparison[1] = availability_for_comparison
+      availabilities_are_duplicates
     end
   end
 
-  def availabilities_are_duplicates(availability_1, availability_2)
-    availability_1 != availability_2 &&
-      availability_1.day == availability_2.day &&
-      availability_1.start_hour == availability_2.start_hour &&
-      availability_1.end_hour == availability_2.end_hour &&
-      availability_1.volunteer == availability_2.volunteer
+  def availabilities_are_duplicates
+    !availabilities_are_same_object &&
+      availabilities_have_same_day &&
+      availabilities_have_same_start_hour &&
+      availabilities_have_same_end_hour &&
+      availabilities_have_same_volunteer
   end
 
-
-  def get_bordering_availabilities(availability)
+  def get_bordering_availabilities
     @availabilities.select do |availability_for_comparison|
-      availabilities_are_bordering(availability, availability_for_comparison)
+      @availabilities_for_comparison[1] = availability_for_comparison
+      availabilities_are_bordering
     end
   end
 
-  def availabilities_are_bordering(availability_1, availability_2)
-    return false if availability_1 == availability_2
-    return true if (availability_1.day == availability_2.day) &&
-      (availability_1.start_hour == availability_2.end_hour ||
-        availability_1.end_hour == availability_2.start_hour)
+  def availabilities_are_bordering
+    return false if availabilities_are_same_object
+    return true if (availabilities_have_same_day) && availabilities_have_bordering_start_and_end_times
     false
   end
 
-  def get_overlapping_availabilities(availability)
+  def get_overlapping_availabilities
     @availabilities.select do |availability_for_comparison|
-      availabilities_are_overlapping(availability, availability_for_comparison)
+      @availabilities_for_comparison[1] = availability_for_comparison
+      availabilities_are_overlapping
     end
   end
 
-  def availabilities_are_overlapping(availability_1, availability_2)
-    return false if availability_1 == availability_2
-    return true if (availability_1.day == availability_2.day) &&
-      (
-      (availability_1.start_hour >= availability_2.start_hour && availability_1.end_hour <= availability_2.end_hour) ||
-        (availability_1.end_hour >= availability_2.start_hour && availability_1.end_hour <= availability_2.end_hour) ||
-        (availability_1.start_hour >= availability_2.start_hour && availability_1.start_hour <= availability_2.end_hour)
-      )
+  def availabilities_are_overlapping
+    return false if availabilities_are_same_object
+    return true if (availabilities_have_same_day) && (availabilities_are_fully_overlapping || availabilities_are_partially_overlapping)
     false
   end
 
@@ -128,4 +128,40 @@ class VolunteerAvailabilityMergingService
     @availabilities = @volunteer.reload.volunteer_availabilities
     @availabilities_already_merged = []
   end
+
+  def availabilities_are_same_object
+    @availabilities_for_comparison[0] == @availabilities_for_comparison[1]
+  end
+
+  def availabilities_have_same_day
+    @availabilities_for_comparison[0].day == @availabilities_for_comparison[1].day
+  end
+
+  def availabilities_have_same_volunteer
+    @availabilities_for_comparison[0].volunteer == @availabilities_for_comparison[1].volunteer
+  end
+
+  def availabilities_have_same_end_hour
+    @availabilities_for_comparison[0].end_hour == @availabilities_for_comparison[1].end_hour
+  end
+
+  def availabilities_have_same_start_hour
+    @availabilities_for_comparison[0].start_hour == @availabilities_for_comparison[1].start_hour
+  end
+
+  def availabilities_have_bordering_start_and_end_times
+    (@availabilities_for_comparison[0].start_hour == @availabilities_for_comparison[1].end_hour ||
+      @availabilities_for_comparison[0].end_hour == @availabilities_for_comparison[1].start_hour)
+  end
+
+  def availabilities_are_fully_overlapping
+    (@availabilities_for_comparison[0].start_hour >= @availabilities_for_comparison[1].start_hour && @availabilities_for_comparison[0].end_hour <= @availabilities_for_comparison[1].end_hour)
+  end
+
+  def availabilities_are_partially_overlapping
+    (@availabilities_for_comparison[0].end_hour >= @availabilities_for_comparison[1].start_hour && @availabilities_for_comparison[0].end_hour <= @availabilities_for_comparison[1].end_hour) ||
+      (@availabilities_for_comparison[0].start_hour >= @availabilities_for_comparison[1].start_hour && @availabilities_for_comparison[0].start_hour <= @availabilities_for_comparison[1].end_hour)
+  end
+
+
 end
