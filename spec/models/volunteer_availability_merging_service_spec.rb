@@ -16,6 +16,29 @@ describe VolunteerAvailabilityMergingService do
       expect(test_volunteer.reload.volunteer_availabilities).to include_availability(VolunteerAvailability.new(start_hour: 9, end_hour: 10, day: 'monday', volunteer: test_volunteer))
     end
 
+    it 'merges partially overlapping volunteer availabilities' do
+      generate_availability({day: 'monday', start_hour: 9, end_hour: 11})
+      generate_availability({day: 'monday', start_hour: 7, end_hour: 10})
+      service = VolunteerAvailabilityMergingService.new(test_volunteer)
+
+      expect { service.merge }.to(
+        change { test_volunteer.reload.volunteer_availabilities.size }.by(-1)
+      )
+
+      expect(test_volunteer.reload.volunteer_availabilities).to include_availability(VolunteerAvailability.new(start_hour: 7, end_hour: 11, day: 'monday', volunteer: test_volunteer))
+    end
+
+    it 'merges fully overlapping volunteer availabilities' do
+      generate_availability({day: 'monday', start_hour: 9, end_hour: 10})
+      generate_availability({day: 'monday', start_hour: 8, end_hour: 11})
+      service = VolunteerAvailabilityMergingService.new(test_volunteer)
+
+      expect { service.merge }.to(
+        change { test_volunteer.reload.volunteer_availabilities.size }.by(-1)
+      )
+      expect(test_volunteer.reload.volunteer_availabilities).to include_availability(VolunteerAvailability.new(start_hour: 8, end_hour: 11, day: 'monday', volunteer: test_volunteer))
+    end
+
     it 'merges bordering volunteer availabilities' do
       generate_availability({day: 'monday', start_hour: 9, end_hour: 10})
       generate_availability({day: 'monday', start_hour: 10, end_hour: 11})
