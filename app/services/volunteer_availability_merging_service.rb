@@ -10,6 +10,7 @@ class VolunteerAvailabilityMergingService
     merge_duplicate_availabilities
     refresh_availabilities
     merge_bordering_availabilities
+  #   TODO: merge overlapping availabilities
   end
 
   private
@@ -67,11 +68,11 @@ class VolunteerAvailabilityMergingService
 
   def get_duplicate_availabilities(availability)
     @availabilities.select do |availability_for_comparison|
-      availabilities_are_equal(availability, availability_for_comparison)
+      availabilities_are_duplicates(availability, availability_for_comparison)
     end
   end
 
-  def availabilities_are_equal(availability_1, availability_2)
+  def availabilities_are_duplicates(availability_1, availability_2)
     availability_1 != availability_2 &&
       availability_1.day == availability_2.day &&
       availability_1.start_hour == availability_2.start_hour &&
