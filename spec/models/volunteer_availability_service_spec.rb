@@ -9,16 +9,41 @@ describe VolunteerAvailabilityService do
       'id' => "#{test_volunteer.id}"
     )
   end
-  let(:test_availability) { create(:volunteer_availability, volunteer_id: test_volunteer.id) }
-  let(:test_availability_for_other_volunteer) { create(:volunteer_availability, volunteer_id: test_volunteer.id + 1) }
 
   it 'instantiates correctly' do
+    test_availability= create(:volunteer_availability, volunteer_id: test_volunteer.id)
+    test_availability_for_other_volunteer = create(:volunteer_availability, volunteer_id: test_volunteer.id + 1)
+
     service = VolunteerAvailabilityService.new(params_from_volunteer_show_page)
 
     expect(service.volunteer).to eql(test_volunteer)
     expect(service.volunteer_availability).to be_instance_of(VolunteerAvailability)
     expect(service.volunteer_availabilities).to include(test_availability)
     expect(service.volunteer_availabilities).to_not include(test_availability_for_other_volunteer)
+  end
+
+  it 'sorts volunteer availabilities correctly' do
+    availability_2 = create(:volunteer_availability, volunteer_id: test_volunteer.id, day: 'sunday', start_hour: 9, end_hour: 10)
+    availability_4 = create(:volunteer_availability, volunteer_id: test_volunteer.id, day: 'tuesday', start_hour: 13, end_hour: 14)
+    availability_6 = create(:volunteer_availability, volunteer_id: test_volunteer.id, day: 'thursday', start_hour: 9, end_hour: 10)
+    availability_1 = create(:volunteer_availability, volunteer_id: test_volunteer.id, day: 'sunday', start_hour: 2, end_hour: 3)
+    availability_7 = create(:volunteer_availability, volunteer_id: test_volunteer.id, day: 'thursday', start_hour: 12, end_hour: 14)
+    availability_3 = create(:volunteer_availability, volunteer_id: test_volunteer.id, day: 'tuesday', start_hour: 9, end_hour: 10)
+    availability_5 = create(:volunteer_availability, volunteer_id: test_volunteer.id, day: 'wednesday', start_hour: 9, end_hour: 10)
+
+    service = VolunteerAvailabilityService.new(params_from_volunteer_show_page)
+
+    expect(service.volunteer_availabilities).to eq(
+                                                  [
+                                                    availability_1,
+                                                    availability_2,
+                                                    availability_3,
+                                                    availability_4,
+                                                    availability_5,
+                                                    availability_6,
+                                                    availability_7
+                                                  ]
+                                                )
   end
 
   it 'saves a volunteer availability' do
@@ -69,5 +94,5 @@ describe VolunteerAvailabilityService do
 end
 
 def generate_volunteer_availability_params(attrs = {})
-  { 'start_hour' => attrs.fetch(:start_hour, 6), 'end_hour' => attrs.fetch(:end_hour, 7), 'day' => attrs.fetch(:day, 'sunday') }
+  {'start_hour' => attrs.fetch(:start_hour, 6), 'end_hour' => attrs.fetch(:end_hour, 7), 'day' => attrs.fetch(:day, 'sunday')}
 end
