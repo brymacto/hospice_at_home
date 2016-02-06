@@ -68,48 +68,20 @@ class VolunteerAvailabilityMergingService
 
   def get_duplicate_availabilities(availability)
     @availabilities.select do |availability_for_comparison|
-      availabilities_are_duplicates(availability, availability_for_comparison)
+      compare(availability, availability_for_comparison).availabilities_are_duplicates
     end
   end
-
-  def availabilities_are_duplicates(availability_1, availability_2)
-    availability_1 != availability_2 &&
-      availability_1.day == availability_2.day &&
-      availability_1.start_hour == availability_2.start_hour &&
-      availability_1.end_hour == availability_2.end_hour &&
-      availability_1.volunteer == availability_2.volunteer
-  end
-
 
   def get_bordering_availabilities(availability)
     @availabilities.select do |availability_for_comparison|
-      availabilities_are_bordering(availability, availability_for_comparison)
+      compare(availability, availability_for_comparison).availabilities_are_bordering
     end
-  end
-
-  def availabilities_are_bordering(availability_1, availability_2)
-    return false if availability_1 == availability_2
-    return true if (availability_1.day == availability_2.day) &&
-      (availability_1.start_hour == availability_2.end_hour ||
-        availability_1.end_hour == availability_2.start_hour)
-    false
   end
 
   def get_overlapping_availabilities(availability)
     @availabilities.select do |availability_for_comparison|
-      availabilities_are_overlapping(availability, availability_for_comparison)
+      compare(availability, availability_for_comparison).availabilities_are_overlapping
     end
-  end
-
-  def availabilities_are_overlapping(availability_1, availability_2)
-    return false if availability_1 == availability_2
-    return true if (availability_1.day == availability_2.day) &&
-      (
-      (availability_1.start_hour >= availability_2.start_hour && availability_1.end_hour <= availability_2.end_hour) ||
-        (availability_1.end_hour >= availability_2.start_hour && availability_1.end_hour <= availability_2.end_hour) ||
-        (availability_1.start_hour >= availability_2.start_hour && availability_1.start_hour <= availability_2.end_hour)
-      )
-    false
   end
 
   def already_merged?(availability)
@@ -127,5 +99,9 @@ class VolunteerAvailabilityMergingService
   def refresh_availabilities
     @availabilities = @volunteer.reload.volunteer_availabilities
     @availabilities_already_merged = []
+  end
+
+  def compare(availability_1, availability_2)
+    VolunteerAvailabilityComparisonService.new(availability_1, availability_2)
   end
 end
