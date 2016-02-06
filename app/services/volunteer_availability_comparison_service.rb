@@ -1,6 +1,6 @@
 class VolunteerAvailabilityComparisonService
   def initialize(availability_1, availability_2)
-    @availability_1 =availability_1
+    @availability_1 = availability_1
     @availability_2 = availability_2
   end
 
@@ -18,7 +18,6 @@ class VolunteerAvailabilityComparisonService
       (@availability_1.start_hour == @availability_2.end_hour ||
         @availability_1.end_hour == @availability_2.start_hour)
   end
-
 
   def availabilities_are_overlapping
     !availabilities_are_same_object &&

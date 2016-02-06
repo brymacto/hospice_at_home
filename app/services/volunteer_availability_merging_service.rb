@@ -1,5 +1,4 @@
 class VolunteerAvailabilityMergingService
-
   def initialize(volunteer)
     @volunteer = volunteer
     @availabilities = @volunteer.volunteer_availabilities

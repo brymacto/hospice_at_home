@@ -5,8 +5,8 @@ describe VolunteerAvailabilityMergingService do
 
   describe '#merge_volunteer_availability' do
     it 'merges duplicate volunteer availabilities' do
-      generate_availability({day: 'monday', start_hour: 9, end_hour: 10})
-      generate_availability({day: 'monday', start_hour: 9, end_hour: 10})
+      generate_availability(day: 'monday', start_hour: 9, end_hour: 10)
+      generate_availability(day: 'monday', start_hour: 9, end_hour: 10)
       service = VolunteerAvailabilityMergingService.new(test_volunteer)
 
       expect { service.merge }.to(
@@ -17,8 +17,8 @@ describe VolunteerAvailabilityMergingService do
     end
 
     it 'merges partially overlapping volunteer availabilities' do
-      generate_availability({day: 'monday', start_hour: 9, end_hour: 11})
-      generate_availability({day: 'monday', start_hour: 7, end_hour: 10})
+      generate_availability(day: 'monday', start_hour: 9, end_hour: 11)
+      generate_availability(day: 'monday', start_hour: 7, end_hour: 10)
       service = VolunteerAvailabilityMergingService.new(test_volunteer)
 
       expect { service.merge }.to(
@@ -29,8 +29,8 @@ describe VolunteerAvailabilityMergingService do
     end
 
     it 'merges fully overlapping volunteer availabilities' do
-      generate_availability({day: 'monday', start_hour: 9, end_hour: 10})
-      generate_availability({day: 'monday', start_hour: 8, end_hour: 11})
+      generate_availability(day: 'monday', start_hour: 9, end_hour: 10)
+      generate_availability(day: 'monday', start_hour: 8, end_hour: 11)
       service = VolunteerAvailabilityMergingService.new(test_volunteer)
 
       expect { service.merge }.to(
@@ -40,8 +40,8 @@ describe VolunteerAvailabilityMergingService do
     end
 
     it 'merges bordering volunteer availabilities' do
-      generate_availability({day: 'monday', start_hour: 9, end_hour: 10})
-      generate_availability({day: 'monday', start_hour: 10, end_hour: 11})
+      generate_availability(day: 'monday', start_hour: 9, end_hour: 10)
+      generate_availability(day: 'monday', start_hour: 10, end_hour: 11)
       service = VolunteerAvailabilityMergingService.new(test_volunteer)
 
       expect { service.merge }.to(
@@ -52,8 +52,8 @@ describe VolunteerAvailabilityMergingService do
     end
 
     it 'does not merge non-bordering volunteer availabilities' do
-      generate_availability({day: 'monday', start_hour: 9, end_hour: 10})
-      generate_availability({day: 'monday', start_hour: 11, end_hour: 12})
+      generate_availability(day: 'monday', start_hour: 9, end_hour: 10)
+      generate_availability(day: 'monday', start_hour: 11, end_hour: 12)
       service = VolunteerAvailabilityMergingService.new(test_volunteer)
 
       expect { service.merge }.to_not(
@@ -62,8 +62,8 @@ describe VolunteerAvailabilityMergingService do
     end
 
     it 'does not merge availabilities that merge at midnight, and are on different days' do
-      generate_availability({day: 'monday', start_hour: 23, end_hour: 24})
-      generate_availability({day: 'monday', start_hour: 0, end_hour: 1})
+      generate_availability(day: 'monday', start_hour: 23, end_hour: 24)
+      generate_availability(day: 'monday', start_hour: 0, end_hour: 1)
       service = VolunteerAvailabilityMergingService.new(test_volunteer)
 
       expect { service.merge }.to_not(
@@ -72,8 +72,8 @@ describe VolunteerAvailabilityMergingService do
     end
 
     it 'does not duplicate merged availabilities (using @availabilities_already_merged)' do
-      generate_availability({day: 'monday', start_hour: 9, end_hour: 10})
-      generate_availability({day: 'monday', start_hour: 10, end_hour: 12})
+      generate_availability(day: 'monday', start_hour: 9, end_hour: 10)
+      generate_availability(day: 'monday', start_hour: 10, end_hour: 12)
       service = VolunteerAvailabilityMergingService.new(test_volunteer)
 
       expect { service.merge }.to_not(
@@ -105,7 +105,6 @@ RSpec::Matchers.define :include_availability do |availability_being_compared|
     end
   end
 end
-
 
 RSpec::Matchers.define :includes_only_one_availability do |availability_being_compared|
   match do |availabilities|
