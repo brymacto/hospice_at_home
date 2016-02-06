@@ -1,11 +1,11 @@
 $badge-font-size: 0.75em !default;
-$medium-gray: #999 !default;
-$alert-color: #fff6bf !default;
-$error-color: #fbe3e4 !default;
-$notice-color: #e5edf8 !default;
-$success-color: #e6efc2 !default;
+$badge-medium-gray: #999 !default;
+$badge-alert-color: #fff6bf !default;
+$badge-error-color: #fbe3e4 !default;
+$badge-notice-color: #e5edf8 !default;
+$badge-success-color: #e6efc2 !default;
 
-@mixin badge($color: $medium-gray) {
+@mixin badge($color: $badge-medium-gray) {
   background-color: $color;
   border-radius: $badge-font-size * 5;
   color: darken($color, 60%);
@@ -21,17 +21,17 @@ $success-color: #e6efc2 !default;
 }
 
 .badge-alert {
-  @include badge($alert-color);
+  @include badge($badge-alert-color);
 }
 
 .badge-error {
-  @include badge($error-color);
+  @include badge($badge-error-color);
 }
 
 .badge-notice {
-  @include badge($notice-color);
+  @include badge($badge-notice-color);
 }
 
 .badge-success {
-  @include badge($success-color);
+  @include badge($badge-success-color);
 }
