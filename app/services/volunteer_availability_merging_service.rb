@@ -3,6 +3,7 @@ class VolunteerAvailabilityMergingService
     @volunteer = volunteer
     @availabilities = @volunteer.volunteer_availabilities
     @availabilities_already_merged = []
+    @flash_message_contents = []
   end
 
   def merge
@@ -13,7 +14,18 @@ class VolunteerAvailabilityMergingService
     merge_overlapping_availabilities
   end
 
+  def flash_message
+    return if @flash_message_contents.empty?
+    message = "The following availabilities have been merged: "
+    @flash_message_contents.each { |contents| message << "#{contents}; "}
+    message.chomp('; ')
+  end
+
   private
+
+  def update_flash_messages(availability_1, availability_2)
+    @flash_message_contents << "#{availability_1.description} and #{availability_2.description(time_only: true)}"
+  end
 
   def merge_duplicate_availabilities
     @availabilities.each do |availability|
@@ -57,6 +69,8 @@ class VolunteerAvailabilityMergingService
     create_merged_availability(availability_1, availability_2)
 
     mark_availabilities_as_merged(availability_1, availability_2)
+
+    update_flash_messages(availability_1, availability_2)
 
     destroy_availabilities(availability_1, availability_2)
   end

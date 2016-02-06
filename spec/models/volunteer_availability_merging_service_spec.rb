@@ -3,6 +3,41 @@ require 'rails_helper'
 describe VolunteerAvailabilityMergingService do
   let!(:test_volunteer) { create(:volunteer) }
 
+  describe 'flash_message' do
+    it 'returns no flash message if no merges are executed' do
+      generate_availability(day: 'monday', start_hour: 9, end_hour: 10)
+      generate_availability(day: 'monday', start_hour: 12, end_hour: 14)
+      service = VolunteerAvailabilityMergingService.new(test_volunteer)
+
+      service.merge
+
+      expect(service.flash_message).to be_nil
+    end
+
+    it 'returns correct flash message if one merge was executed' do
+      generate_availability(day: 'monday', start_hour: 9, end_hour: 10)
+      generate_availability(day: 'monday', start_hour: 10, end_hour: 11)
+      service = VolunteerAvailabilityMergingService.new(test_volunteer)
+
+      service.merge
+
+      expect(service.flash_message).to eq("The following availabilities have been merged: Monday, from 9 to 10 and from 10 to 11")
+    end
+
+    it 'returns correct flash message if multiple merges were executed' do
+      generate_availability(day: 'monday', start_hour: 9, end_hour: 10)
+      generate_availability(day: 'monday', start_hour: 10, end_hour: 11)
+
+      generate_availability(day: 'tuesday', start_hour: 9, end_hour: 12)
+      generate_availability(day: 'tuesday', start_hour: 10, end_hour: 11)
+      service = VolunteerAvailabilityMergingService.new(test_volunteer)
+
+      service.merge
+
+      expect(service.flash_message).to eq("The following availabilities have been merged: Monday, from 9 to 10 and from 10 to 11; Tuesday, from 9 to 12 and from 10 to 11")
+    end
+  end
+
   describe '#merge_volunteer_availability' do
     it 'merges duplicate volunteer availabilities' do
       generate_availability(day: 'monday', start_hour: 9, end_hour: 10)

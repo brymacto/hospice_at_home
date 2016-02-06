@@ -13,6 +13,11 @@ class VolunteerAvailability < ActiveRecord::Base
     %w(day day), %w(start_hour start_time), %w(end_hour end_time)
   ]
 
+  def description(time_only = false)
+    return "from #{availability_time.start_time} to #{availability_time.end_time}" if time_only
+    "#{availability_time.day.capitalize}, from #{availability_time.start_time} to #{availability_time.end_time}"
+  end
+
   private
 
   def start_hour_possible_times
