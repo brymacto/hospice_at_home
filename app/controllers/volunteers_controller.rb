@@ -75,6 +75,7 @@ class VolunteersController < ApplicationController
     service.new_volunteer_availability(volunteer_availability_params)
 
     flash[:error] = service.volunteer_availability_errors
+    flash[:notice] = service.merging_result
     load_assigns(:volunteer, :availabities)
     load_availabilities
 

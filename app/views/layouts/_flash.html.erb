@@ -1,6 +1,6 @@
 <div id="flash">
   <% if flash -%>
-    <div <%= flash[:notice].present? ? '' : 'style="display:none" '.html_safe %>id="flash-notice" class="flash flash_notice"><%= format_flash_messages flash[:notice] %></div>
+    <div <%= flash[:notice].present? ? '' : 'style="display:none" '.html_safe %>id="flash-notice" class="flash flash-notice"><%= format_flash_messages flash[:notice] %></div>
     <div <%= flash[:error].present? ? '' : 'style="display:none" '.html_safe %>class="flash flash-error"><%= format_flash_messages flash[:error] %></div>
     <div <%= flash[:alert].present? ? '' : 'style="display:none" '.html_safe %>class="flash flash-error"><%= format_flash_messages flash[:alert] %></div>
     <div <%= flash[:warning].present? ? '' : 'style="display:none" '.html_safe %>id="flash_warning" class="flash flash-warning"><%= format_flash_messages flash[:warning] %></div>
