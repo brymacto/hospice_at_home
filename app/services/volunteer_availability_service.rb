@@ -11,8 +11,9 @@ class VolunteerAvailabilityService
   def new_volunteer_availability(attrs)
     attrs.merge!(volunteer_id: @volunteer.id)
     @volunteer_availability = VolunteerAvailability.new(attrs)
-    @volunteer_availability.save
-    @volunteer.merge_volunteer_availabilities
+    save_success = @volunteer_availability.save
+    @volunteer.merge_volunteer_availabilities if save_success
+    save_success
   end
 
   def volunteer_availability_errors
