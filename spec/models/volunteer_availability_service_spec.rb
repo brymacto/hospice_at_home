@@ -11,7 +11,7 @@ describe VolunteerAvailabilityService do
   end
 
   it 'instantiates correctly' do
-    test_availability= create(:volunteer_availability, volunteer_id: test_volunteer.id)
+    test_availability = create(:volunteer_availability, volunteer_id: test_volunteer.id)
     test_availability_for_other_volunteer = create(:volunteer_availability, volunteer_id: test_volunteer.id + 1)
 
     service = VolunteerAvailabilityService.new(params_from_volunteer_show_page)
@@ -34,16 +34,16 @@ describe VolunteerAvailabilityService do
     service = VolunteerAvailabilityService.new(params_from_volunteer_show_page)
 
     expect(service.volunteer_availabilities).to eq(
-                                                  [
-                                                    availability_1,
-                                                    availability_2,
-                                                    availability_3,
-                                                    availability_4,
-                                                    availability_5,
-                                                    availability_6,
-                                                    availability_7
-                                                  ]
-                                                )
+      [
+        availability_1,
+        availability_2,
+        availability_3,
+        availability_4,
+        availability_5,
+        availability_6,
+        availability_7
+      ]
+    )
   end
 
   it 'saves a volunteer availability' do
@@ -94,5 +94,5 @@ describe VolunteerAvailabilityService do
 end
 
 def generate_volunteer_availability_params(attrs = {})
-  {'start_hour' => attrs.fetch(:start_hour, 6), 'end_hour' => attrs.fetch(:end_hour, 7), 'day' => attrs.fetch(:day, 'sunday')}
+  { 'start_hour' => attrs.fetch(:start_hour, 6), 'end_hour' => attrs.fetch(:end_hour, 7), 'day' => attrs.fetch(:day, 'sunday') }
 end

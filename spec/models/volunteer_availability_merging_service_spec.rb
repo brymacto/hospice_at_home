@@ -21,7 +21,7 @@ describe VolunteerAvailabilityMergingService do
 
       service.merge
 
-      expect(service.flash_message).to eq("The following availabilities have been merged: Monday, from 9 to 10 and from 10 to 11")
+      expect(service.flash_message).to eq('The following availabilities have been merged: Monday, from 9 to 10 and from 10 to 11')
     end
 
     it 'returns correct flash message if multiple merges were executed' do
@@ -34,7 +34,7 @@ describe VolunteerAvailabilityMergingService do
 
       service.merge
 
-      expect(service.flash_message).to eq("The following availabilities have been merged: Monday, from 9 to 10 and from 10 to 11; Tuesday, from 9 to 12 and from 10 to 11")
+      expect(service.flash_message).to eq('The following availabilities have been merged: Monday, from 9 to 10 and from 10 to 11; Tuesday, from 9 to 12 and from 10 to 11')
     end
   end
 
