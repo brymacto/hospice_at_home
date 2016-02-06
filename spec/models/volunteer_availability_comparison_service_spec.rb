@@ -68,8 +68,26 @@ describe VolunteerAvailabilityMergingService do
       expect(result).to eq true
     end
 
-  end
+    it 'returns true when availabilities are partially overlapping for both start and end time' do
+      availability_1 = generate_availability({day: 'monday', start_hour: 9, end_hour: 12})
+      availability_2 = generate_availability({day: 'monday', start_hour: 8, end_hour: 11})
+      service = VolunteerAvailabilityComparisonService.new(availability_1, availability_2)
 
+      result = service.availabilities_are_overlapping
+
+      expect(result).to eq true
+    end
+
+    it 'returns true when availabilities are partially overlapping for one time, equal for other time' do
+      availability_1 = generate_availability({day: 'monday', start_hour: 9, end_hour: 12})
+      availability_2 = generate_availability({day: 'monday', start_hour: 10, end_hour: 12})
+      service = VolunteerAvailabilityComparisonService.new(availability_1, availability_2)
+
+      result = service.availabilities_are_overlapping
+
+      expect(result).to eq true
+    end
+  end
 end
 
 def generate_availability(args = {})
