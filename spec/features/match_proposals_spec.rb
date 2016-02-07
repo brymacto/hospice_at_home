@@ -3,12 +3,30 @@ feature 'feature: match proposals' do
   let!(:test_client) { create(:client, first_name: 'Jonathan', last_name: 'Doe') }
   let!(:test_volunteer) { create(:volunteer, first_name: 'Susan', last_name: 'Smith') }
 
+  scenario 'tab to match proposals from matches' do
+    Capybara.current_driver = :selenium
+
+    visit matches_path
+    expect(page).to_not have_css ('#match_proposals_table')
+
+    click_link 'Match proposals'
+
+    expect(page).to have_css ('#match_proposals_table')
+
+    Capybara.use_default_driver
+  end
+
   scenario 'view list of match proposals' do
     Capybara.current_driver = :selenium
+
     create_match_proposal_and_request
     visit matches_path
+    match_for_checking = {client: test_client, status: 'pending', day_and_time: 'Monday, 9 to 10'}
+
     click_link 'Match proposals'
-    expect(page).to have_match ({client: test_client, status: 'pending', day_and_time: 'Monday, 9 to 10'})
+
+    expect(page).to have_match (match_for_checking)
+
     Capybara.use_default_driver
   end
 end
