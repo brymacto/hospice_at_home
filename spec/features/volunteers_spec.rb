@@ -39,6 +39,33 @@ feature 'feature: volunteers' do
     expect(page).to have_content 'Volunteer: Sara Jane Smith'
   end
 
+  feature 'volunteer specialties' do
+    scenario 'add specialty to volunteer' do
+      create(:volunteer_specialty, name: 'Expressive Arts')
+      visit volunteer_path(test_volunteer.id)
+      select('Expressive Arts', from: 'volunteer_volunteer_specialty_ids')
+
+      click_button('add_specialty')
+
+      expect(page).to have_css('span.specialty a', text: 'Expressive Arts')
+
+      page.find('span.specialty a.remove_specialty').click
+      expect(page).to_not have_css('span.specialty a', text: 'Expressive Arts')
+    end
+
+    scenario 'remove specialty from volunteer' do
+      create(:volunteer_specialty, name: 'Expressive Arts')
+      visit volunteer_path(test_volunteer.id)
+      select('Expressive Arts', from: 'volunteer_volunteer_specialty_ids')
+
+      click_button('add_specialty')
+
+      expect(page).to have_css('span.specialty a', text: 'Expressive Arts')
+
+
+    end
+  end
+
   feature 'volunteer availabilities' do
     scenario 'add volunteer availability' do
       visit volunteer_path(test_volunteer.id)
