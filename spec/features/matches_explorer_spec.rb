@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'feature: Matches Explorer' do
+feature 'Matches Explorer' do
   let!(:test_volunteer_available) do
     create(:volunteer,
            first_name: 'John',
@@ -25,6 +25,11 @@ feature 'feature: Matches Explorer' do
     create(:client,
            first_name: 'Brian',
            last_name: 'Blaine')
+  end
+
+  let!(:test_specialty) do
+    create(:volunteer_specialty,
+           name: 'Expressive Arts')
   end
 
   scenario 'displays validation message when field blank' do
@@ -67,10 +72,6 @@ feature 'feature: Matches Explorer' do
   end
 
   feature 'specialty is included in search criteria' do
-    let!(:test_specialty) do
-      create(:volunteer_specialty,
-             name: 'Expressive Arts')
-    end
 
     scenario 'returns no volunteer results when volunteers match time range but do not match given specialty' do
       visit matches_explorer_path
@@ -96,37 +97,32 @@ feature 'feature: Matches Explorer' do
       expect(page).to have_content test_volunteer_available.first_name
     end
   end
-end
 
-feature 'feature: Match proposal creation from Matches Explorer' do
-  let!(:test_volunteer_available) do
-    create(:volunteer,
-           first_name: Faker::Name.first_name,
-           last_name: Faker::Name.last_name)
-  end
-  let!(:test_volunteer_not_available) do
-    create(:volunteer,
-           first_name: Faker::Name.first_name,
-           last_name: Faker::Name.last_name)
-  end
-  let!(:test_volunteer_availability) do
-    create(:volunteer_availability,
-           volunteer_id: test_volunteer_available.id,
-           day: 'monday',
-           start_hour: 10,
-           end_hour: 24)
-  end
+  feature 'Match proposal creation from Matches Explorer' do
+    let!(:test_client) { create(:client, first_name: 'John', last_name: 'Smith') }
 
-  let!(:test_client) { create(:client, first_name: 'John', last_name: 'Smith') }
+    scenario 'does not display match proposal creation form when explorer returns no volunteers' do
+      visit matches_explorer_path
+      fill_in_form(day: 'Friday', start_time: 10, end_time: 12)
 
-  scenario 'does not display match proposal creation form when explorer returns no volunteers' do
-    visit matches_explorer_path
-    fill_in_form(day: 'Friday', start_time: 10, end_time: 12)
+      click_button('Explore Matches')
 
-    click_button('Explore Matches')
+      expect(page.status_code).to be(200)
+      expect(page).to have_no_selector('input#create_proposal_button')
+    end
 
-    expect(page.status_code).to be(200)
-    expect(page).to have_no_selector('input#create_proposal_button')
+    scenario 'creates match proposal from explorer results' do
+      visit matches_explorer_path
+      fill_in_form(day: 'Monday', start_time: 10, end_time: 12, client: test_client)
+      click_button('Explore Matches')
+      expect(page).to have_content test_volunteer_available.first_name
+      check("select_for_email_#{test_volunteer_available.id}")
+
+      click_button('Create proposal')
+
+      expect(page.status_code).to be(200)
+      expect(page).to have_content('Match proposal for John Smith')
+    end
   end
 end
 
@@ -145,7 +141,7 @@ def fill_in_form(args = {})
 end
 
 def add_specialty_to_volunteer(specialty, volunteer)
-  params =     ActionController::Parameters.new(
+  params = ActionController::Parameters.new(
     'controller' => 'volunteers',
     'action' => 'add_volunteer_specialty',
     'volunteer' => {
