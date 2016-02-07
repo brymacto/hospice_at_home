@@ -27,15 +27,9 @@ feature 'feature: Matches Explorer' do
            last_name: 'Blaine')
   end
 
-  let!(:test_specialty) do
-    create(:volunteer_specialty,
-           name: 'Expressive Arts')
-  end
-
   scenario 'displays validation message when field blank' do
     visit matches_explorer_path
-    select('Monday', from: 'match_exploration_day')
-    fill_in('match_exploration_start_time', with: '10')
+    fill_in_form(day: 'Monday', start_time: 10)
 
     click_button('Explore Matches')
 
@@ -45,8 +39,6 @@ feature 'feature: Matches Explorer' do
   end
 
   scenario 'does not display validation message before form has been submitted' do
-    # @match_exploration is not valid when page first loads because it has nil values.
-    # This tests the logic that hides this message when user first lands on the page.
     visit matches_explorer_path
 
     expect(page.status_code).to be(200)
@@ -55,10 +47,7 @@ feature 'feature: Matches Explorer' do
 
   scenario 'returns correct volunteer results when searching for a time range' do
     visit matches_explorer_path
-    select('Monday', from: 'match_exploration_day')
-    select(test_client.name, from: 'match_exploration_client_id')
-    fill_in('match_exploration_start_time', with: '10')
-    fill_in('match_exploration_end_time', with: '12')
+    fill_in_form(day: 'Monday', start_time: 10, end_time: 12, client: test_client)
 
     click_button('Explore Matches')
 
@@ -69,10 +58,7 @@ feature 'feature: Matches Explorer' do
 
   scenario 'returns no volunteer results when no volunteers match time range' do
     visit matches_explorer_path
-    select('Friday', from: 'match_exploration_day')
-    select(test_client.name, from: 'match_exploration_client_id')
-    fill_in('match_exploration_start_time', with: '23')
-    fill_in('match_exploration_end_time', with: '24')
+    fill_in_form(day: 'Friday', start_time: 23, end_time: 24, client: test_client)
 
     click_button('Explore Matches')
 
@@ -81,13 +67,14 @@ feature 'feature: Matches Explorer' do
   end
 
   feature 'specialty is included in search criteria' do
+    let!(:test_specialty) do
+      create(:volunteer_specialty,
+             name: 'Expressive Arts')
+    end
+
     scenario 'returns no volunteer results when volunteers match time range but do not match given specialty' do
       visit matches_explorer_path
-      select('Monday', from: 'match_exploration_day')
-      select(test_client.name, from: 'match_exploration_client_id')
-      fill_in('match_exploration_start_time', with: '10')
-      fill_in('match_exploration_end_time', with: '12')
-      select(test_specialty.name, from: 'match_exploration_specialty_id')
+      fill_in_form(day: 'Monday', start_time: 10, end_time: 12, client: test_client, specialty: test_specialty)
 
       click_button('Explore Matches')
 
@@ -100,11 +87,7 @@ feature 'feature: Matches Explorer' do
     scenario 'returns correct volunteer results when volunteers match time range and specialty' do
       add_specialty_to_volunteer(test_specialty, test_volunteer_available)
       visit matches_explorer_path
-      select('Monday', from: 'match_exploration_day')
-      select(test_client.name, from: 'match_exploration_client_id')
-      fill_in('match_exploration_start_time', with: '10')
-      fill_in('match_exploration_end_time', with: '12')
-      select(test_specialty.name, from: 'match_exploration_specialty_id')
+      fill_in_form(day: 'Monday', start_time: 10, end_time: 12, client: test_client, specialty: test_specialty)
 
       click_button('Explore Matches')
 
@@ -112,22 +95,6 @@ feature 'feature: Matches Explorer' do
       expect(page).to_not have_content 'No volunteers match your search criteria.'
       expect(page).to have_content test_volunteer_available.first_name
     end
-  end
-
-  scenario 'does not display proposal form if volunteer matches other time criteria but not specialty' do
-    visit matches_explorer_path
-    select('Monday', from: 'match_exploration_day')
-    select(test_client.name, from: 'match_exploration_client_id')
-    fill_in('match_exploration_start_time', with: '10')
-    fill_in('match_exploration_end_time', with: '12')
-    select(test_specialty.name, from: 'match_exploration_specialty_id')
-
-    click_button('Explore Matches')
-
-    expect(page.status_code).to be(200)
-    expect(page).to have_content 'No volunteers match your search criteria.'
-    expect(page).to_not have_content test_volunteer_available.first_name
-    expect(page).to_not have_content test_volunteer_not_available.first_name
   end
 end
 
@@ -152,11 +119,9 @@ feature 'feature: Match proposal creation from Matches Explorer' do
 
   let!(:test_client) { create(:client, first_name: 'John', last_name: 'Smith') }
 
-  scenario 'doesnt display match proposal creation form when explorer returns no volunteers' do
+  scenario 'does not display match proposal creation form when explorer returns no volunteers' do
     visit matches_explorer_path
-    select('Friday', from: 'match_exploration_day')
-    fill_in('match_exploration_start_time', with: '10')
-    fill_in('match_exploration_end_time', with: '12')
+    fill_in_form(day: 'Friday', start_time: 10, end_time: 12)
 
     click_button('Explore Matches')
 
@@ -165,6 +130,19 @@ feature 'feature: Match proposal creation from Matches Explorer' do
   end
 end
 
+def fill_in_form(args = {})
+  day = args[:day]
+  start_time = args[:start_time].to_s
+  end_time = args[:end_time].to_s
+  client = args[:client]
+  specialty = args[:specialty]
+
+  select(day, from: 'match_exploration_day') if day
+  select(client.name, from: 'match_exploration_client_id') if client
+  select(specialty.name, from: 'match_exploration_specialty_id') if specialty
+  fill_in('match_exploration_start_time', with: start_time)
+  fill_in('match_exploration_end_time', with: end_time)
+end
 
 def add_specialty_to_volunteer(specialty, volunteer)
   params =     ActionController::Parameters.new(
