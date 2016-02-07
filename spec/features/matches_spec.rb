@@ -10,6 +10,7 @@ feature 'feature: matches' do
            start_time: 9,
            end_time: 10)
   end
+
   scenario 'add a match' do
     visit new_match_path
     select(test_client.name, from: 'match_client_id')
@@ -48,5 +49,24 @@ feature 'feature: matches' do
     click_link 'Delete'
     visit match_path(test_match)
     expect(page.status_code).to be(404)
+  end
+
+  scenario 'view list of matches' do
+    Capybara.current_driver = :selenium
+    visit matches_path
+    expect(page).to have_match ({client: test_client, volunteer: test_volunteer, day_and_time: 'Monday, 9 to 10'})
+    Capybara.use_default_driver
+  end
+end
+
+RSpec::Matchers::define :have_match do |match|
+  day_and_time = match[:day_and_time]
+  client = match[:client].name
+  volunteer = match[:volunteer].name
+
+  match do |page|
+    page.find('#matches_table tr:nth-child(2) td.matches_table_day_and_time').has_content?(day_and_time) &&
+      page.find('#matches_table tr:nth-child(2) td.matches_table_client').has_content?(client) &&
+      page.find('#matches_table tr:nth-child(2) td.matches_table_volunteer').has_content?(volunteer)
   end
 end

@@ -8,23 +8,23 @@
       <% end %> tab-link">Matches</a>
 
       <div class="tab-content" ng-controller="MatchCtrl">
-        <table>
+        <table id="matches_table">
           <tr>
             <th>Day and time <a ng-click="setOrder('date')"><%= fa_icon("sort", class: 'sort_icon') %></a></th>
             <th>Client <a ng-click="setOrder('client')"><%= fa_icon("sort", class: 'sort_icon') %></a></th>
             <th>Volunteer <a ng-click="setOrder('volunteer')"><%= fa_icon("sort", class: 'sort_icon') %></a></th>
           </tr>
           <tr ng-repeat="match in matches | orderBy: orderProp : orderAscending ">
-            <td>
+            <td class="matches_table_day_and_time">
               <a href="/matches/{{match.id}}" class="thumb">
                 {{ {day: match.day, start_time: match.start_time,
                 end_time: match.end_time } | fullDate | capitalize }}
               </a>
             </td>
-            <td>
+            <td class="matches_table_client">
               {{match.client.first_name}} {{match.client.last_name}}
             </td>
-            <td>
+            <td class="matches_table_volunteer">
               {{match.volunteer.first_name}} {{match.volunteer.last_name}}
             </td>
           </tr>
