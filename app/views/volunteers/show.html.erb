@@ -70,7 +70,7 @@
 
 
 <h2>Availability</h2>
-<table>
+<table id="availability_table">
   <tr>
     <th>Day</th>
     <th>Start time</th>
@@ -79,10 +79,10 @@
   </tr>
   <% @volunteer_availabilities.each do |volunteer_availability| %>
       <tr>
-        <td><%= volunteer_availability.day.capitalize %></td>
-        <td><%= volunteer_availability.start_hour %></td>
-        <td><%= volunteer_availability.end_hour %></td>
-        <td>
+        <td class="availability_table_day"><%= volunteer_availability.day.capitalize %></td>
+        <td class="availability_table_start_time"><%= volunteer_availability.start_hour %></td>
+        <td class="availability_table_end_time"><%= volunteer_availability.end_hour %></td>
+        <td class="availability_actions">
           <%= link_to 'Edit', edit_volunteer_availability_path(volunteer_availability) %>,
           <%= link_to 'Delete', volunteer_availability_path(volunteer_availability),
                       method: :delete
