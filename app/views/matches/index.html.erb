@@ -37,7 +37,7 @@
       <% end %> tab-link">Match proposals</a>
 
       <div class="tab-content" ng-controller="MatchProposalCtrl">
-        <table>
+        <table id="match_proposals_table">
           <tr>
             <th>Day and time <a ng-click="setOrder('date')"><%= fa_icon("sort", class: 'sort_icon') %></a></th>
             <th>Client <a ng-click="setOrder('client')"><%= fa_icon("sort", class: 'sort_icon') %></a></th>
@@ -46,22 +46,22 @@
             <th>Proposal created <a ng-click="setOrder('proposal_date')"><%= fa_icon("sort", class: 'sort_icon') %></a></th>
           </tr>
           <tr ng-repeat="matchProposal in matchProposals | orderBy: orderProp : orderAscending ">
-            <td>
+            <td class="match_proposals_table_day_and_time">
               <a href="/match_proposals/{{matchProposal.id}}" class="thumb">
                 {{ {day: matchProposal.day, start_time: matchProposal.start_time,
                 end_time: matchProposal.end_time } | fullDate | capitalize }}
               </a>
             </td>
-            <td>
+            <td class="match_proposals_table_client">
               {{matchProposal.client.first_name}} {{matchProposal.client.last_name}}
             </td>
-            <td>
+            <td class="match_proposals_table_status">
               {{matchProposal.status | capitalize}}
             </td>
-            <td>
+            <td class="match_proposals_table_requests">
               {{matchProposal.match_requests.length}}
             </td>
-            <td>
+            <td class="match_proposals_table_date_created">
               {{matchProposal.proposal_date}}
             </td>
           </tr>
