@@ -2,8 +2,8 @@ require 'rails_helper'
 
 describe MatchExplorerService do
   let(:test_client) { create(:client) }
-  let(:test_specialty) { create(:volunteer_specialty, name: 'Expressive Arts') }
 
+  let(:test_specialty) { create(:volunteer_specialty, name: 'Expressive Arts') }
 
   let!(:test_client) do
     create(:client,
@@ -31,13 +31,13 @@ describe MatchExplorerService do
   end
 
   it 'provides an invalid match exploration if no params provided' do
-    service = MatchExplorerService.new(nil)
+    service = described_class.new(nil)
 
     expect(service.match_exploration.valid?).to be false
   end
 
   it 'provides a valid match exploration if params provided' do
-    service = MatchExplorerService.new(params_with_specialty)
+    service = described_class.new(params_with_specialty)
 
     expect(service.match_exploration.valid?).to be true
   end
@@ -64,7 +64,7 @@ describe MatchExplorerService do
     end
 
     it 'provides correct volunteers for given time with no specialty specified' do
-      service = MatchExplorerService.new(params_without_specialty)
+      service = described_class.new(params_without_specialty)
 
       expect(service.volunteers).to include test_volunteer_available
       expect(service.volunteers).to_not include test_volunteer_not_available
@@ -73,18 +73,17 @@ describe MatchExplorerService do
     it 'provides correct volunteers for given time with specialty specified' do
       test_volunteer_with_specialty = create(:volunteer)
       create(:volunteer_availability,
-               volunteer_id: test_volunteer_with_specialty.id,
-               day: 'monday',
-               start_hour: 10,
-               end_hour: 24)
+             volunteer_id: test_volunteer_with_specialty.id,
+             day: 'monday',
+             start_hour: 10,
+             end_hour: 24)
       test_volunteer_with_specialty.volunteer_specialties << test_specialty
-      service = MatchExplorerService.new(params_with_specialty)
 
-      expect(service.volunteers).to include test_volunteer_with_specialty.reload
+      service = described_class.new(params_with_specialty)
+
+      expect(service.volunteers).to include test_volunteer_with_specialty
       expect(service.volunteers).to_not include test_volunteer_available
       expect(service.volunteers).to_not include test_volunteer_not_available
     end
   end
 end
-
-
