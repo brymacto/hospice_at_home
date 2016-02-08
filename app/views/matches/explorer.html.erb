@@ -1,31 +1,14 @@
-<h1>Create match</h1>
-
-<ul class="accordion-tabs">
-  <li class="tab-header-and-content">
-    <a href="javascript:void(0)" class="is-active tab-link">Match explorer</a>
-    <div class="tab-content">
-      <%= render "matches/explorer/match_exploration_form" %>
-      <% if @match_exploration && !@match_exploration.values_nil? %>
-          <% if @match_exploration.valid? %>
-              <hr>
-              <%= render "matches/explorer/match_exploration_results" %>
-          <% else %>
-              <div class="MatchExplorer_flash">
-                <%= render :partial => "/layouts/flash", :locals => {:flash => {error: @match_exploration.errors.full_messages.to_sentence}} %>
-              </div>
-          <% end %>
-      <% end %>
-    </div>
-  </li>
-
-  <li class="tab-header-and-content">
-    <a href="javascript:void(0)" class="tab-link">Create instant match</a>
-
-    <div class="tab-content">
-      <!--TODO: add match content-->
-    </div>
-  </li>
-
-</ul>
+<h1>Match Explorer</h1>
+<%= render "matches/explorer/match_exploration_form" %>
+<% if @match_exploration && !@match_exploration.values_nil? %>
+    <% if @match_exploration.valid? %>
+        <hr>
+        <%= render "matches/explorer/match_exploration_results" %>
+    <% else %>
+        <div class="MatchExplorer_flash">
+          <%= render :partial => "/layouts/flash", :locals => {:flash => {error: @match_exploration.errors.full_messages.to_sentence}} %>
+        </div>
+    <% end %>
+<% end %>
 
 

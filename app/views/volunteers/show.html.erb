@@ -63,7 +63,7 @@
                    selected: @volunteer_specialties_options.first,
                    class: 'form_field' %>
     </div>
-    <div class="button">
+    <div class="button_container">
       <%= f.submit "Add", id: 'add_specialty' %>
     </div>
 <% end %>
@@ -111,7 +111,7 @@
     <div class="input">
       <%= f.text_field :end_hour, class: 'form_field', type: 'number', min: 1, max: 24 %>
     </div>
-    <div class="button">
+    <div class="button_container">
       <%= f.submit "Add", id: 'add_availability' %>
     </div>
 <% end %>
