@@ -21,11 +21,11 @@ feature 'feature: match proposals' do
 
     create_match_proposal_and_request
     visit matches_path
-    match_for_checking = {client: test_client, status: 'pending', day_and_time: 'Monday, 9 to 10'}
+    match_for_checking = { client: test_client, status: 'pending', day_and_time: 'Monday, 9 to 10' }
 
     click_link 'Match proposals'
 
-    expect(page).to have_match (match_for_checking)
+    expect(page).to have_match_proposal (match_for_checking)
 
     Capybara.use_default_driver
   end
@@ -36,10 +36,10 @@ feature 'feature: match proposals' do
     create_match_proposal_and_request
     visit match_proposal_path(MatchProposal.first)
 
-    expect(page).to have_css('td#meta_status', text:'Pending')
+    expect(page).to have_css('td#meta_status', text: 'Pending')
     page.find('.request_accept').click
 
-    expect(page).to have_css('td#meta_status', text:'Accepted')
+    expect(page).to have_css('td#meta_status', text: 'Accepted')
 
     Capybara.use_default_driver
   end
@@ -67,13 +67,13 @@ feature 'feature: match proposals' do
 
     page.find('.request_reject').click
     sleep(7)
-    expect(page).to have_css('td#meta_status', text:'Rejected')
+    expect(page).to have_css('td#meta_status', text: 'Rejected')
 
     Capybara.use_default_driver
   end
 end
 
-RSpec::Matchers::define :have_match do |match|
+RSpec::Matchers.define :have_match_proposal do |match|
   day_and_time = match[:day_and_time]
   client = match[:client].name
   status = match[:status]
