@@ -6,8 +6,8 @@ feature 'feature: volunteers' do
     create(:availability,
            volunteer_id: test_volunteer.id,
            day: 'monday',
-           start_hour: 13,
-           end_hour: 14)
+           start_time: 13,
+           end_time: 14)
   end
 
   scenario 'add a volunteer' do
@@ -112,8 +112,8 @@ def fill_in_availability_form(args = {})
   start_time = args[:start_time].to_s
   end_time = args[:end_time].to_s
 
-  fill_in('availability_start_hour', with: start_time)
-  fill_in('availability_end_hour', with: end_time)
+  fill_in('availability_start_time', with: start_time)
+  fill_in('availability_end_time', with: end_time)
   select(day, from: 'availability_day')
 end
 

@@ -29,13 +29,13 @@ RSpec.describe MatchesController, type: :controller do
         create(:availability,
                volunteer_id: test_volunteer_available.id,
                day: 'monday',
-               start_hour: 10,
-               end_hour: 24)
+               start_time: 10,
+               end_time: 24)
         create(:availability,
                volunteer_id: test_volunteer_with_specialty.id,
                day: 'monday',
-               start_hour: 10,
-               end_hour: 24)
+               start_time: 10,
+               end_time: 24)
       end
 
       it 'assigns @volunteers correctly based on availability search params' do

@@ -5,7 +5,7 @@ class AvailabilityService
     @params = params
     @volunteer = Volunteer.find(params[:id])
     @availability = Availability.new
-    @availabilities = @volunteer.availabilities.sort_by { |availability| [DAY_NUMBERS.fetch(availability.day.to_sym, 9), availability.start_hour] }
+    @availabilities = @volunteer.availabilities.sort_by { |availability| [DAY_NUMBERS.fetch(availability.day.to_sym, 9), availability.start_time] }
     @merging_result = nil
   end
 

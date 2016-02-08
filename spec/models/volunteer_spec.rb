@@ -13,8 +13,8 @@ describe Volunteer do
     FactoryGirl.create(
       :availability,
       day: 'monday',
-      start_hour: 14,
-      end_hour: 16,
+      start_time: 14,
+      end_time: 16,
       volunteer_id: volunteer_with_availability.id)
   end
 
@@ -22,8 +22,8 @@ describe Volunteer do
     FactoryGirl.create(
       :availability,
       day: 'tuesday',
-      start_hour: 0,
-      end_hour: 24,
+      start_time: 0,
+      end_time: 24,
       volunteer_id: volunteer_with_availability.id)
   end
   describe '#available?' do

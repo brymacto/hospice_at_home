@@ -1,16 +1,16 @@
 class Availability < ActiveRecord::Base
   belongs_to :volunteer
 
-  validates :start_hour, presence: true
-  validates :end_hour, presence: true
+  validates :start_time, presence: true
+  validates :end_time, presence: true
   validates :day, presence: true
-  validates :start_hour, numericality: { only_integer: true }
-  validates :end_hour, numericality: { only_integer: true }
-  validate :start_hour_possible_times
-  validate :start_hour_before_end_hour
+  validates :start_time, numericality: { only_integer: true }
+  validates :end_time, numericality: { only_integer: true }
+  validate :start_time_possible_times
+  validate :start_time_before_end_time
 
   composed_of :availability_time, class_name: 'TimeRange', mapping: [
-    %w(day day), %w(start_hour start_time), %w(end_hour end_time)
+    %w(day day), %w(start_time start_time), %w(end_time end_time)
   ]
 
   def description(time_only = false)
@@ -20,12 +20,12 @@ class Availability < ActiveRecord::Base
 
   private
 
-  def start_hour_possible_times
-    return unless (start_hour < 0) || (start_hour > 23)
-    errors.add(:start_hour, 'must be between 0 and 23 (12:00 AM and 11:00 PM)')
+  def start_time_possible_times
+    return unless (start_time < 0) || (start_time > 23)
+    errors.add(:start_time, 'must be between 0 and 23 (12:00 AM and 11:00 PM)')
   end
 
-  def start_hour_before_end_hour
-    errors.add(:start_hour, 'must be before end hour') if start_hour >= end_hour
+  def start_time_before_end_time
+    errors.add(:start_time, 'must be before end time') if start_time >= end_time
   end
 end
