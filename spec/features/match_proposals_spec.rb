@@ -29,6 +29,48 @@ feature 'feature: match proposals' do
 
     Capybara.use_default_driver
   end
+
+  scenario 'accept a match request' do
+    Capybara.current_driver = :selenium
+
+    create_match_proposal_and_request
+    visit match_proposal_path(MatchProposal.first)
+
+    expect(page).to have_css('td#meta_status', text:'Pending')
+    page.find('.request_accept').click
+
+    expect(page).to have_css('td#meta_status', text:'Accepted')
+
+    Capybara.use_default_driver
+  end
+
+  scenario 'click through to a match from an accepted match request' do
+    Capybara.current_driver = :selenium
+
+    create_match_proposal_and_request
+    visit match_proposal_path(MatchProposal.first)
+
+    page.find('.request_accept').click
+
+    click_link('View match')
+    expect(page).to have_content('This match accepted from a match proposal')
+
+    Capybara.use_default_driver
+  end
+
+  xscenario 'decline the only match request' do
+    # TODO: this has not yet been implemented (proposal set to rejected once all the requests are rejected)
+    Capybara.current_driver = :selenium
+
+    create_match_proposal_and_request
+    visit match_proposal_path(MatchProposal.first)
+
+    page.find('.request_reject').click
+    sleep(7)
+    expect(page).to have_css('td#meta_status', text:'Rejected')
+
+    Capybara.use_default_driver
+  end
 end
 
 RSpec::Matchers::define :have_match do |match|
