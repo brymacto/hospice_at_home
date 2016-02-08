@@ -8,10 +8,6 @@ class MatchExplorerService
     @volunteers = load_volunteers(@match_exploration.valid?)
   end
 
-  def day_options
-    Date::DAYNAMES.zip(Date::DAYNAMES.map(&:downcase))
-  end
-
   private
 
   def match_exploration_params

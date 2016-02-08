@@ -7,7 +7,7 @@ describe VolunteerAvailabilityMergingService do
     it 'returns no flash message if no merges are executed' do
       generate_availability(day: 'monday', start_hour: 9, end_hour: 10)
       generate_availability(day: 'monday', start_hour: 12, end_hour: 14)
-      service = VolunteerAvailabilityMergingService.new(test_volunteer)
+      service = described_class.new(test_volunteer)
 
       service.merge
 
@@ -17,7 +17,7 @@ describe VolunteerAvailabilityMergingService do
     it 'returns correct flash message if one merge was executed' do
       generate_availability(day: 'monday', start_hour: 9, end_hour: 10)
       generate_availability(day: 'monday', start_hour: 10, end_hour: 11)
-      service = VolunteerAvailabilityMergingService.new(test_volunteer)
+      service = described_class.new(test_volunteer)
 
       service.merge
 
@@ -30,7 +30,7 @@ describe VolunteerAvailabilityMergingService do
 
       generate_availability(day: 'tuesday', start_hour: 9, end_hour: 12)
       generate_availability(day: 'tuesday', start_hour: 10, end_hour: 11)
-      service = VolunteerAvailabilityMergingService.new(test_volunteer)
+      service = described_class.new(test_volunteer)
 
       service.merge
 
@@ -42,7 +42,7 @@ describe VolunteerAvailabilityMergingService do
     it 'merges duplicate volunteer availabilities' do
       generate_availability(day: 'monday', start_hour: 9, end_hour: 10)
       generate_availability(day: 'monday', start_hour: 9, end_hour: 10)
-      service = VolunteerAvailabilityMergingService.new(test_volunteer)
+      service = described_class.new(test_volunteer)
 
       expect { service.merge }.to(
         change { test_volunteer.reload.volunteer_availabilities.size }.by(-1)
@@ -54,7 +54,7 @@ describe VolunteerAvailabilityMergingService do
     it 'merges partially overlapping volunteer availabilities' do
       generate_availability(day: 'monday', start_hour: 9, end_hour: 11)
       generate_availability(day: 'monday', start_hour: 7, end_hour: 10)
-      service = VolunteerAvailabilityMergingService.new(test_volunteer)
+      service = described_class.new(test_volunteer)
 
       expect { service.merge }.to(
         change { test_volunteer.reload.volunteer_availabilities.size }.by(-1)
@@ -66,7 +66,7 @@ describe VolunteerAvailabilityMergingService do
     it 'merges fully overlapping volunteer availabilities' do
       generate_availability(day: 'monday', start_hour: 9, end_hour: 10)
       generate_availability(day: 'monday', start_hour: 8, end_hour: 11)
-      service = VolunteerAvailabilityMergingService.new(test_volunteer)
+      service = described_class.new(test_volunteer)
 
       expect { service.merge }.to(
         change { test_volunteer.reload.volunteer_availabilities.size }.by(-1)
@@ -77,7 +77,7 @@ describe VolunteerAvailabilityMergingService do
     it 'merges bordering volunteer availabilities' do
       generate_availability(day: 'monday', start_hour: 9, end_hour: 10)
       generate_availability(day: 'monday', start_hour: 10, end_hour: 11)
-      service = VolunteerAvailabilityMergingService.new(test_volunteer)
+      service = described_class.new(test_volunteer)
 
       expect { service.merge }.to(
         change { test_volunteer.reload.volunteer_availabilities.size }.by(-1)
@@ -89,7 +89,7 @@ describe VolunteerAvailabilityMergingService do
     it 'does not merge non-bordering volunteer availabilities' do
       generate_availability(day: 'monday', start_hour: 9, end_hour: 10)
       generate_availability(day: 'monday', start_hour: 11, end_hour: 12)
-      service = VolunteerAvailabilityMergingService.new(test_volunteer)
+      service = described_class.new(test_volunteer)
 
       expect { service.merge }.to_not(
         change { test_volunteer.reload.volunteer_availabilities }
@@ -99,7 +99,7 @@ describe VolunteerAvailabilityMergingService do
     it 'does not merge availabilities that merge at midnight, and are on different days' do
       generate_availability(day: 'monday', start_hour: 23, end_hour: 24)
       generate_availability(day: 'monday', start_hour: 0, end_hour: 1)
-      service = VolunteerAvailabilityMergingService.new(test_volunteer)
+      service = described_class.new(test_volunteer)
 
       expect { service.merge }.to_not(
         change { test_volunteer.reload.volunteer_availabilities }
@@ -109,7 +109,7 @@ describe VolunteerAvailabilityMergingService do
     it 'does not duplicate merged availabilities (using @availabilities_already_merged)' do
       generate_availability(day: 'monday', start_hour: 9, end_hour: 10)
       generate_availability(day: 'monday', start_hour: 10, end_hour: 12)
-      service = VolunteerAvailabilityMergingService.new(test_volunteer)
+      service = described_class.new(test_volunteer)
 
       expect { service.merge }.to_not(
         change { test_volunteer.reload.volunteer_availabilities }
