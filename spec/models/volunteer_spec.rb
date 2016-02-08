@@ -11,7 +11,7 @@ describe Volunteer do
 
   let!(:test_availability) do
     FactoryGirl.create(
-      :volunteer_availability,
+      :availability,
       day: 'monday',
       start_hour: 14,
       end_hour: 16,
@@ -20,7 +20,7 @@ describe Volunteer do
 
   let!(:test_availability_2) do
     FactoryGirl.create(
-      :volunteer_availability,
+      :availability,
       day: 'tuesday',
       start_hour: 0,
       end_hour: 24,

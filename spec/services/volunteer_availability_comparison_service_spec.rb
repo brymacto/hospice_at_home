@@ -92,7 +92,7 @@ end
 
 def generate_availability(args = {})
   create(
-    :volunteer_availability,
+    :availability,
     volunteer_id: test_volunteer.id,
     day: args.fetch(:day, 'monday'),
     start_hour: args.fetch(:start_hour, 9),

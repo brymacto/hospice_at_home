@@ -1,6 +1,6 @@
 class Volunteer < ActiveRecord::Base
   has_many :matches, dependent: :destroy
-  has_many :volunteer_availabilities, dependent: :destroy
+  has_many :availabilities, dependent: :destroy
   has_and_belongs_to_many :volunteer_specialties
 
   validates :first_name, presence: true
@@ -26,7 +26,7 @@ class Volunteer < ActiveRecord::Base
   end
 
   def load_matching_availabilities(match_time)
-    volunteer_availabilities.select do |availability|
+    availabilities.select do |availability|
       availability_matching?(availability, match_time)
     end
   end

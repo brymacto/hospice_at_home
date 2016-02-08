@@ -1,4 +1,4 @@
-class VolunteerAvailability < ActiveRecord::Base
+class Availability < ActiveRecord::Base
   belongs_to :volunteer
 
   validates :start_hour, presence: true

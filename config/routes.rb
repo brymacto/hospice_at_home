@@ -26,7 +26,7 @@ Rails.application.routes.draw do
   resources :match_proposals do
     resources :match_requests
   end
-  resources :volunteer_availabilities
+  resources :availabilities
   resources :volunteer_specialties
 
   # Example of regular route:

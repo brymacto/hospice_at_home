@@ -26,12 +26,12 @@ RSpec.describe MatchesController, type: :controller do
       end
 
       before(:each) do
-        create(:volunteer_availability,
+        create(:availability,
                volunteer_id: test_volunteer_available.id,
                day: 'monday',
                start_hour: 10,
                end_hour: 24)
-        create(:volunteer_availability,
+        create(:availability,
                volunteer_id: test_volunteer_with_specialty.id,
                day: 'monday',
                start_hour: 10,

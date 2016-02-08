@@ -39,7 +39,7 @@ end
 end
 
 100.times do
-  VolunteerAvailability.create(
+  Availability.create(
     volunteer_id: Volunteer.order('RANDOM()').first.id,
     start_hour: [9, 10, 13].sample,
     end_hour: [14, 16, 17].sample,

@@ -77,14 +77,14 @@
     <th>End time</th>
     <th>Actions</th>
   </tr>
-  <% @volunteer_availabilities.each do |volunteer_availability| %>
+  <% @availabilities.each do |availability| %>
       <tr>
-        <td class="availability_table_day"><%= volunteer_availability.day.capitalize %></td>
-        <td class="availability_table_start_time"><%= volunteer_availability.start_hour %></td>
-        <td class="availability_table_end_time"><%= volunteer_availability.end_hour %></td>
+        <td class="availability_table_day"><%= availability.day.capitalize %></td>
+        <td class="availability_table_start_time"><%= availability.start_hour %></td>
+        <td class="availability_table_end_time"><%= availability.end_hour %></td>
         <td class="availability_actions">
-          <%= link_to 'Edit', edit_volunteer_availability_path(volunteer_availability) %>,
-          <%= link_to 'Delete', volunteer_availability_path(volunteer_availability),
+          <%= link_to 'Edit', edit_availability_path(availability) %>,
+          <%= link_to 'Delete', availability_path(availability),
                       method: :delete
           %>
         </td>
@@ -92,7 +92,7 @@
   <% end %>
 </table>
 
-<%= form_for @volunteer_availability, url: add_volunteer_availabilities_volunteer_path(@volunteer), html: {class: :horizontal_form} do |f| %>
+<%= form_for @availability, url: add_volunteer_availabilities_volunteer_path(@volunteer), html: {class: :horizontal_form} do |f| %>
     <div class="label">
       <%= label_tag(:day, "Add availability:") %>
     </div>
