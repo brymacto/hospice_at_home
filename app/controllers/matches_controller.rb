@@ -12,14 +12,14 @@ class MatchesController < ApplicationController
   end
 
   def show
-    service = LoadMatch.new(params, load_collection: false)
+    service = MatchLoadingService.new(params, load_collection: false)
     @match = service.match
     @match_proposal = service.match_proposal
     load_breadcrumbs(Match, @match)
   end
 
   def edit
-    service = LoadMatch.new(params, load_collection: false)
+    service = MatchLoadingService.new(params, load_collection: false)
     @match = service.match
     load_breadcrumbs(Match, @match, :edit)
   end
@@ -42,7 +42,7 @@ class MatchesController < ApplicationController
   end
 
   def index
-    service = LoadMatch.new(params, load_collection: true)
+    service = MatchLoadingService.new(params, load_collection: true)
     @matches = service.matches
     @match_proposals = service.match_proposals
     @no_turbolinks = true
@@ -55,14 +55,14 @@ class MatchesController < ApplicationController
   end
 
   def destroy
-    service = LoadMatch.new(params, load_collection: false)
+    service = MatchLoadingService.new(params, load_collection: false)
     @match = service.match
     @match.destroy
     redirect_to matches_path
   end
 
   def update
-    service = LoadMatch.new(params, load_collection: false)
+    service = MatchLoadingService.new(params, load_collection: false)
     @match = service.match
     if @match.update(match_params)
       redirect_to @match
