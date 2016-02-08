@@ -61,8 +61,6 @@ feature 'feature: volunteers' do
       click_button('add_specialty')
 
       expect(page).to have_css('span.specialty a', text: 'Expressive Arts')
-
-
     end
   end
 
@@ -74,7 +72,7 @@ feature 'feature: volunteers' do
       click_button('add_availability')
 
       expect(page.status_code).to be(200)
-      expect(page).to have_availability({day: 'Monday', start_time: 9, end_time: 10})
+      expect(page).to have_availability(day: 'Monday', start_time: 9, end_time: 10)
     end
 
     scenario 'add multiple volunteer availabilities that are automatically merged' do
@@ -93,11 +91,10 @@ feature 'feature: volunteers' do
       visit volunteer_path(test_volunteer_availability.volunteer.id)
 
       expect(page.status_code).to be(200)
-      expect(page).to have_availability({day: 'Monday', start_time: 13, end_time: 14})
+      expect(page).to have_availability(day: 'Monday', start_time: 13, end_time: 14)
 
       visit edit_volunteer_availability_path(test_volunteer_availability.id)
       expect(page.status_code).to be(200)
-
 
       fill_in_availability_form(day: 'Wednesday', start_time: 15, end_time: 16)
 
@@ -105,7 +102,7 @@ feature 'feature: volunteers' do
 
       visit volunteer_path(test_volunteer_availability.volunteer.id)
       expect(page.status_code).to be(200)
-      expect(page).to have_availability({day: 'Wednesday', start_time: 15, end_time: 16})
+      expect(page).to have_availability(day: 'Wednesday', start_time: 15, end_time: 16)
     end
   end
 end
@@ -120,7 +117,7 @@ def fill_in_availability_form(args = {})
   select(day, from: 'volunteer_availability_day')
 end
 
-RSpec::Matchers::define :have_availability do |availability|
+RSpec::Matchers.define :have_availability do |availability|
   day = availability[:day].capitalize
   start_time = availability[:start_time].to_s
   end_time = availability[:end_time].to_s

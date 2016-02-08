@@ -54,12 +54,12 @@ feature 'feature: matches' do
   scenario 'view list of matches' do
     Capybara.current_driver = :selenium
     visit matches_path
-    expect(page).to have_match ({client: test_client, volunteer: test_volunteer, day_and_time: 'Monday, 9 to 10'})
+    expect(page).to have_match ({ client: test_client, volunteer: test_volunteer, day_and_time: 'Monday, 9 to 10' })
     Capybara.use_default_driver
   end
 end
 
-RSpec::Matchers::define :have_match do |match|
+RSpec::Matchers.define :have_match do |match|
   day_and_time = match[:day_and_time]
   client = match[:client].name
   volunteer = match[:volunteer].name

@@ -72,7 +72,6 @@ feature 'Matches Explorer' do
   end
 
   feature 'specialty is included in search criteria' do
-
     scenario 'returns no volunteer results when volunteers match time range but do not match given specialty' do
       visit matches_explorer_path
       fill_in_form(day: 'Monday', start_time: 10, end_time: 12, client: test_client, specialty: test_specialty)
