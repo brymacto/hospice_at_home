@@ -1,4 +1,4 @@
-class CreateMatchProposal
+class MatchProposalCreationService
   def initialize(params)
     @params = params
     @match_proposal = create_match_proposal

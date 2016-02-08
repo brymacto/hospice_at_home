@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe CreateMatchProposal do
+describe MatchProposalCreationService do
   it 'saves a valid match proposal' do
     params = build_params
 

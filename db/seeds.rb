@@ -90,5 +90,5 @@ end
     }
   )
 
-  CreateMatchProposal.new(match_proposal_params)
+  MatchProposalCreationService.new(match_proposal_params)
 end
