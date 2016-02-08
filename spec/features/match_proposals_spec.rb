@@ -95,6 +95,6 @@ def create_match_proposal_and_request
     "select_for_email_#{test_volunteer.id}" => 1
   )
 
-  service = CreateMatchProposal.new(params)
+  service = MatchProposalCreationService.new(params)
   expect(service.successful?).to be true
 end

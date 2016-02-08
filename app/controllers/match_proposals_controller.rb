@@ -2,7 +2,7 @@ class MatchProposalsController < ApplicationController
   include BreadcrumbGenerator
 
   def create
-    service = CreateMatchProposal.new(params)
+    service = MatchProposalCreationService.new(params)
     if service.successful?
       @match_proposal = service.match_proposal
       redirect_to @match_proposal
