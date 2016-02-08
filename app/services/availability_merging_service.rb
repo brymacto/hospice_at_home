@@ -102,7 +102,7 @@ class AvailabilityMergingService
   end
 
   def create_merged_availability(availability_1, availability_2)
-    Availability.create!(day: availability_1.day, start_hour: [availability_1.start_hour, availability_2.start_hour].min, end_hour: [availability_1.end_hour, availability_2.end_hour].max, volunteer: @volunteer)
+    Availability.create!(day: availability_1.day, start_time: [availability_1.start_time, availability_2.start_time].min, end_time: [availability_1.end_time, availability_2.end_time].max, volunteer: @volunteer)
   end
 
   def destroy_availabilities(*availabilities)

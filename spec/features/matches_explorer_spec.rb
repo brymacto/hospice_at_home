@@ -17,8 +17,8 @@ feature 'Matches Explorer' do
     create(:availability,
            volunteer_id: test_volunteer_available.id,
            day: 'monday',
-           start_hour: 10,
-           end_hour: 24)
+           start_time: 10,
+           end_time: 24)
   end
 
   let!(:test_client) do

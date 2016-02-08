@@ -59,8 +59,8 @@ describe MatchExplorerService do
       create(:availability,
              volunteer_id: test_volunteer_available.id,
              day: 'monday',
-             start_hour: 10,
-             end_hour: 24)
+             start_time: 10,
+             end_time: 24)
     end
 
     it 'provides correct volunteers for given time with no specialty specified' do
@@ -75,8 +75,8 @@ describe MatchExplorerService do
       create(:availability,
              volunteer_id: test_volunteer_with_specialty.id,
              day: 'monday',
-             start_hour: 10,
-             end_hour: 24)
+             start_time: 10,
+             end_time: 24)
       test_volunteer_with_specialty.volunteer_specialties << test_specialty
 
       service = described_class.new(params_with_specialty)

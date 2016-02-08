@@ -11,8 +11,8 @@ FactoryGirl.define do
 
   factory :availability do
     day 'monday'
-    start_hour 14
-    end_hour 16
+    start_time 14
+    end_time 16
     volunteer_id 1
   end
 

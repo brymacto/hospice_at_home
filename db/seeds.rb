@@ -41,8 +41,8 @@ end
 100.times do
   Availability.create(
     volunteer_id: Volunteer.order('RANDOM()').first.id,
-    start_hour: [9, 10, 13].sample,
-    end_hour: [14, 16, 17].sample,
+    start_time: [9, 10, 13].sample,
+    end_time: [14, 16, 17].sample,
     day: %w(monday tuesday wednesday thursday friday saturday sunday).sample
   )
 end

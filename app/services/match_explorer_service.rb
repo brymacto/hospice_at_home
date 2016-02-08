@@ -39,8 +39,8 @@ class MatchExplorerService
   end
 
   def match_exploration_query
-    "availabilities.start_hour <= :start_time AND
-     availabilities.end_hour >= :end_time AND
+    "availabilities.start_time <= :start_time AND
+     availabilities.end_time >= :end_time AND
      availabilities.day = :day#{' AND volunteer_specialties_volunteers.volunteer_specialty_id = :volunteer_specialty_id' if match_exploration.specialty_id}"
   end
 

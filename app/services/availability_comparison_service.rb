@@ -7,16 +7,16 @@ class AvailabilityComparisonService
   def availabilities_are_duplicates
     !availabilities_are_same_object &&
       availabilities_have_same_day &&
-      @availability_1.start_hour == @availability_2.start_hour &&
-      @availability_1.end_hour == @availability_2.end_hour &&
+      @availability_1.start_time == @availability_2.start_time &&
+      @availability_1.end_time == @availability_2.end_time &&
       @availability_1.volunteer == @availability_2.volunteer
   end
 
   def availabilities_are_bordering
     !availabilities_are_same_object &&
       (availabilities_have_same_day) &&
-      (@availability_1.start_hour == @availability_2.end_hour ||
-        @availability_1.end_hour == @availability_2.start_hour)
+      (@availability_1.start_time == @availability_2.end_time ||
+        @availability_1.end_time == @availability_2.start_time)
   end
 
   def availabilities_are_overlapping
@@ -38,13 +38,13 @@ class AvailabilityComparisonService
   end
 
   def overlaps_fully(availability_1, availability_2)
-    (availability_1.start_hour >= availability_2.start_hour && availability_1.end_hour <= availability_2.end_hour)
+    (availability_1.start_time >= availability_2.start_time && availability_1.end_time <= availability_2.end_time)
   end
 
   def overlaps_partially(availability_1, availability_2)
-    ((availability_1.start_hour <= availability_2.start_hour &&
-      availability_1.end_hour >= availability_2.start_hour &&
-      availability_1.end_hour <= availability_2.end_hour))
+    ((availability_1.start_time <= availability_2.start_time &&
+      availability_1.end_time >= availability_2.start_time &&
+      availability_1.end_time <= availability_2.end_time))
   end
 
   def availabilities_are_same_object

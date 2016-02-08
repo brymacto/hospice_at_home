@@ -113,7 +113,7 @@ class VolunteersController < ApplicationController
   end
 
   def availability_params
-    params.require(:availability).permit(:start_hour, :end_hour, :day)
+    params.require(:availability).permit(:start_time, :end_time, :day)
   end
 
   def availability_service_params
