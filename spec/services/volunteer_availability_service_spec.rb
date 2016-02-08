@@ -14,7 +14,7 @@ describe VolunteerAvailabilityService do
     test_availability = create(:volunteer_availability, volunteer_id: test_volunteer.id)
     test_availability_for_other_volunteer = create(:volunteer_availability, volunteer_id: test_volunteer.id + 1)
 
-    service = VolunteerAvailabilityService.new(params_from_volunteer_show_page)
+    service = described_class.new(params_from_volunteer_show_page)
 
     expect(service.volunteer).to eql(test_volunteer)
     expect(service.volunteer_availability).to be_instance_of(VolunteerAvailability)
@@ -31,7 +31,7 @@ describe VolunteerAvailabilityService do
     availability_3 = create(:volunteer_availability, volunteer_id: test_volunteer.id, day: 'tuesday', start_hour: 9, end_hour: 10)
     availability_5 = create(:volunteer_availability, volunteer_id: test_volunteer.id, day: 'wednesday', start_hour: 9, end_hour: 10)
 
-    service = VolunteerAvailabilityService.new(params_from_volunteer_show_page)
+    service = described_class.new(params_from_volunteer_show_page)
 
     expect(service.volunteer_availabilities).to eq(
       [
@@ -48,7 +48,7 @@ describe VolunteerAvailabilityService do
 
   it 'saves a volunteer availability' do
     vol_availability_params = generate_volunteer_availability_params
-    service = VolunteerAvailabilityService.new(params_from_volunteer_show_page)
+    service = described_class.new(params_from_volunteer_show_page)
 
     expect do
       service.new_volunteer_availability(vol_availability_params)
@@ -57,7 +57,7 @@ describe VolunteerAvailabilityService do
 
   it 'confirms when a volunteer availability was successfully saved' do
     vol_availability_params = generate_volunteer_availability_params
-    service = VolunteerAvailabilityService.new(params_from_volunteer_show_page)
+    service = described_class.new(params_from_volunteer_show_page)
 
     result = service.new_volunteer_availability(vol_availability_params)
 
@@ -66,7 +66,7 @@ describe VolunteerAvailabilityService do
 
   it 'does not save a volunteer availability that has errors' do
     vol_availability_params = generate_volunteer_availability_params(start_hour: 7, end_hour: 6)
-    service = VolunteerAvailabilityService.new(params_from_volunteer_show_page)
+    service = described_class.new(params_from_volunteer_show_page)
 
     expect do
       service.new_volunteer_availability(vol_availability_params)
@@ -75,7 +75,7 @@ describe VolunteerAvailabilityService do
 
   it 'confirms when a volunteer availability was not successfully saved' do
     vol_availability_params = generate_volunteer_availability_params(start_hour: 7, end_hour: 6)
-    service = VolunteerAvailabilityService.new(params_from_volunteer_show_page)
+    service = described_class.new(params_from_volunteer_show_page)
 
     result = service.new_volunteer_availability(vol_availability_params)
 
@@ -84,7 +84,7 @@ describe VolunteerAvailabilityService do
 
   it 'returns errors for a volunteer availability' do
     vol_availability_params = generate_volunteer_availability_params(start_hour: 7, end_hour: 6)
-    service = VolunteerAvailabilityService.new(params_from_volunteer_show_page)
+    service = described_class.new(params_from_volunteer_show_page)
 
     service.new_volunteer_availability(vol_availability_params)
     result = service.volunteer_availability_errors
