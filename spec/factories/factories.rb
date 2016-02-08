@@ -9,7 +9,7 @@ FactoryGirl.define do
     last_name 'Doe'
   end
 
-  factory :volunteer_availability do
+  factory :availability do
     day 'monday'
     start_hour 14
     end_hour 16

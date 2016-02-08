@@ -2,8 +2,8 @@ require 'rails_helper'
 feature 'feature: volunteers' do
   let!(:test_volunteer) { create(:volunteer, first_name: 'John', last_name: 'Smith') }
 
-  let!(:test_volunteer_availability) do
-    create(:volunteer_availability,
+  let!(:test_availability) do
+    create(:availability,
            volunteer_id: test_volunteer.id,
            day: 'monday',
            start_hour: 13,
@@ -65,7 +65,7 @@ feature 'feature: volunteers' do
   end
 
   feature 'volunteer availabilities' do
-    scenario 'add volunteer availability' do
+    scenario 'add availability' do
       visit volunteer_path(test_volunteer.id)
       fill_in_availability_form(day: 'Monday', start_time: 9, end_time: 10)
 
@@ -87,20 +87,20 @@ feature 'feature: volunteers' do
       expect(page).to have_content 'The following availabilities have been merged: Monday, from 9 to 10 and from 10 to 11'
     end
 
-    scenario 'edit volunteer availability' do
-      visit volunteer_path(test_volunteer_availability.volunteer.id)
+    scenario 'edit availability' do
+      visit volunteer_path(test_availability.volunteer.id)
 
       expect(page.status_code).to be(200)
       expect(page).to have_availability(day: 'Monday', start_time: 13, end_time: 14)
 
-      visit edit_volunteer_availability_path(test_volunteer_availability.id)
+      visit edit_availability_path(test_availability.id)
       expect(page.status_code).to be(200)
 
       fill_in_availability_form(day: 'Wednesday', start_time: 15, end_time: 16)
 
       click_button('Submit')
 
-      visit volunteer_path(test_volunteer_availability.volunteer.id)
+      visit volunteer_path(test_availability.volunteer.id)
       expect(page.status_code).to be(200)
       expect(page).to have_availability(day: 'Wednesday', start_time: 15, end_time: 16)
     end
@@ -112,9 +112,9 @@ def fill_in_availability_form(args = {})
   start_time = args[:start_time].to_s
   end_time = args[:end_time].to_s
 
-  fill_in('volunteer_availability_start_hour', with: start_time)
-  fill_in('volunteer_availability_end_hour', with: end_time)
-  select(day, from: 'volunteer_availability_day')
+  fill_in('availability_start_hour', with: start_time)
+  fill_in('availability_end_hour', with: end_time)
+  select(day, from: 'availability_day')
 end
 
 RSpec::Matchers.define :have_availability do |availability|

@@ -1,7 +1,7 @@
-class VolunteerAvailabilityMergingService
+class AvailabilityMergingService
   def initialize(volunteer)
     @volunteer = volunteer
-    @availabilities = @volunteer.volunteer_availabilities
+    @availabilities = @volunteer.availabilities
     @availabilities_already_merged = []
     @flash_message_contents = []
   end
@@ -102,7 +102,7 @@ class VolunteerAvailabilityMergingService
   end
 
   def create_merged_availability(availability_1, availability_2)
-    VolunteerAvailability.create!(day: availability_1.day, start_hour: [availability_1.start_hour, availability_2.start_hour].min, end_hour: [availability_1.end_hour, availability_2.end_hour].max, volunteer: @volunteer)
+    Availability.create!(day: availability_1.day, start_hour: [availability_1.start_hour, availability_2.start_hour].min, end_hour: [availability_1.end_hour, availability_2.end_hour].max, volunteer: @volunteer)
   end
 
   def destroy_availabilities(*availabilities)
@@ -110,11 +110,11 @@ class VolunteerAvailabilityMergingService
   end
 
   def refresh_availabilities
-    @availabilities = @volunteer.reload.volunteer_availabilities
+    @availabilities = @volunteer.reload.availabilities
     @availabilities_already_merged = []
   end
 
   def compare(availability_1, availability_2)
-    VolunteerAvailabilityComparisonService.new(availability_1, availability_2)
+    AvailabilityComparisonService.new(availability_1, availability_2)
   end
 end

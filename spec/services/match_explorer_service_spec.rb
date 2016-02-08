@@ -55,8 +55,8 @@ describe MatchExplorerService do
              last_name: 'Doe')
     end
 
-    let!(:test_volunteer_availability) do
-      create(:volunteer_availability,
+    let!(:test_availability) do
+      create(:availability,
              volunteer_id: test_volunteer_available.id,
              day: 'monday',
              start_hour: 10,
@@ -72,7 +72,7 @@ describe MatchExplorerService do
 
     it 'provides correct volunteers for given time with specialty specified' do
       test_volunteer_with_specialty = create(:volunteer)
-      create(:volunteer_availability,
+      create(:availability,
              volunteer_id: test_volunteer_with_specialty.id,
              day: 'monday',
              start_hour: 10,

@@ -13,8 +13,8 @@ feature 'Matches Explorer' do
            last_name: 'Doe')
   end
 
-  let!(:test_volunteer_availability) do
-    create(:volunteer_availability,
+  let!(:test_availability) do
+    create(:availability,
            volunteer_id: test_volunteer_available.id,
            day: 'monday',
            start_hour: 10,

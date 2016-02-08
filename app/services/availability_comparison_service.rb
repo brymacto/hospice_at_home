@@ -1,4 +1,4 @@
-class VolunteerAvailabilityComparisonService
+class AvailabilityComparisonService
   def initialize(availability_1, availability_2)
     @availability_1 = availability_1
     @availability_2 = availability_2

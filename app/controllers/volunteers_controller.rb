@@ -71,10 +71,10 @@ class VolunteersController < ApplicationController
   end
 
   def add_volunteer_availabilities
-    service = VolunteerAvailabilityService.new(volunteer_availability_service_params)
-    service.new_volunteer_availability(volunteer_availability_params)
+    service = AvailabilityService.new(availability_service_params)
+    service.new_availability(availability_params)
 
-    flash[:error] = service.volunteer_availability_errors
+    flash[:error] = service.availability_errors
     flash[:notice] = service.merging_result
     load_assigns(:volunteer, :availabities)
     load_availabilities
@@ -103,20 +103,20 @@ class VolunteersController < ApplicationController
   end
 
   def load_availabilities
-    service = VolunteerAvailabilityService.new(volunteer_availability_service_params)
-    @volunteer_availability = service.volunteer_availability
-    @volunteer_availabilities = service.volunteer_availabilities
+    service = AvailabilityService.new(availability_service_params)
+    @availability = service.availability
+    @availabilities = service.availabilities
   end
 
   def load_volunteer_specialties
     @volunteer_specialties = @volunteer.volunteer_specialties.order(name: :asc)
   end
 
-  def volunteer_availability_params
-    params.require(:volunteer_availability).permit(:start_hour, :end_hour, :day)
+  def availability_params
+    params.require(:availability).permit(:start_hour, :end_hour, :day)
   end
 
-  def volunteer_availability_service_params
+  def availability_service_params
     params.permit(:id)
   end
 
