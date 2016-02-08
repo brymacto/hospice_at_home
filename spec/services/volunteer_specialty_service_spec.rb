@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe VolunteerAvailabilityService do
+describe AvailabilityService do
   let!(:test_volunteer) { create(:volunteer, first_name: 'Jane', last_name: 'Doe') }
   let(:test_specialty) { create(:volunteer_specialty, name: 'Expressive Arts') }
 

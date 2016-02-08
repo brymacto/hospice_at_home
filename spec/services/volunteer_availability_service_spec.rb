@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe VolunteerAvailabilityService do
+describe AvailabilityService do
   let!(:test_volunteer) { create(:volunteer) }
   let(:params_from_volunteer_show_page) do
     ActionController::Parameters.new(

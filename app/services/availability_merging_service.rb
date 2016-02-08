@@ -1,4 +1,4 @@
-class VolunteerAvailabilityMergingService
+class AvailabilityMergingService
   def initialize(volunteer)
     @volunteer = volunteer
     @availabilities = @volunteer.availabilities
@@ -115,6 +115,6 @@ class VolunteerAvailabilityMergingService
   end
 
   def compare(availability_1, availability_2)
-    VolunteerAvailabilityComparisonService.new(availability_1, availability_2)
+    AvailabilityComparisonService.new(availability_1, availability_2)
   end
 end

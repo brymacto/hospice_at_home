@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe VolunteerAvailabilityMergingService do
+describe AvailabilityMergingService do
   let!(:test_volunteer) { create(:volunteer) }
 
   describe 'flash_message' do

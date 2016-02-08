@@ -71,7 +71,7 @@ class VolunteersController < ApplicationController
   end
 
   def add_volunteer_availabilities
-    service = VolunteerAvailabilityService.new(availability_service_params)
+    service = AvailabilityService.new(availability_service_params)
     service.new_availability(availability_params)
 
     flash[:error] = service.availability_errors
@@ -103,7 +103,7 @@ class VolunteersController < ApplicationController
   end
 
   def load_availabilities
-    service = VolunteerAvailabilityService.new(availability_service_params)
+    service = AvailabilityService.new(availability_service_params)
     @availability = service.availability
     @availabilities = service.availabilities
   end

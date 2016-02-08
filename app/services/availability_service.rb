@@ -1,4 +1,4 @@
-class VolunteerAvailabilityService
+class AvailabilityService
   attr_reader :volunteer, :availability, :availabilities, :merging_result
 
   def initialize(params)

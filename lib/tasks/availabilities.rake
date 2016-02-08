@@ -1,5 +1,5 @@
 namespace :availabilities do
-  desc 'merges volunteer availabilities that are duplicate and bordering'
+  desc 'merges availabilities that are duplicate and bordering'
   task 'merge_availabilities' => :environment do
     volunteers = Volunteer.all
     availabilities_before_task = Availability.all.size
