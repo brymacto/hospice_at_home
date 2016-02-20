@@ -46,7 +46,7 @@ RSpec.describe VolunteersController, type: :controller do
     end
   end
 
-  describe '#remove_volunteer_specialty' do
+  describe '#remove_specialty' do
     let(:test_specialty) do
       create(:specialty)
     end

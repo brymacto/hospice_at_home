@@ -18,7 +18,7 @@
       </div>
       <div class="width25">
         <%= label_tag(:specialty_id, "Specialty") %>
-        <%= f.select(:specialty_id, Specialty.all.order('name ASC').collect { |volunteer_specialty| [volunteer_specialty.name, volunteer_specialty.id] }.unshift(["No specialty specified", nil]), class: 'form_field', selected: @specialty_selected_value) %>
+        <%= f.select(:specialty_id, Specialty.all.order('name ASC').collect { |specialty| [specialty.name, specialty.id] }.unshift(["No specialty specified", nil]), class: 'form_field', selected: @specialty_selected_value) %>
       </div>
     </div>
 

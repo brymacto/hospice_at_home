@@ -7,7 +7,7 @@ describe BreadcrumbGenerator do
       FactoryGirl.create(:volunteer, first_name: :Jane, last_name: :Doe)
     end
 
-    let!(:test_volunteer_specialty) do
+    let!(:test_specialty) do
       FactoryGirl.create(:specialty)
     end
 
@@ -59,8 +59,8 @@ describe BreadcrumbGenerator do
       end
 
       it 'correctly generates a path for a controller that has two words in its name' do
-        expect(load_breadcrumbs(Specialty, test_volunteer_specialty, :edit)[1][:path]).to(
-          eql("http://localhost:3000/specialties/#{test_volunteer_specialty.id}")
+        expect(load_breadcrumbs(Specialty, test_specialty, :edit)[1][:path]).to(
+          eql("http://localhost:3000/specialties/#{test_specialty.id}")
         )
       end
 

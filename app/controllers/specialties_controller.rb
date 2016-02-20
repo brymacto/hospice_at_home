@@ -12,7 +12,7 @@ class SpecialtiesController < ApplicationController
   end
 
   def create
-    specialty = Specialty.new(volunteer_specialty_params)
+    specialty = Specialty.new(specialty_params)
     if specialty.save
       redirect_to specialty
     else
@@ -34,7 +34,7 @@ class SpecialtiesController < ApplicationController
 
   def update
     load_specialty
-    if @specialty.update(volunteer_specialty_params)
+    if @specialty.update(specialty_params)
       redirect_to @specialty
     else
       flash.now[:error] = @specialty.errors.full_messages.to_sentence
@@ -54,7 +54,7 @@ class SpecialtiesController < ApplicationController
     @specialty = Specialty.find(params[:id])
   end
 
-  def volunteer_specialty_params
+  def specialty_params
     params.require(:specialty).permit(:name)
   end
 end

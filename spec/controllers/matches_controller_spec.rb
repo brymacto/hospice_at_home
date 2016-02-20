@@ -13,12 +13,12 @@ RSpec.describe MatchesController, type: :controller do
         create(:volunteer)
       end
 
-      let!(:test_volunteer_specialty) do
+      let!(:test_specialty) do
         create(:specialty)
       end
 
       let!(:test_volunteer_with_specialty) do
-        create(:volunteer, specialties: [test_volunteer_specialty])
+        create(:volunteer, specialties: [test_specialty])
       end
 
       let!(:test_volunteer_not_available) do
@@ -46,7 +46,7 @@ RSpec.describe MatchesController, type: :controller do
       end
 
       it 'assigns @volunteers correctly based on specialty search params' do
-        get :explorer, match_exploration: { day: 'monday', start_time: 10, end_time: 12, client_id: 1, specialty_id: test_volunteer_specialty.id }
+        get :explorer, match_exploration: { day: 'monday', start_time: 10, end_time: 12, client_id: 1, specialty_id: test_specialty.id }
 
         expect(assigns(:volunteers)).to include(test_volunteer_with_specialty)
         expect(assigns(:volunteers)).to_not include(test_volunteer_available)
@@ -60,7 +60,7 @@ RSpec.describe MatchesController, type: :controller do
       end
 
       it 'assigns empty @volunteers when none match search params based on specialty' do
-        get :explorer, match_exploration: { day: 'monday', start_time: 10, end_time: 12, client_id: 1, specialty_id: test_volunteer_specialty.id + 1 }
+        get :explorer, match_exploration: { day: 'monday', start_time: 10, end_time: 12, client_id: 1, specialty_id: test_specialty.id + 1 }
 
         expect(assigns(:volunteers)).to be_empty
       end
