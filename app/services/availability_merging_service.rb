@@ -16,9 +16,7 @@ class AvailabilityMergingService
 
   def flash_message
     return if @flash_message_contents.empty?
-    message = 'The following availabilities have been merged: '
-    @flash_message_contents.each { |contents| message << "#{contents}; " }
-    message.chomp('; ')
+    "The following availabilities have been merged: #{@flash_message_contents.join('; ')}"
   end
 
   private
