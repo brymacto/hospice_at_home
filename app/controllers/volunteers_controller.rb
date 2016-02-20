@@ -12,9 +12,9 @@ class VolunteersController < ApplicationController
   end
 
   def show
-    load_assigns(:volunteer, :availabilities, :volunteer_specialties)
+    load_assigns(:volunteer, :availabilities, :specialties)
     @matches = @volunteer.matches
-    @volunteer_specialties_options = VolunteerSpecialty.all
+    @specialties_options = Specialty.all
     @load_map_js = true
     load_breadcrumbs(Volunteer, @volunteer)
   end
@@ -52,19 +52,19 @@ class VolunteersController < ApplicationController
     end
   end
 
-  def add_volunteer_specialty
+  def add_specialty
     load_volunteer
 
-    service = VolunteerSpecialtyService.new(volunteer_specialty_params)
+    service = SpecialtyService.new(specialty_params)
     service.add_specialty_to_volunteer
 
     flash[:error] = service.flash_message
     redirect_to @volunteer
   end
 
-  def remove_volunteer_specialty
+  def remove_specialty
     load_volunteer
-    service = VolunteerSpecialtyService.new(volunteer_specialty_params)
+    service = SpecialtyService.new(specialty_params)
     service.remove_specialty_from_volunteer
 
     redirect_to @volunteer
@@ -79,7 +79,7 @@ class VolunteersController < ApplicationController
     load_assigns(:volunteer, :availabities)
     load_availabilities
 
-    @volunteer_specialties_options = VolunteerSpecialty.all
+    @specialties_options = Specialty.all
     redirect_to @volunteer
   end
 
@@ -91,7 +91,7 @@ class VolunteersController < ApplicationController
     load_volunteer if assigns.include?(:volunteer)
     load_volunteers if assigns.include?(:volunteers)
     load_availabilities if assigns.include?(:availabilities)
-    load_volunteer_specialties if assigns.include?(:volunteer_specialties)
+    load_specialties if assigns.include?(:specialties)
   end
 
   def load_volunteer
@@ -108,8 +108,8 @@ class VolunteersController < ApplicationController
     @availabilities = service.availabilities
   end
 
-  def load_volunteer_specialties
-    @volunteer_specialties = @volunteer.volunteer_specialties.order(name: :asc)
+  def load_specialties
+    @specialties = @volunteer.specialties.order(name: :asc)
   end
 
   def availability_params
@@ -121,10 +121,10 @@ class VolunteersController < ApplicationController
   end
 
   def volunteer_params
-    params.require(:volunteer).permit(:last_name, :first_name, :volunteer_specialty_ids, :address, :city, :province, :postal_code)
+    params.require(:volunteer).permit(:last_name, :first_name, :specialty_ids, :address, :city, :province, :postal_code)
   end
 
-  def volunteer_specialty_params
-    params.permit(:id, volunteer: [:volunteer_specialty_ids])
+  def specialty_params
+    params.permit(:id, volunteer: [:specialty_ids])
   end
 end

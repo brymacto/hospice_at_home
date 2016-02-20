@@ -36,14 +36,14 @@
 
 <h2>Specialties</h2>
 
-<% if @volunteer_specialties && @volunteer_specialties.size > 0 %>
-    <% @volunteer_specialties.each do |volunteer_specialty| %>
-        <span class="badge badge-notice specialty"><%= link_to volunteer_specialty.name, volunteer_specialty %>
+<% if @specialties && @specialties.size > 0 %>
+    <% @specialties.each do |specialty| %>
+        <span class="badge badge-notice specialty"><%= link_to specialty.name, specialty %>
           <%= link_to fa_icon('close'), {
                                           controller: 'volunteers',
-                                          action: 'remove_volunteer_specialty',
+                                          action: 'remove_specialty',
                                           volunteer: {
-                                            volunteer_specialty_ids: volunteer_specialty.id
+                                            specialty_ids: specialty.id
                                           }
                                         },
                                         class: 'red remove_specialty' %>
@@ -53,15 +53,17 @@
     <p><%= @volunteer.name %> has no specialties.</p>
 <% end %>
 
-<%= form_for @volunteer, url: {action: 'add_volunteer_specialty'}, html: {class: :horizontal_form} do |f| %>
+<%= form_for @volunteer, url: {action: 'add_specialty'}, html: {class: :horizontal_form} do |f| %>
     <div class="label">
-      <%= label_tag(:volunteer_specialty, "Add specialty:") %>
+      <%= label_tag(:specialty, "Add specialty:") %>
     </div>
     <div class="input stretch">
-      <%= f.select :volunteer_specialty_ids,
-                   @volunteer_specialties_options.collect { |volunteer_specialty| [volunteer_specialty.name, volunteer_specialty.id] },
-                   selected: @volunteer_specialties_options.first,
-                   class: 'form_field' %>
+      <%= f.select :specialty_ids,
+                   @specialties_options.collect { |specialty_option| [specialty_option.name, specialty_option.id] },
+                   selected: @specialties_options.first,
+                   class: 'form_field',
+                   id: 'specialty_ids'
+      %>
     </div>
     <div class="button_container">
       <%= f.submit "Add", id: 'add_specialty' %>

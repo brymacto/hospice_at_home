@@ -41,9 +41,9 @@ feature 'feature: volunteers' do
 
   feature 'volunteer specialties' do
     scenario 'add specialty to volunteer' do
-      create(:volunteer_specialty, name: 'Expressive Arts')
+      create(:specialty, name: 'Expressive Arts')
       visit volunteer_path(test_volunteer.id)
-      select('Expressive Arts', from: 'volunteer_volunteer_specialty_ids')
+      select('Expressive Arts', from: 'volunteer_specialty_ids')
 
       click_button('add_specialty')
 
@@ -54,9 +54,9 @@ feature 'feature: volunteers' do
     end
 
     scenario 'remove specialty from volunteer' do
-      create(:volunteer_specialty, name: 'Expressive Arts')
+      create(:specialty, name: 'Expressive Arts')
       visit volunteer_path(test_volunteer.id)
-      select('Expressive Arts', from: 'volunteer_volunteer_specialty_ids')
+      select('Expressive Arts', from: 'volunteer_specialty_ids')
 
       click_button('add_specialty')
 

@@ -14,11 +14,11 @@ RSpec.describe MatchesController, type: :controller do
       end
 
       let!(:test_volunteer_specialty) do
-        create(:volunteer_specialty)
+        create(:specialty)
       end
 
       let!(:test_volunteer_with_specialty) do
-        create(:volunteer, volunteer_specialties: [test_volunteer_specialty])
+        create(:volunteer, specialties: [test_volunteer_specialty])
       end
 
       let!(:test_volunteer_not_available) do

@@ -4,14 +4,14 @@
   <th>Number of volunteers</th>
   <th>Actions</th>
 
-  <% @volunteer_specialties.each do |volunteer_specialty| %>
+  <% @specialties.each do |volunteer_specialty| %>
       <tr>
         <td><%= volunteer_specialty.id %></td>
         <td>
           <%= link_to volunteer_specialty.name, volunteer_specialty %>
         </td>
         <td><%= volunteer_specialty.volunteers.size %></td>
-        <td><%= link_to "Edit", edit_volunteer_specialty_path(volunteer_specialty.id) %></td>
+        <td><%= link_to "Edit", edit_specialty_path(volunteer_specialty.id) %></td>
       </tr>
 
   <% end %>

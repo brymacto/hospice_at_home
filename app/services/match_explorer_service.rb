@@ -29,19 +29,19 @@ class MatchExplorerService
     return unless match_exploration_valid
     @volunteers = Volunteer.joins('LEFT OUTER JOIN availabilities ON
                                   availabilities.volunteer_id = volunteers.id
-                                  LEFT OUTER JOIN volunteer_specialties_volunteers ON
-                                  volunteer_specialties_volunteers.volunteer_id = volunteers.id').where(
+                                  LEFT OUTER JOIN specialties_volunteers ON
+                                  specialties_volunteers.volunteer_id = volunteers.id').where(
                                     match_exploration_query,
                                     start_time: match_exploration_time_range.start_time,
                                     end_time: match_exploration_time_range.end_time,
                                     day: match_exploration_time_range.day,
-                                    volunteer_specialty_id: match_exploration.specialty_id).distinct.order(:last_name)
+                                    specialty_id: match_exploration.specialty_id).distinct.order(:last_name)
   end
 
   def match_exploration_query
     "availabilities.start_time <= :start_time AND
      availabilities.end_time >= :end_time AND
-     availabilities.day = :day#{' AND volunteer_specialties_volunteers.volunteer_specialty_id = :volunteer_specialty_id' if match_exploration.specialty_id}"
+     availabilities.day = :day#{' AND specialties_volunteers.specialty_id = :specialty_id' if match_exploration.specialty_id}"
   end
 
   def match_exploration_time_range

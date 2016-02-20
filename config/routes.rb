@@ -15,8 +15,8 @@ Rails.application.routes.draw do
     resources :matches, only: [:show, :index]
     member do
       post 'add_volunteer_availabilities'
-      patch 'add_volunteer_specialty'
-      get 'remove_volunteer_specialty'
+      patch 'add_specialty'
+      get 'remove_specialty'
     end
   end
   get 'matches/explorer' => 'matches#explorer', as: :matches_explorer
@@ -27,7 +27,7 @@ Rails.application.routes.draw do
     resources :match_requests
   end
   resources :availabilities
-  resources :volunteer_specialties
+  resources :specialties
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

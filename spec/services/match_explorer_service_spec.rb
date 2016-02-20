@@ -3,7 +3,7 @@ require 'rails_helper'
 describe MatchExplorerService do
   let(:test_client) { create(:client) }
 
-  let(:test_specialty) { create(:volunteer_specialty, name: 'Expressive Arts') }
+  let(:test_specialty) { create(:specialty, name: 'Expressive Arts') }
 
   let!(:test_client) do
     create(:client,
@@ -77,7 +77,7 @@ describe MatchExplorerService do
              day: 'monday',
              start_time: 10,
              end_time: 24)
-      test_volunteer_with_specialty.volunteer_specialties << test_specialty
+      test_volunteer_with_specialty.specialties << test_specialty
 
       service = described_class.new(params_with_specialty)
 

@@ -8,7 +8,7 @@
       from <%= @match_exploration.start_time %>
       to <%= @match_exploration.end_time %>
     <% if @match_exploration.specialty_id %>
-      with specialty <%= VolunteerSpecialty.find(@match_exploration.specialty_id).name %>
+      with specialty <%= Specialty.find(@match_exploration.specialty_id).name %>
       <% end %>
 
     </h2>

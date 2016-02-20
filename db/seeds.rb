@@ -57,13 +57,13 @@ end
   'Registered Massage Therapy',
   'Spiritual Support'
 ].each do |specialty_name|
-  VolunteerSpecialty.create(name: specialty_name)
+  Specialty.create(name: specialty_name)
 end
 
-VolunteerSpecialty.all.each do |specialty|
+Specialty.all.each do |specialty|
   20.times do
     volunteer = Volunteer.order('RANDOM()').first
-    volunteer.volunteer_specialties << specialty unless volunteer.volunteer_specialties.include?(specialty)
+    volunteer.specialties << specialty unless volunteer.specialties.include?(specialty)
   end
 end
 

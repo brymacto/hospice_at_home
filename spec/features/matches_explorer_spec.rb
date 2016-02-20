@@ -28,7 +28,7 @@ feature 'Matches Explorer' do
   end
 
   let!(:test_specialty) do
-    create(:volunteer_specialty,
+    create(:specialty,
            name: 'Expressive Arts')
   end
 
@@ -142,13 +142,13 @@ end
 def add_specialty_to_volunteer(specialty, volunteer)
   params = ActionController::Parameters.new(
     'controller' => 'volunteers',
-    'action' => 'add_volunteer_specialty',
+    'action' => 'add_specialty',
     'volunteer' => {
-      'volunteer_specialty_ids' => specialty.id.to_s
+      'specialty_ids' => specialty.id.to_s
     },
     'id' => volunteer.id.to_s
   )
 
-  service = VolunteerSpecialtyService.new(params)
+  service = SpecialtyService.new(params)
   service.add_specialty_to_volunteer
 end
