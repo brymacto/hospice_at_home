@@ -70,7 +70,7 @@ class VolunteersController < ApplicationController
     redirect_to @volunteer
   end
 
-  def add_volunteer_availabilities
+  def add_availabilities
     service = AvailabilityService.new(availability_service_params)
     service.new_availability(availability_params)
 

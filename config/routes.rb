@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   resources :volunteers do
     resources :matches, only: [:show, :index]
     member do
-      post 'add_volunteer_availabilities'
+      post 'add_availabilities'
       patch 'add_specialty'
       get 'remove_specialty'
     end

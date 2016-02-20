@@ -94,7 +94,7 @@
   <% end %>
 </table>
 
-<%= form_for @availability, url: add_volunteer_availabilities_volunteer_path(@volunteer), html: {class: :horizontal_form} do |f| %>
+<%= form_for @availability, url: add_availabilities_volunteer_path(@volunteer), html: {class: :horizontal_form} do |f| %>
     <div class="label">
       <%= label_tag(:day, "Add availability:") %>
     </div>

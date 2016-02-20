@@ -7,7 +7,7 @@ RSpec.describe VolunteersController, type: :controller do
 
   describe 'availability POST' do
     it 'redirects user to volunteer edit page and displays flash message when there are validation errors' do
-      post(:add_volunteer_availabilities,
+      post(:add_availabilities,
            id: test_volunteer.id,
            availability: { start_time: 9, end_time: 10, day: '' }
           )
@@ -16,20 +16,20 @@ RSpec.describe VolunteersController, type: :controller do
     end
   end
 
-  describe '#add_volunteer_availabilities' do
+  describe '#add_availabilities' do
     it 'does not add invalid availability' do
-      get :add_volunteer_availabilities, id: test_volunteer.id, availability: { start_time: '9', end_time: '8', day: 'monday', volunteer_id: test_volunteer.id }
+      get :add_availabilities, id: test_volunteer.id, availability: { start_time: '9', end_time: '8', day: 'monday', volunteer_id: test_volunteer.id }
       expect(assigns[:availabilities].size).to eq(0)
       expect(flash[:error]).to eq('Start time must be before end time')
     end
 
     it 'adds valid availability' do
-      post :add_volunteer_availabilities, id: test_volunteer.id, availability: { start_time: '9', end_time: '10', day: 'monday', volunteer_id: test_volunteer.id }
+      post :add_availabilities, id: test_volunteer.id, availability: { start_time: '9', end_time: '10', day: 'monday', volunteer_id: test_volunteer.id }
       expect(assigns[:availabilities].size).to eq(1)
     end
 
     it 'redirects to volunteer show view' do
-      get :add_volunteer_availabilities, id: test_volunteer.id, availability: { start_time: '9', end_time: '10', day: 'monday', volunteer_id: test_volunteer.id }
+      get :add_availabilities, id: test_volunteer.id, availability: { start_time: '9', end_time: '10', day: 'monday', volunteer_id: test_volunteer.id }
       expect(response).to redirect_to(volunteer_path(test_volunteer))
     end
   end
