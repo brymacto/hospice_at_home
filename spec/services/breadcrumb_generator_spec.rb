@@ -58,10 +58,6 @@ describe BreadcrumbGenerator do
         expect(load_breadcrumbs(MatchProposal)[0][:name]).to eql('Match proposals')
       end
 
-      it 'correctly labels Specialty class as Specialties' do
-        expect(load_breadcrumbs(Specialty)[0][:name]).to eql('Specialties')
-      end
-
       it 'correctly generates a path for a controller that has two words in its name' do
         expect(load_breadcrumbs(Specialty, test_volunteer_specialty, :edit)[1][:path]).to(
           eql("http://localhost:3000/specialties/#{test_volunteer_specialty.id}")
