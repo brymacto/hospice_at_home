@@ -1,0 +1,3 @@
+<%= link_to 'Delete this specialty', specialty_path(@specialty), class: [:button, 'float_right'], method: :delete, data: {confirm: 'Are you sure?' } %>
+<h1>Edit specialty: <%= @specialty.name %></h1>
+<%= render "form" %>

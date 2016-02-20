@@ -1,0 +1,18 @@
+<table>
+  <th>ID</th>
+  <th>Name</th>
+  <th>Number of volunteers</th>
+  <th>Actions</th>
+
+  <% @specialties.each do |specialty| %>
+      <tr>
+        <td><%= specialty.id %></td>
+        <td>
+          <%= link_to specialty.name, specialty %>
+        </td>
+        <td><%= specialty.volunteers.size %></td>
+        <td><%= link_to "Edit", edit_specialty_path(specialty.id) %></td>
+      </tr>
+
+  <% end %>
+</table>

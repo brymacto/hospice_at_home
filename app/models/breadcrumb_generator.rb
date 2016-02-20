@@ -35,7 +35,6 @@ module BreadcrumbGenerator
   end
 
   def breadcrumb_class_name(breadcrumb_class)
-    return 'Specialties' if breadcrumb_class == VolunteerSpecialty
     breadcrumb_class
       .name
       .underscore

@@ -38,7 +38,7 @@ FactoryGirl.define do
     match_proposal_id 01
   end
 
-  factory :volunteer_specialty, class: 'VolunteerSpecialty' do
+  factory :specialty, class: 'Specialty' do
     name 'Expressive Arts'
   end
 end

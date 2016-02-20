@@ -1,7 +1,7 @@
 class Volunteer < ActiveRecord::Base
   has_many :matches, dependent: :destroy
   has_many :availabilities, dependent: :destroy
-  has_and_belongs_to_many :volunteer_specialties
+  has_and_belongs_to_many :specialties
 
   validates :first_name, presence: true
   validates :last_name, presence: true
