@@ -48,7 +48,4 @@
     <p><%= @client.name %> has no match proposals.</p>
 <% end %>
 
-<% if @client.has_been_geocoded? %>
-<h2>Location</h2>
-    <%= render partial: "shared/map", locals: {map_subject: @client} %>
-<% end %>
+<%= render partial: "shared/map", locals: {map_subject: @client} %>

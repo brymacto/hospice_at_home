@@ -1,32 +1,25 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Hospice at Home</title>
-  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-  <% if @load_map_js == true  %>
-      <script defer src="https://maps.googleapis.com/maps/api/js?key=<%= Rails.application.secrets.google_maps_browser_api %>">
-      </script>
-      <% if (@client && @client.has_been_geocoded?) || (@volunteer && @volunteer.has_been_geocoded?)%>
-      <script>
-      $(document).on('ready page:load', function () {
-      initMap();
-      });
-      </script>
-      <% end %>
-  <% end %>
-</head>
-<% if @no_turbolinks && @no_turbolinks == true %>
-    <body data-no-turbolink="true">
-<% else %>
-    <body>
-<% end %>
-<%= render "refills/navigation" %>
-<div class="container">
-  <%= render 'shared/breadcrumbs' %>
-  <%= render :partial => "/layouts/flash", :locals => {:flash => flash} %>
-  <%= yield %>
-</div>
-</body>
+  <head>
+    <title>Hospice at Home</title>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+    <script src="https://maps.googleapis.com/maps/api/js?key=<%= Rails.application.secrets.google_maps_browser_api %>">
+    </script>
+  </head>
+
+  <body <%= yield(:body_attributes) %>>
+    <%= render "refills/navigation" %>
+
+    <div class="container">
+      <%= render 'shared/breadcrumbs' %>
+
+      <%= render :partial => "/layouts/flash", :locals => {:flash => flash} %>
+
+      <%= yield %>
+    </div>
+
+    <%= yield :javascript %>
+  </body>
 </html>

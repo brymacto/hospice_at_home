@@ -42,8 +42,10 @@
             <th>Day and time <a ng-click="setOrder('date')"><%= fa_icon("sort", class: 'sort_icon') %></a></th>
             <th>Client <a ng-click="setOrder('client')"><%= fa_icon("sort", class: 'sort_icon') %></a></th>
             <th>Status <a ng-click="setOrder('status')"><%= fa_icon("sort", class: 'sort_icon') %></a></th>
-            <th>Volunteer requests <a ng-click="setOrder('match_requests_size')"><%= fa_icon("sort", class: 'sort_icon') %></a></th>
-            <th>Proposal created <a ng-click="setOrder('proposal_date')"><%= fa_icon("sort", class: 'sort_icon') %></a></th>
+            <th>Volunteer requests
+              <a ng-click="setOrder('match_requests_size')"><%= fa_icon("sort", class: 'sort_icon') %></a></th>
+            <th>Proposal created <a ng-click="setOrder('proposal_date')"><%= fa_icon("sort", class: 'sort_icon') %></a>
+            </th>
           </tr>
           <tr ng-repeat="matchProposal in matchProposals | orderBy: orderProp : orderAscending ">
             <td class="match_proposals_table_day_and_time">
@@ -71,11 +73,13 @@
   </ul>
 </div>
 
-<script>
-  $(document).on('ready page:load', function() {
-    angular.bootstrap(document, ['matchesAngularApp']);
-  });
-</script>
+<% content_for :javascript do %>
+    <script type="text/javascript">
+      $(document).on('ready page:load', function () {
+        angular.bootstrap(document, ['matchesAngularApp']);
+      });
+    </script>
+<% end %>
 
-
+<%= content_for(:body_attributes) do %>data-no-turbolink<% end %>
 
