@@ -10,6 +10,7 @@ namespace :geocode do
       else
         puts "Fail: client #{client.name}"
       end
+      sleep(0.15)
     end
 
     volunteers = Volunteer.where(latitude: nil, longitude: nil)
@@ -21,6 +22,7 @@ namespace :geocode do
       else
         puts "Fail: volunteer #{volunteer.name}"
       end
+      sleep(0.15)
     end
   end
 end
