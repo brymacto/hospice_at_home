@@ -129,7 +129,4 @@
              action: 'new',
              volunteer_id: @volunteer.id}, class: [:button, 'float_right', 'bottom_margin'], id: 'add_match' %>
 
-<% if @volunteer.has_been_geocoded? %>
-<h2>Location</h2>
-    <%= render partial: "shared/map", locals: {map_subject: @volunteer} %>
-<% end %>
+<%= render partial: "shared/map", locals: {map_subject: @volunteer} %>

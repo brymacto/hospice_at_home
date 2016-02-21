@@ -1,20 +1,29 @@
-<div id="map"></div>
-<script type="text/javascript">
+<% if (@client && @client.has_been_geocoded?) || (@volunteer && @volunteer.has_been_geocoded?) %>
+    <h2>Location</h2>
+    <div id="map"></div>
 
-  var map;
+    <% content_for :javascript do %>
+        <script type="text/javascript">
 
-  function initMap() {
-    var latLng = {lat: <%= map_subject.latitude %>, lng: <%= map_subject.longitude %>};
-    map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 14,
-      center: latLng
-    });
-    var marker = new google.maps.Marker({
-      position: latLng,
-      map: map,
-      label: '<%= map_subject.class %>',
-      title: '<%= map_subject.name %>'
-    });
-  }
+          var map;
 
-</script>
+          function initMap() {
+            var latLng = {lat: <%= map_subject.latitude %>, lng: <%= map_subject.longitude %>};
+            map = new google.maps.Map(document.getElementById('map'), {
+              zoom: 14,
+              center: latLng
+            });
+            var marker = new google.maps.Marker({
+              position: latLng,
+              map: map,
+              label: '<%= map_subject.class %>',
+              title: '<%= map_subject.name %>'
+            });
+          }
+
+          $(document).on('ready page:load', function () {
+            initMap();
+          });
+        </script>
+    <% end %>
+<% end %>
