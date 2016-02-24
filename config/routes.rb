@@ -1,8 +1,7 @@
 Rails.application.routes.draw do
   mount JasmineRails::Engine => '/specs' if defined?(JasmineRails)
-  get 'static_pages/home'
 
-  root 'clients#index'
+  root 'static_pages#home'
 
   resources :clients do
     resources :matches, only: [:show, :index]

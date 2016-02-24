@@ -10,7 +10,7 @@
     <%= yield :inline_css %>
   </head>
 
-  <body<%= yield(:body_attributes) %>>
+  <body data-no-turbolink>
     <%= render "refills/navigation" %>
     <%= yield :hero %>
     <div class="container">
