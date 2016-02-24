@@ -7,6 +7,40 @@ div.container {
   padding: 1em;
 }
 
+.quick-links {
+  @include outer-container;
+  .quick-link {
+    @include span-columns(2.4);
+    padding-top: 1em;
+    padding-bottom: 1em;
+    background-color: transparent;
+    border: 1px solid $c_callout;
+    color: $c_callout;
+    text-align: center;
+    &:hover {
+      background-color: $c_callout;
+      color: #fff;
+
+    }
+    .icon {
+      display: block;
+      font-size: 2em;
+      margin-bottom: 0.5em;
+    }
+  }
+}
+
+small.photo-credit, small.photo-credit a {
+  color: $medium-gray;
+
+}
+small.photo-credit {
+  position: fixed;
+  bottom: 3px;
+  right: 10px;
+  font-size: 0.8em;
+}
+
 .width10 {
   @include span-columns(2);
   @include omega();
