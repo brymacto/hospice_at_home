@@ -7,11 +7,12 @@
     <%= csrf_meta_tags %>
     <script src="https://maps.googleapis.com/maps/api/js?key=<%= Rails.application.secrets.google_maps_browser_api %>">
     </script>
+    <%= yield :inline_css %>
   </head>
 
-  <body<%= yield(:body_attributes) %>>
+  <body data-no-turbolink>
     <%= render "refills/navigation" %>
-
+    <%= yield :hero %>
     <div class="container">
       <%= render 'shared/breadcrumbs' %>
 

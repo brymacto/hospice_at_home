@@ -1,0 +1,62 @@
+.hero {
+  $base-border-radius: 3px !default;
+  $action-color: #477DCA !default;
+  $large-screen: em(860) !default;
+  $hero-background-top: #7F99BE;
+  $hero-background-bottom: #20392B;
+  $hero-color: white;
+  $gradient-angle: 10deg;
+  $hero-image: image-url("hero.jpg");
+
+  @include background($hero-image, linear-gradient($gradient-angle, $hero-background-bottom, $hero-background-top), no-repeat $hero-background-top scroll);
+  background-color: #324766;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding-bottom: 3em;
+
+  .hero-logo img {
+    margin-bottom: 1em;
+    background-color: rgba(60, 186, 200, 0.5);
+    border-radius: 80%;
+    height: 20em;
+    float: right;
+  }
+
+  .hero-inner {
+    @include outer-container;
+    @include clearfix;
+    margin: auto;
+    padding: 3.5em;
+    text-align: left;
+
+
+
+    .hero-copy {
+      text-align: left;
+      margin-top: 4em;
+      text-shadow: 4px 4px rgba(75, 77, 40, 0.5);
+
+      h1 {
+        color: $hero-color;
+        font-size: 3em;
+        margin-bottom: 0.5em;
+
+        @include media($large-screen) {
+          font-size: 4em;
+        }
+      }
+
+      p {
+        color: $hero-color;
+        line-height: 1.4em;
+        //margin: 0 auto 3em auto;
+
+        @include media($large-screen) {
+          font-size: 2em;
+          max-width: 40%;
+        }
+      }
+    }
+  }
+}

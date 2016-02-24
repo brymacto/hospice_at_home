@@ -1,2 +1,32 @@
-<h1>Welcome</h1>
-<p>hello world</p>
+<% content_for :hero do %>
+  <div class="hero">
+    <div class="hero-inner">
+      <div href="" class="hero-logo">
+        <%= image_tag("logo") %></div>
+      <div class="hero-copy">
+        <h1>Hospice at Home</h1>
+
+        <p>Providing care, comfort, and dignity.</p>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<div class="quick-links">
+  <%= link_to "#{fa_icon("user", class: 'icon')} New client".html_safe, new_client_path, class: 'button quick-link' %>
+  <%= link_to "#{fa_icon("user-md", class: 'icon')} New volunteer".html_safe, new_client_path, class: 'button quick-link' %>
+  <%= link_to "#{fa_icon("mortar-board", class: 'icon')} New specialty".html_safe, new_specialty_path, class: 'button quick-link' %>
+  <%= link_to "#{fa_icon("calendar", class: 'icon')} New match".html_safe, new_match_path, class: 'button quick-link' %>
+  <%= link_to "#{fa_icon("search", class: 'icon')} Match explorer".html_safe, matches_explorer_path, class: 'button quick-link' %>
+</div>
+<small class="photo-credit">Photo: <a href="https://www.flickr.com/photos/ncvophotos/8591440981/">NCVO London</a>
+</small>
+
+
+<% content_for :inline_css do %>
+  <style>
+    .breadcrumb {
+      display: none;
+    }
+  </style>
+<% end %>
