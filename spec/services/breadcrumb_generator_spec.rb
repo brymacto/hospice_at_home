@@ -42,6 +42,11 @@ describe BreadcrumbGenerator do
       )
     end
 
+    it 'raises an error when the action is not an array' do
+      # expect(load_breadcrumbs(crumb_class: Volunteer, crumb_instance: test_volunteer, crumb_actions: :edit)).
+      expect { load_breadcrumbs(crumb_actions: :edit) }.to raise_error('Crumb actions must be provided as an Array')
+    end
+
     it 'works with a class, and an action, but no instance' do
       expect(load_breadcrumbs(crumb_class: Volunteer, crumb_actions: [:new])).to(
         eql(

@@ -1,5 +1,7 @@
 module BreadcrumbGenerator
   def load_breadcrumbs(crumb_class: nil, crumb_instance: nil, crumb_actions: [])
+    validate_input(crumb_class, crumb_instance, crumb_actions)
+
     @breadcrumb_links = [class_breadcrumb(crumb_class)]
     add_instance_to_breadcrumb_links(crumb_instance)
 
@@ -11,6 +13,10 @@ module BreadcrumbGenerator
   end
 
   private
+
+  def validate_input(_crumb_class, _crumb_instance, crumb_actions)
+    raise 'Crumb actions must be provided as an Array' if crumb_actions.class != Array
+  end
 
   def add_instance_to_breadcrumb_links(breadcrumb_instance)
     @breadcrumb_links << instance_breadcrumb(breadcrumb_instance) if breadcrumb_instance
