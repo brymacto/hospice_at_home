@@ -15,19 +15,19 @@ class MatchesController < ApplicationController
     service = MatchLoadingService.new(params, load_collection: false)
     @match = service.match
     @match_proposal = service.match_proposal
-    load_breadcrumbs(crumb_class:Match, crumb_instance: @match)
+    load_breadcrumbs(crumb_class: Match, crumb_instance: @match)
   end
 
   def edit
     service = MatchLoadingService.new(params, load_collection: false)
     @match = service.match
-    load_breadcrumbs(crumb_class:Match, crumb_instance: @match, crumb_actions: [:edit])
+    load_breadcrumbs(crumb_class: Match, crumb_instance: @match, crumb_actions: [:edit])
   end
 
   def new
     @volunteer = Volunteer.find(params[:volunteer_id]) if params[:volunteer_id]
     load_new_match
-    load_breadcrumbs(crumb_class:Match, crumb_actions: [:new])
+    load_breadcrumbs(crumb_class: Match, crumb_actions: [:new])
   end
 
   def explorer
@@ -38,7 +38,7 @@ class MatchesController < ApplicationController
     @match_proposal = MatchProposal.new
     @volunteers = service.volunteers
     @specialty_selected_value = @match_exploration.specialty_id if @match_exploration
-    load_breadcrumbs(crumb_class:Match, crumb_actions: [:match_explorer])
+    load_breadcrumbs(crumb_class: Match, crumb_actions: [:match_explorer])
   end
 
   def index
@@ -47,7 +47,7 @@ class MatchesController < ApplicationController
     @match_proposals = service.match_proposals
     @no_turbolinks = true
     @initial_tab = params[:initial_tab]
-    load_breadcrumbs(crumb_class:Match)
+    load_breadcrumbs(crumb_class: Match)
     respond_to do |format|
       format.html
       format.json { render json: @matches }

@@ -15,22 +15,22 @@ class ClientsController < ApplicationController
     load_client
     load_matches
     @load_map_js = true
-    load_breadcrumbs(crumb_class:Client, crumb_instance: @client)
+    load_breadcrumbs(crumb_class: Client, crumb_instance: @client)
   end
 
   def edit
     load_client
-    load_breadcrumbs(crumb_class:Client, crumb_instance: @client, crumb_actions: [:edit])
+    load_breadcrumbs(crumb_class: Client, crumb_instance: @client, crumb_actions: [:edit])
   end
 
   def new
     @client = Client.new
-    load_breadcrumbs(crumb_class:Client, crumb_actions: [:new])
+    load_breadcrumbs(crumb_class: Client, crumb_actions: [:new])
   end
 
   def index
     load_client(all: true)
-    load_breadcrumbs(crumb_class:Client)
+    load_breadcrumbs(crumb_class: Client)
   end
 
   def destroy

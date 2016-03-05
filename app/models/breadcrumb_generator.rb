@@ -15,7 +15,7 @@ module BreadcrumbGenerator
   private
 
   def validate_input(_crumb_class, _crumb_instance, crumb_actions)
-    raise 'Crumb actions must be provided as an Array' if crumb_actions.class != Array
+    fail 'Crumb actions must be provided as an Array' if crumb_actions.class != Array
   end
 
   def add_instance_to_breadcrumb_links(breadcrumb_instance)
