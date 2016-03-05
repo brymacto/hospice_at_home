@@ -26,7 +26,7 @@ class MatchProposalsController < ApplicationController
   def show
     @match_proposal = MatchProposal.find(params[:id])
     @match_requests = @match_proposal.match_requests.includes(:volunteer).order('volunteers.last_name ASC')
-    load_breadcrumbs(MatchProposal, @match_proposal)
+    load_breadcrumbs(crumb_class: MatchProposal, crumb_instance: @match_proposal)
   end
 
   def destroy
