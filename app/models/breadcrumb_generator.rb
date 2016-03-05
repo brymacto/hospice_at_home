@@ -2,12 +2,13 @@ module BreadcrumbGenerator
   def load_breadcrumbs(crumb_class: nil, crumb_instance: nil, crumb_actions: [])
     validate_input(crumb_class, crumb_instance, crumb_actions)
 
-    @breadcrumb_links = [class_breadcrumb(crumb_class)]
-    add_instance_to_breadcrumb_links(crumb_instance)
+    @breadcrumb_links = []
 
-    crumb_actions.each do |crumb_action|
-      @breadcrumb_links << action_breadcrumb(crumb_class, crumb_instance, crumb_action)
-    end
+    load_class_breadcrumb(crumb_class)
+
+    load_instance_breadcrumb(crumb_instance)
+
+    load_action_breadcrumbs(crumb_class, crumb_instance, crumb_actions)
 
     @breadcrumb_links
   end
@@ -18,8 +19,18 @@ module BreadcrumbGenerator
     fail 'Crumb actions must be provided as an Array' if crumb_actions.class != Array
   end
 
-  def add_instance_to_breadcrumb_links(breadcrumb_instance)
-    @breadcrumb_links << instance_breadcrumb(breadcrumb_instance) if breadcrumb_instance
+  def load_class_breadcrumb(crumb_class)
+    @breadcrumb_links.push(class_breadcrumb(crumb_class)) if crumb_class
+  end
+
+  def load_instance_breadcrumb(crumb_instance)
+    @breadcrumb_links.push(instance_breadcrumb(crumb_instance)) if crumb_instance
+  end
+
+  def load_action_breadcrumbs(crumb_class, crumb_instance, crumb_actions)
+    crumb_actions.each do |crumb_action|
+      @breadcrumb_links.push(action_breadcrumb(crumb_class, crumb_instance, crumb_action))
+    end
   end
 
   def class_breadcrumb(breadcrumb_class)
