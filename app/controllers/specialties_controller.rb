@@ -3,12 +3,12 @@ class SpecialtiesController < ApplicationController
 
   def index
     @specialties = Specialty.all.includes(:volunteers).order('specialties.name ASC')
-    load_breadcrumbs(Specialty)
+    load_breadcrumbs(crumb_class: Specialty)
   end
 
   def new
     @specialty = Specialty.new
-    load_breadcrumbs(Specialty, nil, :new)
+    load_breadcrumbs(crumb_class: Specialty, crumb_actions: [:new])
   end
 
   def create
@@ -24,12 +24,12 @@ class SpecialtiesController < ApplicationController
   def show
     load_specialty
     @volunteers = @specialty.volunteers
-    load_breadcrumbs(Specialty, @specialty)
+    load_breadcrumbs(crumb_class: Specialty, crumb_instance: @specialty)
   end
 
   def edit
     load_specialty
-    load_breadcrumbs(Specialty, @specialty, :edit)
+    load_breadcrumbs(crumb_class: Specialty, crumb_instance: @specialty, crumb_actions: [:edit])
   end
 
   def update
