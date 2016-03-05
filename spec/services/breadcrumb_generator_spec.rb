@@ -12,7 +12,7 @@ describe BreadcrumbGenerator do
     end
 
     it 'works with a class only' do
-      expect(load_breadcrumbs(Volunteer)).to(
+      expect(load_breadcrumbs(crumb_class: Volunteer)).to(
         eql(
           [{ path: 'http://localhost:3000/volunteers', name: 'Volunteers' }]
         )
@@ -20,7 +20,7 @@ describe BreadcrumbGenerator do
     end
 
     it 'works with a class and an instance' do
-      expect(load_breadcrumbs(Volunteer, test_volunteer)).to(
+      expect(load_breadcrumbs(crumb_class: Volunteer, crumb_instance: test_volunteer)).to(
         eql(
           [
             { path: 'http://localhost:3000/volunteers', name: 'Volunteers' },
@@ -31,7 +31,7 @@ describe BreadcrumbGenerator do
     end
 
     it 'works with a class, an instance, and an action' do
-      expect(load_breadcrumbs(Volunteer, test_volunteer, :edit)).to(
+      expect(load_breadcrumbs(crumb_class: Volunteer, crumb_instance: test_volunteer, crumb_actions: [:edit])).to(
         eql(
           [
             { path: 'http://localhost:3000/volunteers', name: 'Volunteers' },
@@ -43,7 +43,7 @@ describe BreadcrumbGenerator do
     end
 
     it 'works with a class, and an action, but no instance' do
-      expect(load_breadcrumbs(Volunteer, nil, :new)).to(
+      expect(load_breadcrumbs(crumb_class: Volunteer, crumb_actions: [:new])).to(
         eql(
           [
             { path: 'http://localhost:3000/volunteers', name: 'Volunteers' },
@@ -55,18 +55,18 @@ describe BreadcrumbGenerator do
 
     describe 'special cases' do
       it 'correctly labels a class that has two words in its name' do
-        expect(load_breadcrumbs(MatchProposal)[0][:name]).to eql('Match proposals')
+        expect(load_breadcrumbs(crumb_class: MatchProposal)[0][:name]).to eql('Match proposals')
       end
 
       it 'correctly generates a path for a controller that has two words in its name' do
-        expect(load_breadcrumbs(Specialty, test_specialty, :edit)[1][:path]).to(
+        expect(load_breadcrumbs(crumb_class: Specialty, crumb_instance: test_specialty, crumb_actions: [:edit])[1][:path]).to(
           eql("http://localhost:3000/specialties/#{test_specialty.id}")
         )
       end
 
       it 'correctly generates Match Explorer breadcrumb' do
-        expect(load_breadcrumbs(Match, nil, :match_explorer)[1][:name]).to eql('Match explorer')
-        expect(load_breadcrumbs(Match, nil, :match_explorer)[1][:path]).to eql('/matches/explorer')
+        expect(load_breadcrumbs(crumb_class: Match, crumb_actions: [:match_explorer])[1][:name]).to eql('Match explorer')
+        expect(load_breadcrumbs(crumb_class: Match, crumb_actions: [:match_explorer])[1][:path]).to eql('/matches/explorer')
       end
     end
   end

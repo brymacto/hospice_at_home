@@ -1,10 +1,10 @@
 module BreadcrumbGenerator
-  def load_breadcrumbs(breadcrumb_class, breadcrumb_instance = nil, *actions)
-    @breadcrumb_links = [class_breadcrumb(breadcrumb_class)]
-    add_instance_to_breadcrumb_links(breadcrumb_instance)
+  def load_breadcrumbs(crumb_class: nil, crumb_instance: nil, crumb_actions: [])
+    @breadcrumb_links = [class_breadcrumb(crumb_class)]
+    add_instance_to_breadcrumb_links(crumb_instance)
 
-    actions.each do |action|
-      @breadcrumb_links << action_breadcrumb(breadcrumb_class, breadcrumb_instance, action)
+    crumb_actions.each do |crumb_action|
+      @breadcrumb_links << action_breadcrumb(crumb_class, crumb_instance, crumb_action)
     end
 
     @breadcrumb_links
