@@ -16,22 +16,22 @@ class VolunteersController < ApplicationController
     @matches = @volunteer.matches
     @specialties_options = Specialty.all
     @load_map_js = true
-    load_breadcrumbs(Volunteer, @volunteer)
+    load_breadcrumbs(crumb_class: Volunteer, crumb_instance: @volunteer)
   end
 
   def edit(_flash_message = nil)
     load_volunteer
-    load_breadcrumbs(Volunteer, @volunteer, :edit)
+    load_breadcrumbs(crumb_class: Volunteer, crumb_instance: @volunteer, crumb_actions: [:edit])
   end
 
   def new
     @volunteer = Volunteer.new
-    load_breadcrumbs(Volunteer, nil, :new)
+    load_breadcrumbs(crumb_class: Volunteer, crumb_actions: [:new])
   end
 
   def index
     load_volunteers
-    load_breadcrumbs(Volunteer)
+    load_breadcrumbs(crumb_class: Volunteer)
   end
 
   def destroy
