@@ -9,13 +9,13 @@ class Availability < ActiveRecord::Base
   validate :start_time_possible_times
   validate :start_time_before_end_time
 
-  composed_of :availability_time, class_name: 'TimeRange', mapping: [
+  composed_of :time_range, class_name: 'TimeRange', mapping: [
     %w(day day), %w(start_time start_time), %w(end_time end_time)
   ]
 
   def description(time_only = false)
-    return "from #{availability_time.start_time} to #{availability_time.end_time}" if time_only
-    "#{availability_time.day.capitalize}, from #{availability_time.start_time} to #{availability_time.end_time}"
+    return "from #{time_range.start_time} to #{time_range.end_time}" if time_only
+    "#{time_range.day.capitalize}, from #{time_range.start_time} to #{time_range.end_time}"
   end
 
   private

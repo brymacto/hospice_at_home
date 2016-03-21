@@ -48,7 +48,7 @@ class Volunteer < ActiveRecord::Base
   private
 
   def availability_matching?(availability, match_time)
-    availability.availability_time.contains(match_time)
+    availability.time_range.contains(match_time)
   end
 
   def has_address?
